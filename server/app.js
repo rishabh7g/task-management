@@ -17,6 +17,7 @@ app.use((_req, res, next) => {
 
 app.use(authRoutes);
 app.use("/events", eventRoutes);
+require("dotenv").config();
 
 app.use((error, req, res) => {
   const status = error.statusCode || 500;
@@ -26,5 +27,5 @@ app.use((error, req, res) => {
 
 swaggerSetup(app);
 
-const PORT = process.env.PORT || 8090;
+const PORT = process.env.PORT || 3090;
 app.listen(PORT);
