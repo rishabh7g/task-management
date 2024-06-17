@@ -1,7 +1,7 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 
-const eventRoutes = require("./routes/events");
+const taskRoutes = require("./routes/tasks");
 const authRoutes = require("./routes/auth");
 const swaggerSetup = require("./swagger");
 
@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
-app.use("/events", eventRoutes);
+app.use("/tasks", taskRoutes);
 require("dotenv").config();
 
 // Swagger setup

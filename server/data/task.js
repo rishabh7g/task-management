@@ -5,51 +5,51 @@ const { readData, writeData } = require("./util");
 
 async function getAll() {
   const storedData = await readData();
-  if (!storedData.events) {
+  if (!storedData.tasks) {
     throw new NotFoundError("Could not find any events.");
   }
-  return storedData.events;
+  return storedData.tasks;
 }
 
 async function get(id) {
   const storedData = await readData();
-  if (!storedData.events || storedData.events.length === 0) {
+  if (!storedData.tasks || storedData.tasks.length === 0) {
     throw new NotFoundError("Could not find any events.");
   }
 
-  const event = storedData.events.find((ev) => ev.id === id);
-  if (!event) {
-    throw new NotFoundError("Could not find event for id " + id);
+  const task = storedData.tasks.find((ev) => ev.id === id);
+  if (!task) {
+    throw new NotFoundError("Could not find task for id " + id);
   }
 
-  return event;
+  return task;
 }
 
 async function add(data) {
   const storedData = await readData();
-  storedData.events.unshift({ ...data, id: generateId() });
+  storedData.tasks.unshift({ ...data, id: generateId() });
   await writeData(storedData);
 }
 
 async function replace(id, data) {
   const storedData = await readData();
-  if (!storedData.events || storedData.events.length === 0) {
+  if (!storedData.tasks || storedData.tasks.length === 0) {
     throw new NotFoundError("Could not find any events.");
   }
 
-  const index = storedData.events.findIndex((ev) => ev.id === id);
+  const index = storedData.tasks.findIndex((task) => task.id === id);
   if (index < 0) {
-    throw new NotFoundError("Could not find event for id " + id);
+    throw new NotFoundError("Could not find the task for id " + id);
   }
 
-  storedData.events[index] = { ...data, id };
+  storedData.tasks[index] = { ...data, id };
 
   await writeData(storedData);
 }
 
 async function remove(id) {
   const storedData = await readData();
-  const updatedData = storedData.events.filter((ev) => ev.id !== id);
+  const updatedData = storedData.tasks.filter((ev) => ev.id !== id);
   await writeData({ ...storedData, events: updatedData });
 }
 

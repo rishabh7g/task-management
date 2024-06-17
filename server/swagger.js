@@ -23,8 +23,8 @@ const swaggerDefinition = {
       description: "API endpoints related to user authentication",
     },
     {
-      name: "Events",
-      description: "API endpoints related to event management",
+      name: "Tasks",
+      description: "API endpoints related to task management",
     },
   ],
 };
