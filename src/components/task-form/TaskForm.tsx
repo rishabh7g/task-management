@@ -1,35 +1,61 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import { PrimaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
-import { Task } from "src/types/task.types";
+import Select from "src/components/select/Select";
+import {
+  Task,
+  TaskCategory,
+  TaskFieldType,
+  TaskStatus,
+} from "src/types/task.types";
 
 interface TaskFormProps {
   initialTask?: Task;
   onSubmit: (task: Task) => void;
 }
 
-const INITIAL_TASK: Task = {
+const EMPTY_TASK: Task = {
   id: 0,
   title: "",
   description: "",
-  category: "",
-  status: "",
+  category: TaskCategory.WORK,
+  status: TaskStatus.TODO,
 };
 
-const TaskForm = ({ initialTask = INITIAL_TASK, onSubmit }: TaskFormProps) => {
-  const [task, setTask] = useState<Task>(initialTask);
+type TaskAction = {
+  type: TaskFieldType;
+  payload: string;
+};
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
-    const { name, value } = e.target;
-    setTask({ ...task, [name]: value });
+const taskReducer = (state: Task, action: TaskAction) => {
+  switch (action.type) {
+    case TaskFieldType.TITLE:
+      return { ...state, title: action.payload };
+    case TaskFieldType.DESCRIPTION:
+      return { ...state, description: action.payload };
+    case TaskFieldType.CATEGORY:
+      return { ...state, category: action.payload as TaskCategory };
+    default:
+      return state;
+  }
+};
+
+const TaskForm = ({ initialTask = EMPTY_TASK, onSubmit }: TaskFormProps) => {
+  const [task, taskDispatch] = useReducer(taskReducer, initialTask);
+
+  const handleChange = (value: string, name: TaskFieldType) => {
+    taskDispatch({ type: name, payload: value });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const isTaskEmpty = task.title === "" || task.description === "";
+    if (isTaskEmpty) {
+      alert("Title and description are required");
+      return;
+    }
     onSubmit(task);
   };
 
@@ -37,58 +63,28 @@ const TaskForm = ({ initialTask = INITIAL_TASK, onSubmit }: TaskFormProps) => {
     <Form onSubmit={handleSubmit}>
       <Input
         label="Title"
-        name="title"
+        name={TaskFieldType.TITLE}
         type="text"
         value={task.title}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e.target.value, TaskFieldType.TITLE)}
       />
       <Input
         label="Description"
-        name="description"
+        name={TaskFieldType.DESCRIPTION}
         type="text"
         value={task.description}
-        onChange={handleChange}
+        onChange={(e) =>
+          handleChange(e.target.value, TaskFieldType.DESCRIPTION)
+        }
       />
-      <div className="mb-4">
-        <label
-          className="block text-sm font-medium text-gray-700"
-          htmlFor="category"
-        >
-          Category
-        </label>
-        <select
-          id="category"
-          name="category"
-          value={task.category}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
-        >
-          <option value="">Select category</option>
-          <option value="Work">Work</option>
-          <option value="Personal">Personal</option>
-          <option value="Urgent">Urgent</option>
-        </select>
-      </div>
-      <div className="mb-4">
-        <label
-          className="block text-sm font-medium text-gray-700"
-          htmlFor="status"
-        >
-          Status
-        </label>
-        <select
-          name="status"
-          id="status"
-          value={task.status}
-          onChange={handleChange}
-          className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm"
-        >
-          <option value="">Select status</option>
-          <option value="Pending">Pending</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Completed">Completed</option>
-        </select>
-      </div>
+      <Select
+        label="Category"
+        name={TaskFieldType.CATEGORY}
+        options={Object.values(TaskCategory)}
+        handleChange={(value: string) =>
+          handleChange(value, TaskFieldType.CATEGORY)
+        }
+      />
       <PrimaryButton
         label="Submit"
         type={ButtonType.Submit}
