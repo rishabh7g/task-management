@@ -1,12 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PrimaryButton, TertiaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
+import { RoutePath } from "src/routes";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -14,7 +17,8 @@ const LoginPage = () => {
   };
 
   const handleSignUp = () => {
-    // Handle sign-up logic here
+    // Redirect to registration page
+    navigate(RoutePath.Register);
   };
 
   return (

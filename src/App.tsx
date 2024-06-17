@@ -1,14 +1,19 @@
-import LoginPage from "src/pages/LoginPage";
-import RegistrationPage from "src/pages/RegisterPage";
-import TaskManagementPage from "src/pages/TaskPage";
+import React, { Suspense } from "react";
+import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import routes from "./routes";
+
+const Routes = () => {
+  const routing = useRoutes(routes);
+  return routing;
+};
 
 const App = () => {
   return (
-    <div className="App">
-      <LoginPage />
-      <RegistrationPage />
-      <TaskManagementPage />
-    </div>
+    <Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes />
+      </Suspense>
+    </Router>
   );
 };
 

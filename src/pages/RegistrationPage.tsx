@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
+import { RoutePath } from "src/routes";
 
 const RegistrationPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,7 +53,9 @@ const RegistrationPage = () => {
             label="Register"
             type={ButtonType.Submit}
             className="mt-4 w-full"
-            onClick={() => {}}
+            onClick={() => {
+              navigate(RoutePath.Tasks);
+            }}
           />
         </Form>
       </div>
