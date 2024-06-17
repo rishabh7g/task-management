@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { PrimaryButton, TertiaryButton } from "src/components/button/Button";
+import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
 
@@ -37,7 +38,7 @@ const LoginPage = () => {
           />
           <PrimaryButton
             label="Sign In"
-            type="submit"
+            type={ButtonType.Submit}
             className="mt-4 w-full"
             onClick={() => {}}
           />
