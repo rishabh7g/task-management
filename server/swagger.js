@@ -1,6 +1,8 @@
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
+const PORT = process.env.PORT || 3090;
+
 // Basic Swagger definition
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -11,7 +13,7 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: "http://localhost:8090", // URL of your local development server
+      url: `http://localhost:${PORT}`, // URL of your local development server
       description: "Local server",
     },
   ],
