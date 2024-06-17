@@ -4,6 +4,7 @@ import { PrimaryButton, TertiaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
+import { fetchLogin } from "src/fetch/login-fetch";
 import { RoutePath } from "src/routes";
 
 const LoginPage = () => {
@@ -14,6 +15,16 @@ const LoginPage = () => {
   const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle sign-in logic here
+    fetchLogin(username, password).then((res) => {
+      const token = res.token;
+      const isTokenEmpty = !token;
+      if (isTokenEmpty) {
+        alert("Invalid credentials");
+        return;
+      } else {
+        navigate(RoutePath.Tasks);
+      }
+    });
   };
 
   const handleSignUp = () => {
@@ -29,8 +40,8 @@ const LoginPage = () => {
         </h2>
         <Form onSubmit={handleSignIn}>
           <Input
-            label="Username"
-            name="username"
+            label="Email"
+            name="email"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}

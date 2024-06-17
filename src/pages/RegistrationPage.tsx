@@ -4,6 +4,7 @@ import { PrimaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
+import { fetchRegisteration } from "src/fetch/registeration-fetch";
 import { RoutePath } from "src/routes";
 
 const RegistrationPage = () => {
@@ -18,7 +19,16 @@ const RegistrationPage = () => {
       alert("Passwords do not match");
       return;
     }
-    // Handle registration logic here
+    fetchRegisteration(username, password).then((res) => {
+      const token = res.token;
+      const isTokenEmpty = !token;
+      if (isTokenEmpty) {
+        alert("Invalid credentials");
+        return;
+      } else {
+        navigate(RoutePath.Tasks);
+      }
+    });
   };
 
   return (
@@ -29,8 +39,8 @@ const RegistrationPage = () => {
         </h2>
         <Form onSubmit={handleRegister}>
           <Input
-            label="Username"
-            name="username"
+            label="Email"
+            name="email"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -53,9 +63,7 @@ const RegistrationPage = () => {
             label="Register"
             type={ButtonType.Submit}
             className="mt-4 w-full"
-            onClick={() => {
-              navigate(RoutePath.Tasks);
-            }}
+            onClick={() => {}}
           />
         </Form>
       </div>
