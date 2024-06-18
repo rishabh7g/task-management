@@ -131,7 +131,7 @@ router.post("/sign-in", async (req, res) => {
   }
 
   const token = createJSONToken(email);
-  res.json({ token });
+  res.json({ id: user.id, token });
 });
 
 module.exports = router;
