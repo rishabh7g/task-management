@@ -16,7 +16,7 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
-app.use("/tasks", taskRoutes);
+app.use(taskRoutes);
 require("dotenv").config();
 
 // Swagger setup

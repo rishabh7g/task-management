@@ -11,7 +11,7 @@ async function add(data) {
   if (!storedData.users) {
     storedData.users = [];
   }
-  storedData.users.push({ ...data, password: hashedPw, id: userId });
+  storedData.users.push({ ...data, password: hashedPw, id: userId, tasks: [] });
   await writeData(storedData);
   return { id: userId, email: data.email };
 }
