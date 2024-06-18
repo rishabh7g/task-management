@@ -8,7 +8,7 @@ import { fetchRegisteration } from "src/fetch/registeration-fetch";
 import { RoutePath } from "src/routes";
 
 const RegistrationPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const RegistrationPage = () => {
       alert("Passwords do not match");
       return;
     }
-    fetchRegisteration(username, password).then((res) => {
+    fetchRegisteration(email, password).then((res) => {
       const token = res.token;
       const isTokenEmpty = !token;
       if (isTokenEmpty) {
@@ -42,8 +42,8 @@ const RegistrationPage = () => {
             label="Email"
             name="email"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Input
             label="Password"
