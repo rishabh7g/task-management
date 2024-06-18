@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { HttpMethod } from "src/api/api.types";
 import useApi from "src/api/use-api";
 import { PrimaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
-import { REGISTRATION_API_PAYLOAD } from "src/constant/api-payloads";
-import { fetchRegisteration } from "src/fetch/registeration-fetch";
+import { apiRoutes } from "src/constant/api-routes";
 import { RoutePath } from "src/routes";
 
 const RegistrationPage = () => {
@@ -14,7 +14,15 @@ const RegistrationPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
-  const {} = useApi(REGISTRATION_API_PAYLOAD);
+
+  const { status, execute } = useApi();
+
+  useEffect(() => {
+    const isUserRegistered = status === 201;
+    if (isUserRegistered) {
+      navigate(RoutePath.Home);
+    }
+  }, [navigate, status]);
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,16 +30,8 @@ const RegistrationPage = () => {
       alert("Passwords do not match");
       return;
     }
-    fetchRegisteration(email, password).then((res) => {
-      const token = res.token;
-      const isTokenEmpty = !token;
-      if (isTokenEmpty) {
-        alert("Invalid credentials");
-        return;
-      } else {
-        navigate(RoutePath.Tasks);
-      }
-    });
+
+    execute(apiRoutes.createSignUpUrl(), HttpMethod.POST, { email, password });
   };
 
   return (

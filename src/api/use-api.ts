@@ -1,39 +1,31 @@
-import { isAxiosError } from "axios";
+import { AxiosRequestConfig, isAxiosError } from "axios";
 import { useCallback, useState } from "react";
 import apiService from "src/api/api-service";
-import { HttpMethod, UseApiProps, UseApiResponse } from "src/api/api.types";
+import { HttpMethod, UseApiResponse } from "src/api/api.types";
 
-function useApi<T>({
-  url,
-  config,
-  method = HttpMethod.GET,
-  body,
-}: UseApiProps<T>): UseApiResponse<T> {
+function useApi<T>(): UseApiResponse<T> {
   const [data, setData] = useState<T | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [status, setStatus] = useState<number | null>(null);
 
   const execute = useCallback(
-    async (bodyOverride?: any) => {
+    async (
+      url: string,
+      method: HttpMethod,
+      body?: any,
+      config?: AxiosRequestConfig,
+    ) => {
       setIsLoading(true);
       let response;
       try {
         setStatus(null);
         switch (method) {
           case "post":
-            response = await apiService.post<T>(
-              url,
-              bodyOverride || body,
-              config,
-            );
+            response = await apiService.post<T>(url, body, config);
             break;
           case "put":
-            response = await apiService.put<T>(
-              url,
-              bodyOverride || body,
-              config,
-            );
+            response = await apiService.put<T>(url, body, config);
             break;
           case "delete":
             response = await apiService.delete<T>(url, config);
@@ -55,7 +47,7 @@ function useApi<T>({
         setIsLoading(false);
       }
     },
-    [url, config, method, body],
+    [],
   );
 
   return { data, error, isLoading, execute, status };
