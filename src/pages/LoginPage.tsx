@@ -1,30 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { HttpMethod } from "src/api/api.types";
+import useApi from "src/api/use-api";
 import { PrimaryButton, TertiaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
-import { fetchLogin } from "src/fetch/login-fetch";
 import { RoutePath } from "src/routes";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const { error, data, execute, isLoading } = useApi<{ token: string }>({
+    url: "/sign-in",
+    method: HttpMethod.POST,
+  });
+
+  useEffect(() => {
+    const isTokenExist = data && data.token;
+    if (isTokenExist) {
+      navigate(RoutePath.Tasks);
+    }
+  }, [data, navigate]);
 
   const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle sign-in logic here
-    fetchLogin(username, password).then((res) => {
-      const token = res.token;
-      const isTokenEmpty = !token;
-      if (isTokenEmpty) {
-        alert("Invalid credentials");
-        return;
-      } else {
-        navigate(RoutePath.Tasks);
-      }
-    });
+    execute({ email, password });
   };
 
   const handleSignUp = () => {
@@ -43,8 +47,8 @@ const LoginPage = () => {
             label="Email"
             name="email"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Input
             label="Password"
@@ -69,6 +73,9 @@ const LoginPage = () => {
           />
         </div>
       </div>
+
+      {isLoading && <div>Loading...</div>}
+      {error && <div>Error: {error}</div>}
     </div>
   );
 };
