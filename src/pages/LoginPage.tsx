@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HttpMethod } from "src/api/api.types";
 import useApi from "src/api/use-api";
 import { PrimaryButton, TertiaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
+import { LOGIN_API_PAYLOAD } from "src/constant/api-payloads";
 import { RoutePath } from "src/routes";
 
 const LoginPage = () => {
@@ -13,10 +13,9 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const { error, data, execute, isLoading } = useApi<{ token: string }>({
-    url: "/sign-in",
-    method: HttpMethod.POST,
-  });
+  const { error, data, execute, isLoading } = useApi<{ token: string }>(
+    LOGIN_API_PAYLOAD,
+  );
 
   useEffect(() => {
     const isTokenExist = data && data.token;

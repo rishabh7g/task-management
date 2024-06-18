@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useApi from "src/api/use-api";
 import { PrimaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
+import { REGISTRATION_API_PAYLOAD } from "src/constant/api-payloads";
 import { fetchRegisteration } from "src/fetch/registeration-fetch";
 import { RoutePath } from "src/routes";
 
@@ -12,6 +14,7 @@ const RegistrationPage = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
+  const {} = useApi(REGISTRATION_API_PAYLOAD);
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
