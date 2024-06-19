@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const tasksController = require("../controllers/task-controller.js");
+const tasksController = require("../controllers/task.controller");
 const taskSchema = require("../validators/task-schema.js");
 const validate = require("../middleware/validate.js");
 
