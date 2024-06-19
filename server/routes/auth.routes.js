@@ -1,7 +1,5 @@
 const express = require("express");
-const { add, get } = require("../data/user");
-const { createJSONToken, isValidPassword } = require("../util/auth");
-const { isValidEmail, isValidText } = require("../util/validation");
+const { signIn, signUp } = require("../controllers/auth-controller");
 
 const router = express.Router();
 
@@ -42,42 +40,7 @@ const router = express.Router();
  *       422:
  *         description: User signup failed due to validation errors. Returns error messages.
  */
-router.post("/sign-up", async (req, res, next) => {
-  const data = req.body;
-  let errors = {};
-
-  if (!isValidEmail(data.email)) {
-    errors.email = "Invalid email.";
-  } else {
-    try {
-      const existingUser = await get(data.email);
-      if (existingUser) {
-        errors.email = "Email exists already.";
-      }
-    } catch (error) {}
-  }
-
-  if (!isValidText(data.password, 6)) {
-    errors.password = "Invalid password. Must be at least 6 characters long.";
-  }
-
-  if (Object.keys(errors).length > 0) {
-    return res.status(422).json({
-      message: "User signup failed due to validation errors.",
-      errors,
-    });
-  }
-
-  try {
-    const createdUser = await add(data);
-    const authToken = createJSONToken(createdUser.email);
-    res
-      .status(201)
-      .json({ message: "User created.", user: createdUser, token: authToken });
-  } catch (error) {
-    next(error);
-  }
-});
+router.post("/sign-up", signUp);
 
 /**
  * @swagger
@@ -111,27 +74,6 @@ router.post("/sign-up", async (req, res, next) => {
  *       422:
  *         description: Validation error for incorrect email or password format.
  */
-router.post("/sign-in", async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
-
-  let user;
-  try {
-    user = await get(email);
-  } catch (error) {
-    return res.status(401).json({ message: "Authentication failed." });
-  }
-
-  const pwIsValid = await isValidPassword(password, user.password);
-  if (!pwIsValid) {
-    return res.status(422).json({
-      message: "Invalid credentials.",
-      errors: { credentials: "Invalid email or password entered." },
-    });
-  }
-
-  const token = createJSONToken(email);
-  res.json({ id: user.id, token });
-});
+router.post("/sign-in", signIn);
 
 module.exports = router;

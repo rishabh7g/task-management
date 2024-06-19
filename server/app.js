@@ -1,8 +1,8 @@
 const bodyParser = require("body-parser");
 const express = require("express");
 
-const taskRoutes = require("./routes/tasks");
-const authRoutes = require("./routes/auth");
+const taskRoutes = require("./routes/tasks.routes");
+const authRoutes = require("./routes/auth.routes");
 const swaggerSetup = require("./swagger");
 
 const app = express();
