@@ -17,14 +17,13 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const { error, data, execute, isLoading } = useApi<{
-    token: string;
-    id: string;
+    accessToken: string;
   }>();
 
   useEffect(() => {
-    const isTokenExist = data && data.token;
+    const isTokenExist = data && data.accessToken;
     if (isTokenExist) {
-      localStorageService.setItem(LocalStorageKeys.TOKEN, data.token);
+      localStorageService.setItem(LocalStorageKeys.TOKEN, data.accessToken);
       navigate(RoutePath.Tasks);
     }
   }, [data, navigate]);
