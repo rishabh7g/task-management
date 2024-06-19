@@ -9,6 +9,7 @@ const {
   MESSAGE_INVALID_PASSWORD,
   MESSAGE_USER_SIGNUP_FAILED,
   MESSAGE_USER_CREATED,
+  MESSAGE_AUTH_FAILED,
 } = require("../constant/message");
 
 const signIn = async (req, res) => {
@@ -32,8 +33,10 @@ const signIn = async (req, res) => {
     });
   }
 
-  const token = createJSONToken(email);
-  res.json({ id: user.id, token });
+  const { id } = user;
+
+  const token = createJSONToken({ email: email, id: id });
+  res.json({ token });
 };
 
 const signUp = async (req, res, next) => {
@@ -63,12 +66,9 @@ const signUp = async (req, res, next) => {
   }
 
   try {
-    const createdUser = await add(data);
-    const authToken = createJSONToken(createdUser.email);
+    await add(data);
     res.status(HttpStatusCode.Created).json({
       message: MESSAGE_USER_CREATED,
-      user: createdUser,
-      token: authToken,
     });
   } catch (error) {
     next(error);

@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const tasksController = require("../controllers/task.controller");
 const taskSchema = require("../validators/task-schema.js");
-const validate = require("../middleware/validate.js");
+const validateSchemaMiddleware = require("../middleware/validate.js");
+const authorizeAccessTokenMiddleware = require("../middleware/authorize.js");
 
 /**
  * @swagger
@@ -13,17 +14,10 @@ const validate = require("../middleware/validate.js");
 
 /**
  * @swagger
- * /users/{userId}/tasks:
+ * /tasks:
  *   post:
  *     summary: Create a new task
  *     tags: [Tasks]
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: ID of the user
  *     requestBody:
  *       required: true
  *       content:
@@ -48,24 +42,18 @@ const validate = require("../middleware/validate.js");
  *         description: Invalid input
  */
 router.post(
-  "/users/:userId/tasks",
-  validate(taskSchema),
+  "/tasks",
+  authorizeAccessTokenMiddleware,
+  validateSchemaMiddleware(taskSchema),
   tasksController.createTask,
 );
 
 /**
  * @swagger
- * /users/{userId}/tasks:
+ * /tasks:
  *   get:
- *     summary: Get all tasks for a user
+ *     summary: Get all tasks
  *     tags: [Tasks]
- *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: ID of the user
  *     responses:
  *       200:
  *         description: List of tasks
@@ -74,60 +62,54 @@ router.post(
  *             schema:
  *               type: array
  *               items:
- *                 type: object
+ *                 $ref: '#/components/schemas/Task'
+ *       404:
+ *         description: Tasks not found
  */
-router.get("/users/:userId/tasks", tasksController.getTasks);
+router.get("/tasks", authorizeAccessTokenMiddleware, tasksController.getTasks);
 
 /**
  * @swagger
- * /users/{userId}/tasks/{taskId}:
+ * /tasks/{taskId}:
  *   get:
- *     summary: Get a specific task for a user
+ *     summary: Get a specific task
  *     tags: [Tasks]
  *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: ID of the user
  *       - in: path
  *         name: taskId
  *         required: true
  *         schema:
  *           type: string
- *         description: ID of the task
+ *         description: The task ID
  *     responses:
  *       200:
  *         description: Task details
  *         content:
  *           application/json:
  *             schema:
- *               type: object
+ *               $ref: '#/components/schemas/Task'
  *       404:
  *         description: Task not found
  */
-router.get("/users/:userId/tasks/:taskId", tasksController.getTask);
+router.get(
+  "/tasks/:taskId",
+  authorizeAccessTokenMiddleware,
+  tasksController.getTask,
+);
 
 /**
  * @swagger
- * /users/{userId}/tasks/{taskId}:
+ * /tasks/{taskId}:
  *   put:
- *     summary: Update a specific task for a user
+ *     summary: Update a specific task
  *     tags: [Tasks]
  *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: ID of the user
  *       - in: path
  *         name: taskId
  *         required: true
  *         schema:
  *           type: string
- *         description: ID of the task
+ *         description: The task ID
  *     requestBody:
  *       required: true
  *       content:
@@ -143,7 +125,6 @@ router.get("/users/:userId/tasks/:taskId", tasksController.getTask);
  *                 type: string
  *               status:
  *                 type: string
- *
  *     responses:
  *       200:
  *         description: Task updated successfully
@@ -153,36 +134,35 @@ router.get("/users/:userId/tasks/:taskId", tasksController.getTask);
  *         description: Invalid input
  */
 router.put(
-  "/users/:userId/tasks/:taskId",
-  validate(taskSchema),
+  "/tasks/:taskId",
+  authorizeAccessTokenMiddleware,
+  validateSchemaMiddleware(taskSchema),
   tasksController.updateTask,
 );
 
 /**
  * @swagger
- * /users/{userId}/tasks/{taskId}:
+ * /tasks/{taskId}:
  *   delete:
- *     summary: Delete a specific task for a user
+ *     summary: Delete a specific task
  *     tags: [Tasks]
  *     parameters:
- *       - in: path
- *         name: userId
- *         required: true
- *         schema:
- *           type: string
- *         description: ID of the user
  *       - in: path
  *         name: taskId
  *         required: true
  *         schema:
  *           type: string
- *         description: ID of the task
+ *         description: The task ID
  *     responses:
  *       204:
  *         description: Task deleted successfully
  *       404:
  *         description: Task not found
  */
-router.delete("/users/:userId/tasks/:taskId", tasksController.deleteTask);
+router.delete(
+  "/tasks/:taskId",
+  authorizeAccessTokenMiddleware,
+  tasksController.deleteTask,
+);
 
 module.exports = router;

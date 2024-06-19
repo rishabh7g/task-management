@@ -1,6 +1,6 @@
 const { HttpStatusCode } = require("axios");
 
-const validate = (schema) => (req, res, next) => {
+const validateSchemaMiddleware = (schema) => (req, res, next) => {
   const { error } = schema.validate(req.body);
   if (error) {
     return res
@@ -10,4 +10,4 @@ const validate = (schema) => (req, res, next) => {
   next();
 };
 
-module.exports = validate;
+module.exports = validateSchemaMiddleware;

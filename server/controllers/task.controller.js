@@ -8,8 +8,7 @@ const {
 } = require("../constant/message");
 
 const createTask = async (req, res) => {
-  const { userId } = req.params;
-  const user = users.find((u) => u.id === userId);
+  const user = users.find((u) => u.id === req.user.id);
 
   if (!user) {
     return res
@@ -28,8 +27,7 @@ const createTask = async (req, res) => {
 };
 
 const getTasks = async (req, res) => {
-  const { userId } = req.params;
-  const user = users.find((u) => u.id === userId);
+  const user = users.find((u) => u.id === req.user.id);
 
   if (!user) {
     return res
@@ -41,8 +39,8 @@ const getTasks = async (req, res) => {
 };
 
 const getTask = async (req, res) => {
-  const { userId, taskId } = req.params;
-  const user = users.find((u) => u.id === userId);
+  const { taskId } = req.params;
+  const user = users.find((u) => u.id === req.user.id);
 
   if (!user) {
     return res
@@ -62,8 +60,8 @@ const getTask = async (req, res) => {
 };
 
 const updateTask = async (req, res) => {
-  const { userId, taskId } = req.params;
-  const user = users.find((u) => u.id === userId);
+  const { taskId } = req.params;
+  const user = users.find((u) => u.id === req.user.id);
 
   if (!user) {
     return res
@@ -85,8 +83,8 @@ const updateTask = async (req, res) => {
 };
 
 const deleteTask = async (req, res) => {
-  const { userId, taskId } = req.params;
-  const user = users.find((u) => u.id === userId);
+  const { taskId } = req.params;
+  const user = users.find((u) => u.id === req.user.id);
 
   if (!user) {
     return res
