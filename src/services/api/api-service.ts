@@ -6,6 +6,8 @@ import axios, {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios";
+import { LocalStorageKeys } from "src/constant/local-storage.constant";
+import { localStorageService } from "src/services/local-storage/local-storage";
 
 // Create an Axios instance with default configurations
 const apiClient: AxiosInstance = axios.create({
@@ -20,7 +22,7 @@ const apiClient: AxiosInstance = axios.create({
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig<any>) => {
     // Add token or other request modifications here
-    const token = localStorage.getItem("token");
+    const token = localStorageService.getItem(LocalStorageKeys.TOKEN);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

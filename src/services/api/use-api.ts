@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, isAxiosError } from "axios";
 import { useCallback, useState } from "react";
-import apiService from "src/api/api-service";
-import { HttpMethod, UseApiResponse } from "src/api/api.types";
+import apiService from "src/services/api/api-service";
+import { UseApiResponse, HttpMethod } from "src/services/api/api.types";
 
 function useApi<T>(): UseApiResponse<T> {
   const [data, setData] = useState<T | null>(null);

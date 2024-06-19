@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HttpMethod } from "src/api/api.types";
-import useApi from "src/api/use-api";
 import { PrimaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
 import { apiRoutes } from "src/constant/api-routes";
 import { RoutePath } from "src/routes";
+import { HttpMethod } from "src/services/api/api.types";
+import useApi from "src/services/api/use-api";
 
 const RegistrationPage = () => {
   const [email, setEmail] = useState("");
@@ -31,7 +31,7 @@ const RegistrationPage = () => {
       return;
     }
 
-    execute(apiRoutes.createSignUpUcorl(), HttpMethod.POST, {
+    execute(apiRoutes.createSignUpUrl(), HttpMethod.POST, {
       email,
       password,
     });

@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HttpMethod } from "src/api/api.types";
-import useApi from "src/api/use-api";
 import { PrimaryButton, TertiaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
 import { apiRoutes } from "src/constant/api-routes";
-import { useUser } from "src/context/user.context";
-import { UserAction } from "src/context/user.context.type";
+import { LocalStorageKeys } from "src/constant/local-storage.constant";
 import { RoutePath } from "src/routes";
+import { HttpMethod } from "src/services/api/api.types";
+import useApi from "src/services/api/use-api";
+import { localStorageService } from "src/services/local-storage/local-storage";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [, userDispatch] = useUser();
 
   const { error, data, execute, isLoading } = useApi<{
     token: string;
@@ -24,13 +23,11 @@ const LoginPage = () => {
 
   useEffect(() => {
     const isTokenExist = data && data.token;
-    const isUserIdExist = data && data.id;
-    const shouldNavigateToTaskPage = isTokenExist && isUserIdExist;
-    if (shouldNavigateToTaskPage) {
-      userDispatch({ type: UserAction.LOGIN, payload: data.id });
+    if (isTokenExist) {
+      localStorageService.setItem(LocalStorageKeys.TOKEN, data.token);
       navigate(RoutePath.Tasks);
     }
-  }, [data, navigate, userDispatch]);
+  }, [data, navigate]);
 
   const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

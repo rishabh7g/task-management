@@ -1,23 +1,21 @@
-import { useEffect, useState, useCallback } from "react";
-import { HttpMethod } from "src/api/api.types";
-import useApi from "src/api/use-api";
+import { useCallback, useEffect, useState } from "react";
 import TaskForm from "src/components/task-form/TaskForm";
 import TaskList from "src/components/task-list/TaskList";
 import { apiRoutes } from "src/constant/api-routes";
-import { useUser } from "src/context/user.context";
+import { HttpMethod } from "src/services/api/api.types";
+import useApi from "src/services/api/use-api";
 import { Task } from "src/types/task.types";
 
 const TaskManagementPage = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [editingTask, setEditingTask] = useState<Task>();
 
-  const [userState] = useUser();
   const { status: addTaskStatus, execute: addTask } = useApi();
   const { data: fetchedTasks, execute: getTasks } = useApi<Task[]>();
 
   const fetchTasks = useCallback(async () => {
-    await getTasks(apiRoutes.createTaskAddUrl(userState.id), HttpMethod.GET);
-  }, [getTasks, userState.id]);
+    await getTasks(apiRoutes.createTaskAddUrl(), HttpMethod.GET);
+  }, [getTasks]);
 
   useEffect(() => {
     fetchTasks();
@@ -40,7 +38,7 @@ const TaskManagementPage = () => {
     const isTaskEmpty = !task;
     if (isTaskEmpty) return;
     const { category, description, status, title } = task;
-    addTask(apiRoutes.createTaskAddUrl(userState.id), HttpMethod.POST, {
+    addTask(apiRoutes.createTaskAddUrl(), HttpMethod.POST, {
       category,
       description,
       status,
