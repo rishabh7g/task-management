@@ -1,6 +1,6 @@
 const { add, get } = require("../data/user");
-const { createJSONToken, isValidPassword } = require("../util/auth");
-const { isValidEmail, isValidText } = require("../util/validation");
+const { createJSONToken, isValidPassword } = require("../util/auth.util");
+const { isValidEmail, isValidText } = require("../util/validation.util");
 
 const signIn = async (req, res) => {
   const email = req.body.email;

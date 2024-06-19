@@ -1,8 +1,8 @@
 const { hash } = require("bcryptjs");
 const { v4: generateId } = require("uuid");
 
-const { NotFoundError } = require("../util/errors");
-const { readData, writeData } = require("./util");
+const { NotFoundError } = require("../util/errors.util");
+const { readData, writeData } = require("../util/file.util");
 
 async function add(data) {
   const storedData = await readData();
