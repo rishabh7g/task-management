@@ -2,14 +2,12 @@ const { sign, verify } = require("jsonwebtoken");
 const { compare } = require("bcryptjs");
 const { NotAuthError } = require("./errors.util");
 
-const KEY = "abra-ka-dabra";
-
 function createJSONToken(email) {
-  return sign({ email }, KEY, { expiresIn: "1h" });
+  return sign({ email }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "1h" });
 }
 
 function validateJSONToken(token) {
-  return verify(token, KEY);
+  return verify(token, process.env.ACCESS_TOKEN_SECRET);
 }
 
 function isValidPassword(password, storedPassword) {
