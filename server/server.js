@@ -1,8 +1,8 @@
+require("dotenv").config();
 const bodyParser = require("body-parser");
 const express = require("express");
 
 const taskRoutes = require("./routes/tasks.routes");
-const authRoutes = require("./routes/auth.routes");
 const swaggerSetup = require("./swagger");
 
 const app = express();
@@ -15,9 +15,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(authRoutes);
 app.use(taskRoutes);
-require("dotenv").config();
 
 // Swagger setup
 swaggerSetup(app);
@@ -29,7 +27,7 @@ app.use((error, req, res) => {
   res.status(status).json({ error: message });
 });
 
-const PORT = process.env.PORT || 3090;
+const PORT = process.env.PORT || 8090;
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
   console.log(`Server is running on port ${PORT}`);

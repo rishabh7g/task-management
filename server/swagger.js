@@ -1,7 +1,9 @@
+require("dotenv").config();
 const swaggerJSDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
 const PORT = process.env.PORT || 8090;
+const AUTH_PORT = process.env.AUTH_PORT || 8091;
 
 // Basic Swagger definition
 const swaggerDefinition = {
@@ -54,8 +56,12 @@ const swaggerDefinition = {
   ],
   servers: [
     {
-      url: `http://localhost:${PORT}`, // URL of your local development server
-      description: "Local server",
+      url: `http://localhost:${PORT}`,
+      description: "Main server",
+    },
+    {
+      url: `http://localhost:${AUTH_PORT}`,
+      description: "Auth server",
     },
   ],
   tags: [
