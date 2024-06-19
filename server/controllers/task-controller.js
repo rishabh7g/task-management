@@ -1,5 +1,6 @@
 const { v4: uuidv4 } = require("uuid");
 let { users } = require("../db.json");
+const { writeData } = require("../util/file.util");
 
 const createTask = async (req, res) => {
   const { userId } = req.params;
@@ -15,6 +16,7 @@ const createTask = async (req, res) => {
   };
 
   user.tasks.push(task);
+  writeData({ users });
   res.status(201).json(task);
 };
 
@@ -61,6 +63,7 @@ const updateTask = async (req, res) => {
   }
 
   user.tasks[taskIndex] = { ...user.tasks[taskIndex], ...req.body };
+  writeData({ users });
   res.json(user.tasks[taskIndex]);
 };
 
@@ -79,6 +82,7 @@ const deleteTask = async (req, res) => {
   }
 
   user.tasks.splice(taskIndex, 1);
+  writeData({ users });
   res.status(204).send();
 };
 
