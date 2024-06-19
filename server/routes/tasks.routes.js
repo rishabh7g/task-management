@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const tasksController = require("../controllers/task.controller");
-const taskSchema = require("../validators/task-schema.js");
-const validateSchemaMiddleware = require("../middleware/validate.js");
-const authorizeAccessTokenMiddleware = require("../middleware/authorize.js");
+const taskSchema = require("../schemas/task.schema.js");
+const validateSchemaMiddleware = require("../middleware/validate.middleware.js");
+const authorizeAccessTokenMiddleware = require("../middleware/authorize.middleware.js");
 
 /**
  * @swagger

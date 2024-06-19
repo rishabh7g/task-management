@@ -31,7 +31,10 @@ const RegistrationPage = () => {
       return;
     }
 
-    execute(apiRoutes.createSignUpUrl(), HttpMethod.POST, { email, password });
+    execute(apiRoutes.createSignUpUcorl(), HttpMethod.POST, {
+      email,
+      password,
+    });
   };
 
   return (

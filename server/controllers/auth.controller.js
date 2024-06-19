@@ -1,5 +1,5 @@
 const { HttpStatusCode } = require("axios");
-const { add, get } = require("../data/user");
+const { add, get } = require("../data/user.data");
 const { createJSONToken, isValidPassword } = require("../util/auth.util");
 const { isValidEmail, isValidText } = require("../util/validation.util");
 const {
@@ -10,7 +10,7 @@ const {
   MESSAGE_USER_SIGNUP_FAILED,
   MESSAGE_USER_CREATED,
   MESSAGE_AUTH_FAILED,
-} = require("../constant/message");
+} = require("../constant/message.constant");
 
 const signIn = async (req, res) => {
   const email = req.body.email;

@@ -19,6 +19,33 @@ const swaggerDefinition = {
         bearerFormat: "JWT",
       },
     },
+    schemas: {
+      Task: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            description: "Task ID",
+          },
+          title: {
+            type: "string",
+            description: "Task title",
+          },
+          description: {
+            type: "string",
+            description: "Task description",
+          },
+          category: {
+            type: "string",
+            description: "Task category",
+          },
+          status: {
+            type: "string",
+            description: "Task status",
+          },
+        },
+      },
+    },
   },
   security: [
     {
