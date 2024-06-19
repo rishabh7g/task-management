@@ -1,6 +1,6 @@
 const { sign, verify } = require("jsonwebtoken");
 const { compare } = require("bcryptjs");
-const { NotAuthError } = require("./errors");
+const { NotAuthError } = require("./errors.util");
 
 const KEY = "abra-ka-dabra";
 
