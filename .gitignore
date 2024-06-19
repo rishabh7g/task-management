@@ -2,3 +2,4 @@ node_modules
 build
 /server/db.json
 DS_Store
+.env
