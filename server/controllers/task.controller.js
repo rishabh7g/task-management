@@ -1,13 +1,20 @@
 const { v4: uuidv4 } = require("uuid");
 let { users } = require("../db.json");
 const { writeData } = require("../util/file.util");
+const { HttpStatusCode } = require("axios");
+const {
+  MESSAGE_TASK_NOT_FOUND,
+  MESSAGE_USER_NOT_FOUND,
+} = require("../constant/message");
 
 const createTask = async (req, res) => {
   const { userId } = req.params;
   const user = users.find((u) => u.id === userId);
 
   if (!user) {
-    return res.status(404).json({ error: "User not found" });
+    return res
+      .status(HttpStatusCode.NotFound)
+      .json({ error: MESSAGE_USER_NOT_FOUND });
   }
 
   const task = {
@@ -17,7 +24,7 @@ const createTask = async (req, res) => {
 
   user.tasks.push(task);
   writeData({ users });
-  res.status(201).json(task);
+  res.status(HttpStatusCode.Created).json(task);
 };
 
 const getTasks = async (req, res) => {
@@ -25,7 +32,9 @@ const getTasks = async (req, res) => {
   const user = users.find((u) => u.id === userId);
 
   if (!user) {
-    return res.status(404).json({ error: "User not found" });
+    return res
+      .status(HttpStatusCode.NotFound)
+      .json({ error: MESSAGE_USER_NOT_FOUND });
   }
 
   res.json(user.tasks);
@@ -36,13 +45,17 @@ const getTask = async (req, res) => {
   const user = users.find((u) => u.id === userId);
 
   if (!user) {
-    return res.status(404).json({ error: "User not found" });
+    return res
+      .status(HttpStatusCode.NotFound)
+      .json({ error: MESSAGE_USER_NOT_FOUND });
   }
 
   const task = user.tasks.find((t) => t.id === taskId);
 
   if (!task) {
-    return res.status(404).json({ error: "Task not found" });
+    return res
+      .status(HttpStatusCode.NotFound)
+      .json({ error: MESSAGE_TASK_NOT_FOUND });
   }
 
   res.json(task);
@@ -53,13 +66,17 @@ const updateTask = async (req, res) => {
   const user = users.find((u) => u.id === userId);
 
   if (!user) {
-    return res.status(404).json({ error: "User not found" });
+    return res
+      .status(HttpStatusCode.NotFound)
+      .json({ error: MESSAGE_USER_NOT_FOUND });
   }
 
   const taskIndex = user.tasks.findIndex((t) => t.id === taskId);
 
   if (taskIndex === -1) {
-    return res.status(404).json({ error: "Task not found" });
+    return res
+      .status(HttpStatusCode.NotFound)
+      .json({ error: MESSAGE_TASK_NOT_FOUND });
   }
 
   user.tasks[taskIndex] = { ...user.tasks[taskIndex], ...req.body };
@@ -72,18 +89,22 @@ const deleteTask = async (req, res) => {
   const user = users.find((u) => u.id === userId);
 
   if (!user) {
-    return res.status(404).json({ error: "User not found" });
+    return res
+      .status(HttpStatusCode.NotFound)
+      .json({ error: MESSAGE_USER_NOT_FOUND });
   }
 
   const taskIndex = user.tasks.findIndex((t) => t.id === taskId);
 
   if (taskIndex === -1) {
-    return res.status(404).json({ error: "Task not found" });
+    return res
+      .status(HttpStatusCode.NotFound)
+      .json({ error: MESSAGE_TASK_NOT_FOUND });
   }
 
   user.tasks.splice(taskIndex, 1);
   writeData({ users });
-  res.status(204).send();
+  res.status(HttpStatusCode.NoContent).send();
 };
 
 module.exports = {
