@@ -44,7 +44,7 @@ module.exports = {
       template: path.resolve(__dirname, "..", "./src/index.html"),
     }),
     new Dotenv({
-      path: "./.env", // Path to .env file (this is the default)
+      path: path.resolve(__dirname, "..", "./.env"), // Path to .env file (this is the default)
       systemvars: true, // Load system environment variables as well
     }),
   ] /* define plugins */,

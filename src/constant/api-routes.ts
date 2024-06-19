@@ -1,5 +1,5 @@
 export const apiRoutes = {
-  createSignInUrl: () => "/sign-in",
-  createSignUpUrl: () => "/sign-up",
+  createSignInUrl: () => process.env.REACT_APP_AUTH_API_BASE_URL + "/sign-in",
+  createSignUpUrl: () => process.env.REACT_APP_AUTH_API_BASE_URL + "/sign-up",
   createTaskAddUrl: () => "/tasks",
 };
