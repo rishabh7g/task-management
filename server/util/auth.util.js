@@ -2,10 +2,10 @@ const { sign, verify } = require("jsonwebtoken");
 const { compare } = require("bcryptjs");
 const { NotAuthError } = require("./errors.util");
 
-function createJSONToken(user) {
-  return sign({ ...user }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "1h",
-  });
+function createJSONToken(user, secret, expiresIn) {
+  const config = expiresIn ? { expiresIn } : {};
+  const accessToken = sign({ ...user }, secret, config);
+  return accessToken;
 }
 
 function validateJSONToken(token) {

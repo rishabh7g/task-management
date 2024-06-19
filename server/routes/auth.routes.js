@@ -1,5 +1,10 @@
 const express = require("express");
-const { signIn, signUp } = require("../controllers/auth.controller");
+const {
+  signIn,
+  signUp,
+  generateNewToken,
+  logout,
+} = require("../controllers/auth.controller");
 
 const router = express.Router();
 
@@ -75,5 +80,62 @@ router.post("/sign-up", signUp);
  *         description: Validation error for incorrect email or password format.
  */
 router.post("/sign-in", signIn);
+
+/**
+ * @swagger
+ * /token:
+ *   post:
+ *     summary: Generate a new access token using a refresh token
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - refreshToken
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: New access token generated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accessToken:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden
+ */
+router.post("/token", generateNewToken);
+
+/**
+ * @swagger
+ * /logout:
+ *   delete:
+ *     summary: Logout and invalidate the refresh token
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - token
+ *             properties:
+ *               token:
+ *                 type: string
+ *     responses:
+ *       204:
+ *         description: Successfully logged out and refresh token invalidated
+ */
+router.delete("/logout", logout);
 
 module.exports = router;

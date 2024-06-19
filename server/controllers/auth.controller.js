@@ -2,6 +2,7 @@ const { HttpStatusCode } = require("axios");
 const { add, get } = require("../data/user.data");
 const { createJSONToken, isValidPassword } = require("../util/auth.util");
 const { isValidEmail, isValidText } = require("../util/validation.util");
+const { verify } = require("jsonwebtoken");
 const {
   MESSAGE_INVALID_CREDENTIALS,
   MESSAGE_INVALID_EMAIL_OR_PASSWORD,
@@ -11,6 +12,9 @@ const {
   MESSAGE_USER_CREATED,
   MESSAGE_AUTH_FAILED,
 } = require("../constant/message.constant");
+const { ACCESS_TOKEN_EXPIRES_IN } = require("../constant/time.constant");
+
+let refreshTokenList = [];
 
 const signIn = async (req, res) => {
   const email = req.body.email;
@@ -35,8 +39,15 @@ const signIn = async (req, res) => {
 
   const { id } = user;
 
-  const token = createJSONToken({ email: email, id: id });
-  res.json({ token });
+  const userPayload = { email, id };
+  const accessToken = _generateAccessToken(userPayload);
+  const refreshToken = createJSONToken(
+    userPayload,
+    process.env.REFRESH_ACCESS_TOKEN_SECRET,
+  );
+  refreshTokenList.push(refreshToken);
+
+  res.json({ accessToken, refreshToken });
 };
 
 const signUp = async (req, res, next) => {
@@ -75,4 +86,60 @@ const signUp = async (req, res, next) => {
   }
 };
 
-module.exports = { signIn, signUp };
+const generateNewToken = async (req, res) => {
+  const refreshToken = req.body.refreshToken;
+
+  if (!refreshToken) {
+    return res
+      .status(HttpStatusCode.Unauthorized)
+      .json({ message: MESSAGE_AUTH_FAILED });
+  }
+
+  const isRefreshTokenInvalid = !refreshTokenList.includes(refreshToken);
+
+  if (isRefreshTokenInvalid) {
+    return res
+      .status(HttpStatusCode.Forbidden)
+      .json({ message: MESSAGE_AUTH_FAILED });
+  }
+
+  try {
+    verify(
+      refreshToken,
+      process.env.REFRESH_ACCESS_TOKEN_SECRET,
+      (err, user) => {
+        if (err) {
+          return res
+            .status(HttpStatusCode.Forbidden)
+            .json({ message: MESSAGE_AUTH_FAILED });
+        }
+        const { id, email } = user;
+        const userPayload = { id, email };
+        const accessToken = _generateAccessToken(userPayload);
+        res.json({ accessToken });
+      },
+    );
+  } catch (error) {
+    return res
+      .status(HttpStatusCode.Unauthorized)
+      .json({ message: MESSAGE_AUTH_FAILED });
+  }
+};
+
+const logout = async (req, res) => {
+  refreshTokenList = refreshTokenList.filter(
+    (refreshToken) => refreshToken !== req.body.token,
+  );
+  return res.sendStatus(HttpStatusCode.NoContent);
+};
+
+const _generateAccessToken = (payload) => {
+  const accessToken = createJSONToken(
+    payload,
+    process.env.ACCESS_TOKEN_SECRET,
+    ACCESS_TOKEN_EXPIRES_IN,
+  );
+  return accessToken;
+};
+
+module.exports = { signIn, signUp, generateNewToken, logout };
