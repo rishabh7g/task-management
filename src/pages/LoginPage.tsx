@@ -40,7 +40,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+    <section className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
@@ -79,7 +79,7 @@ const LoginPage = () => {
 
       {isLoading && <div>Loading...</div>}
       {error && <div>Error: {error}</div>}
-    </div>
+    </section>
   );
 };
 

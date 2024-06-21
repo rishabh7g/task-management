@@ -10,13 +10,15 @@ const Routes = () => {
 
 const App = () => {
   return (
-    <Router>
-      <Suspense fallback={<div>Loading...</div>}>
-        <UserProvider>
-          <Routes />
-        </UserProvider>
-      </Suspense>
-    </Router>
+    <main>
+      <Router>
+        <Suspense fallback={<div>Loading...</div>}>
+          <UserProvider>
+            <Routes />
+          </UserProvider>
+        </Suspense>
+      </Router>
+    </main>
   );
 };
 
