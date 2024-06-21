@@ -11,6 +11,9 @@ const {
   MESSAGE_USER_SIGNUP_FAILED,
   MESSAGE_USER_CREATED,
   MESSAGE_AUTH_FAILED,
+  MESSAGE_REFRESH_TOKEN_NOT_FOUND,
+  MESSAGE_INVALID_REFRESH_TOKEN,
+  MESSAGE_ERROR_GENERATING_REFRESH_TOKEN,
 } = require("../constant/message.constant");
 const { ACCESS_TOKEN_EXPIRES_IN } = require("../constant/time.constant");
 
@@ -85,14 +88,13 @@ const signUp = async (req, res, next) => {
     next(error);
   }
 };
-
 const generateNewToken = async (req, res) => {
   const refreshToken = req.body.refreshToken;
 
   if (!refreshToken) {
     return res
       .status(HttpStatusCode.Unauthorized)
-      .json({ message: MESSAGE_AUTH_FAILED });
+      .json({ message: MESSAGE_REFRESH_TOKEN_NOT_FOUND });
   }
 
   const isRefreshTokenInvalid = !refreshTokenList.includes(refreshToken);
@@ -100,7 +102,7 @@ const generateNewToken = async (req, res) => {
   if (isRefreshTokenInvalid) {
     return res
       .status(HttpStatusCode.Forbidden)
-      .json({ message: MESSAGE_AUTH_FAILED });
+      .json({ message: MESSAGE_INVALID_REFRESH_TOKEN });
   }
 
   try {
@@ -111,7 +113,7 @@ const generateNewToken = async (req, res) => {
         if (err) {
           return res
             .status(HttpStatusCode.Forbidden)
-            .json({ message: MESSAGE_AUTH_FAILED });
+            .json({ message: MESSAGE_ERROR_VERIFYING_REFRESH_TOKEN });
         }
         const { id, email } = user;
         const userPayload = { id, email };
@@ -122,7 +124,7 @@ const generateNewToken = async (req, res) => {
   } catch (error) {
     return res
       .status(HttpStatusCode.Unauthorized)
-      .json({ message: MESSAGE_AUTH_FAILED });
+      .json({ message: MESSAGE_ERROR_GENERATING_REFRESH_TOKEN });
   }
 };
 
