@@ -1,4 +1,3 @@
-import { faCheckCircle } from "@fortawesome/free-regular-svg-icons";
 import {
   faCheck,
   faInfoCircle,
@@ -6,7 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
@@ -19,6 +18,19 @@ import useApi from "src/services/api/use-api";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+
+const EMAIL_VALIDATION_RULES: string[] = [
+  "4-50 characters, including @ and .",
+  "Must contain only letters, numbers, and special characters.",
+  "Must contain @ and .",
+];
+
+const PASSWORD_VALIDATION_RULES: string[] = [
+  "6 characters minimum",
+  "At least one letter and one number.",
+];
+
+const CONFIRM_PASSWORD_VALIDATION_RULES: string[] = [];
 
 const RegistrationPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -33,8 +45,8 @@ const RegistrationPage = () => {
   const [passwordFocus, setPasswordFocus] = useState(false);
 
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [validMatch, setValidMatch] = useState(false);
-  const [matchFocus, setMatchFocus] = useState(false);
+  const [validConfirmPassword, setValidConfirmPassword] = useState(false);
+  const [confirmPasswordFocus, setConfirmPasswordFocus] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -56,7 +68,7 @@ const RegistrationPage = () => {
     const isPasswordValid = PASSWORD_REGEX.test(password);
     setValidPassword(isPasswordValid);
     const match = password === confirmPassword;
-    setValidMatch(match);
+    setValidConfirmPassword(match);
   }, [confirmPassword, password]);
 
   useEffect(() => {
@@ -84,68 +96,52 @@ const RegistrationPage = () => {
   };
 
   const EmailLabel = (
-    <>
-      Email
-      <span
-        className={classNames({
-          hidden: !validEmail,
-        })}
-      >
-        <FontAwesomeIcon icon={faCheck} />
-      </span>
-      <span
-        className={classNames({
-          hidden: !email || validEmail,
-        })}
-      >
-        <FontAwesomeIcon icon={faTimes} />
-      </span>
-    </>
+    <FormLabel
+      label="Email"
+      isInputValid={!email || validEmail}
+      isInputInvalid={!validEmail}
+    />
   );
+
   const PasswordLabel = (
-    <>
-      Password
-      <span
-        className={classNames({
-          hidden: !validPassword,
-        })}
-      >
-        <FontAwesomeIcon icon={faCheck} />
-      </span>
-      <span
-        className={classNames({
-          hidden: !password || validPassword,
-        })}
-      >
-        <FontAwesomeIcon icon={faTimes} />
-      </span>
-    </>
+    <FormLabel
+      label="Password"
+      isInputValid={!password || validPassword}
+      isInputInvalid={!validPassword}
+    />
   );
 
   const ConfirmPasswordLabel = (
-    <>
-      Confirm Password
-      <span
-        className={classNames({
-          hidden: !validMatch,
-        })}
-      >
-        <FontAwesomeIcon icon={faCheck} />
-      </span>
-      <span
-        className={classNames({
-          hidden: !confirmPassword || validMatch,
-        })}
-      >
-        <FontAwesomeIcon icon={faTimes} />
-      </span>
-    </>
+    <FormLabel
+      label="Confirm Password"
+      isInputValid={!confirmPassword || validConfirmPassword}
+      isInputInvalid={!validConfirmPassword}
+    />
   );
+
+  const EmailInputHelperContent = (
+    <PointList title="Email requirments" points={EMAIL_VALIDATION_RULES} />
+  );
+
+  const PasswordInputHelperContent = (
+    <PointList
+      title="Password requirments"
+      points={PASSWORD_VALIDATION_RULES}
+    />
+  );
+
+  const ConfirmPasswordInputHelperContent = (
+    <PointList
+      title="Passwords must match"
+      points={CONFIRM_PASSWORD_VALIDATION_RULES}
+    />
+  );
+
   return (
     <section className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
         <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Create your account <FontAwesomeIcon icon={faCheckCircle} />
+          Create your account
         </h1>
         <p
           ref={errorRef}
@@ -159,7 +155,7 @@ const RegistrationPage = () => {
         </p>
 
         <Form onSubmit={handleRegister}>
-          <Input
+          <FormField
             id="email"
             label={EmailLabel}
             name="email"
@@ -169,76 +165,42 @@ const RegistrationPage = () => {
             htmlRef={emailRef}
             autocomplete="off"
             required
-            ariaInvalid={
-              validEmail ? AriaInvalidStatus.FALSE : AriaInvalidStatus.TRUE
-            }
-            ariaDescribedby="email-error"
+            isValid={validEmail}
             onFocus={() => setEmailFocus(true)}
             onBlur={() => setEmailFocus(false)}
+            isFocused={emailFocus}
+            InputHelperContent={EmailInputHelperContent}
           />
-          <p
-            id="email-error"
-            className={classNames({
-              visible: emailFocus && email && !validEmail,
-              hidden: !emailFocus || !email || validEmail,
-            })}
-          >
-            <FontAwesomeIcon icon={faInfoCircle} /> Email requirments <br />
-            - 4-50 characters, including @ and . <br />
-            - Must contain only letters, numbers, and special characters.
-            <br />
-            - Must contain @ and .<br />
-          </p>
-          <Input
+          <FormField
+            id="password"
             label={PasswordLabel}
             name="password"
-            id="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
+            isValid={validPassword}
             onFocus={() => setPasswordFocus(true)}
             onBlur={() => setPasswordFocus(false)}
-            ariaInvalid={
-              validPassword ? AriaInvalidStatus.FALSE : AriaInvalidStatus.TRUE
-            }
-            ariaDescribedby="password-error"
-            required
+            isFocused={passwordFocus}
+            InputHelperContent={PasswordInputHelperContent}
           />
-          <p
-            id="password-error"
-            className={classNames({
-              visible: passwordFocus && password && !validPassword,
-              hidden: !passwordFocus || !password || validPassword,
-            })}
-          >
-            <FontAwesomeIcon icon={faInfoCircle} /> Password requirments
-            <br />
-            - 6 characters minimum <br />- At least one letter and one number.
-          </p>
 
-          <Input
+          <FormField
+            id="confirm-password"
             label={ConfirmPasswordLabel}
-            name="confirm password"
+            name="confirmPassword"
             type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            onFocus={() => setMatchFocus(true)}
-            onBlur={() => setMatchFocus(false)}
-            ariaInvalid={
-              validMatch ? AriaInvalidStatus.FALSE : AriaInvalidStatus.TRUE
-            }
-            ariaDescribedby="confirm-password-error"
+            isValid={validConfirmPassword}
+            onFocus={() => setConfirmPasswordFocus(true)}
+            onBlur={() => setConfirmPasswordFocus(false)}
+            isFocused={confirmPasswordFocus}
+            InputHelperContent={ConfirmPasswordInputHelperContent}
           />
-          <p
-            id="confirm-password-error"
-            className={classNames({
-              visible: matchFocus && confirmPassword && !validMatch,
-              hidden: !matchFocus || !confirmPassword || validMatch,
-            })}
-          >
-            <FontAwesomeIcon icon={faInfoCircle} /> Passwords must match
-          </p>
+
           <PrimaryButton
             label="Register"
             type={ButtonType.Submit}
@@ -248,6 +210,136 @@ const RegistrationPage = () => {
         </Form>
       </div>
     </section>
+  );
+};
+
+interface FormLabelProps {
+  label: string;
+  isInputValid: boolean;
+  isInputInvalid: boolean;
+}
+
+const FormLabel = ({ label, isInputValid, isInputInvalid }: FormLabelProps) => {
+  return (
+    <>
+      {label}
+      <span
+        className={classNames({
+          hidden: isInputInvalid,
+        })}
+      >
+        <FontAwesomeIcon icon={faCheck} />
+      </span>
+      <span
+        className={classNames({
+          hidden: isInputValid,
+        })}
+      >
+        <FontAwesomeIcon icon={faTimes} />
+      </span>
+    </>
+  );
+};
+
+interface InputHelperProps {
+  isVisible: boolean;
+  isHidden: boolean;
+  content: ReactNode;
+  id: string;
+}
+
+const InputHelper = ({
+  isVisible,
+  isHidden,
+  content,
+  id,
+}: InputHelperProps) => {
+  return (
+    <div
+      id={id}
+      className={classNames({
+        visible: isVisible,
+        hidden: isHidden,
+      })}
+    >
+      {content}
+    </div>
+  );
+};
+
+interface FormFieldProps {
+  id: string;
+  label: ReactNode;
+  name: string;
+  type: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  htmlRef?: React.RefObject<HTMLInputElement>;
+  autocomplete?: string;
+  required?: boolean;
+  isValid: boolean;
+  onFocus: () => void;
+  onBlur: () => void;
+  isFocused: boolean;
+  InputHelperContent: ReactNode;
+}
+
+const FormField = ({
+  id,
+  label,
+  name,
+  type,
+  value,
+  onChange,
+  htmlRef,
+  autocomplete,
+  required = false,
+  isValid,
+  onFocus,
+  onBlur,
+  isFocused,
+  InputHelperContent,
+}: FormFieldProps) => {
+  return (
+    <>
+      <Input
+        id={id}
+        label={label}
+        name={name}
+        type={type}
+        value={value}
+        onChange={onChange}
+        htmlRef={htmlRef}
+        autocomplete={autocomplete}
+        required={required}
+        ariaInvalid={isValid ? AriaInvalidStatus.FALSE : AriaInvalidStatus.TRUE}
+        ariaDescribedby={`${id}-error`}
+        onFocus={onFocus}
+        onBlur={onBlur}
+      />
+      <InputHelper
+        isVisible={isFocused && !!value && !isValid}
+        isHidden={!isFocused || !value || isValid}
+        content={InputHelperContent}
+        id={`${id}-error`}
+      />
+    </>
+  );
+};
+
+interface PointListProps {
+  title: string;
+  points: string[];
+}
+
+const PointList = ({ title, points }: PointListProps) => {
+  return (
+    <ul>
+      <FontAwesomeIcon icon={faInfoCircle} /> {title}
+      {points.map((point) => (
+        <li key={point}>{point}</li>
+      ))}
+    </ul>
   );
 };
 
