@@ -1,3 +1,4 @@
+import { HttpStatusCode } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiRoutes } from "src/constant/api-routes";
@@ -48,6 +49,16 @@ export const useRegistrationPageManagement = () => {
     const match = password === confirmPassword;
     setIsPasswordMatching(match);
   }, [confirmPassword, password]);
+
+  useEffect(() => {
+    const isSignupFailed = status !== null && status !== HttpStatusCode.Created;
+    if (isSignupFailed) {
+      setErrorMessage("Failed to sign up");
+    }
+
+    const isErrorRefExist = !!errorRef.current;
+    if (isErrorRefExist) errorRef.current.focus();
+  }, [status]);
 
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
