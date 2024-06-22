@@ -171,10 +171,10 @@ const RegisterationPageFormField = ({
       isValid={isFieldValueValid}
       onFocus={() => setIsFieldFocussed(true)}
       onBlur={() => setIsFieldFocussed(false)}
-      isFocused={isFieldFocussed}
       InputHelperContent={InputHelperContent}
       placeholder={placeholder}
       htmlRef={formFieldRef}
+      isFocused={isFieldFocussed}
     />
   );
 };
