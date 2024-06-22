@@ -14,7 +14,9 @@ const App = () => {
       <Router>
         <Suspense fallback={<div>Loading...</div>}>
           <UserProvider>
-            <Routes />
+            <section className="flex min-h-screen items-center justify-center bg-sky-700">
+              <Routes />
+            </section>
           </UserProvider>
         </Suspense>
       </Router>

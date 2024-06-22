@@ -26,50 +26,46 @@ const LoginPage = () => {
   } = useLoginPageManagement();
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Sign in to your account
-        </h2>
-        <ErrorMessage errorMessage={errorMessage} htmlRef={errorRef} />
-        <Form onSubmit={handleSignIn} className="flex flex-col gap-5">
-          <Input
-            label={LOGIN_FORM_DATA.email.label}
-            name={LOGIN_FORM_DATA.email.name}
-            placeholder={LOGIN_FORM_DATA.email.placeholder}
-            type={InputType.EMAIL}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            htmlRef={emailRef}
-          />
-          <Input
-            label={LOGIN_FORM_DATA.password.label}
-            name={LOGIN_FORM_DATA.password.name}
-            placeholder={LOGIN_FORM_DATA.password.placeholder}
-            type={InputType.PASSWORD}
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <PrimaryButton
-            label={
-              isLoading ? LOADING_TEXT : LOGIN_FORM_DATA.buttonLabels.signIn
-            }
-            type={ButtonType.Submit}
-            disabled={isSignInButtonDisabled}
-            className="mt-4 w-full"
-          />
-        </Form>
-        <div className="mt-4 text-center">
-          <span className="text-gray-600">{DONT_HAVE_ACCOUNT_TEXT}</span>
-          <TertiaryButton
-            label={LOGIN_FORM_DATA.buttonLabels.signUp}
-            className="ml-2"
-            disabled={isLoading}
-            onClick={handleSignUp}
-          />
-        </div>
+    <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
+      <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Sign in to your account
+      </h2>
+      <ErrorMessage errorMessage={errorMessage} htmlRef={errorRef} />
+      <Form onSubmit={handleSignIn} className="flex flex-col gap-5">
+        <Input
+          label={LOGIN_FORM_DATA.email.label}
+          name={LOGIN_FORM_DATA.email.name}
+          placeholder={LOGIN_FORM_DATA.email.placeholder}
+          type={InputType.EMAIL}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          htmlRef={emailRef}
+        />
+        <Input
+          label={LOGIN_FORM_DATA.password.label}
+          name={LOGIN_FORM_DATA.password.name}
+          placeholder={LOGIN_FORM_DATA.password.placeholder}
+          type={InputType.PASSWORD}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <PrimaryButton
+          label={isLoading ? LOADING_TEXT : LOGIN_FORM_DATA.buttonLabels.signIn}
+          type={ButtonType.Submit}
+          disabled={isSignInButtonDisabled}
+          className="mt-4 w-full"
+        />
+      </Form>
+      <div className="mt-4 text-center">
+        <span className="text-gray-600">{DONT_HAVE_ACCOUNT_TEXT}</span>
+        <TertiaryButton
+          label={LOGIN_FORM_DATA.buttonLabels.signUp}
+          className="ml-2"
+          disabled={isLoading}
+          onClick={handleSignUp}
+        />
       </div>
-    </section>
+    </div>
   );
 };
 

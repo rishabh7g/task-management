@@ -60,7 +60,7 @@ const TaskForm = ({ initialTask = EMPTY_TASK, onSubmit }: TaskFormProps) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} className="flex flex-col gap-5">
       <Input
         label="Title"
         name={TaskFieldType.TITLE}

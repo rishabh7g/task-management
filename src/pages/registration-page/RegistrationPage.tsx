@@ -55,64 +55,62 @@ const RegistrationPage = () => {
   );
 
   return (
-    <section className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
-        <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Create your account
-        </h1>
-        <ErrorMessage errorMessage={errorMessage} htmlRef={errorRef} />
+    <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
+      <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Create your account
+      </h1>
+      <ErrorMessage errorMessage={errorMessage} htmlRef={errorRef} />
 
-        <Form onSubmit={handleRegister}>
-          <RegisterationPageFormField
-            label={LOGIN_FORM_DATA.email.label}
-            name={LOGIN_FORM_DATA.email.name}
-            placeholder={LOGIN_FORM_DATA.email.placeholder}
-            type={InputType.TEXT}
-            fieldValue={email}
-            onFieldValueChange={setEmail}
-            isFieldValueValid={isEmailValid}
-            InputHelperContent={EmailInputHelperContent}
-            shouldFocousOnLoad
-          />
-          <RegisterationPageFormField
-            label={LOGIN_FORM_DATA.password.label}
-            name={LOGIN_FORM_DATA.password.name}
-            placeholder={LOGIN_FORM_DATA.password.placeholder}
-            type={InputType.PASSWORD}
-            fieldValue={password}
-            onFieldValueChange={setPassword}
-            isFieldValueValid={isPasswordValid}
-            InputHelperContent={PasswordInputHelperContent}
-          />
-          <RegisterationPageFormField
-            label={LOGIN_FORM_DATA.confirmPassword.label}
-            name={LOGIN_FORM_DATA.confirmPassword.name}
-            placeholder={LOGIN_FORM_DATA.confirmPassword.placeholder}
-            type={InputType.PASSWORD}
-            fieldValue={confirmPassword}
-            onFieldValueChange={setConfirmPassword}
-            isFieldValueValid={isPasswordMatching}
-            InputHelperContent={ConfirmPasswordInputHelperContent}
-          />
+      <Form onSubmit={handleRegister}>
+        <RegisterationPageFormField
+          label={LOGIN_FORM_DATA.email.label}
+          name={LOGIN_FORM_DATA.email.name}
+          placeholder={LOGIN_FORM_DATA.email.placeholder}
+          type={InputType.TEXT}
+          fieldValue={email}
+          onFieldValueChange={setEmail}
+          isFieldValueValid={isEmailValid}
+          InputHelperContent={EmailInputHelperContent}
+          shouldFocousOnLoad
+        />
+        <RegisterationPageFormField
+          label={LOGIN_FORM_DATA.password.label}
+          name={LOGIN_FORM_DATA.password.name}
+          placeholder={LOGIN_FORM_DATA.password.placeholder}
+          type={InputType.PASSWORD}
+          fieldValue={password}
+          onFieldValueChange={setPassword}
+          isFieldValueValid={isPasswordValid}
+          InputHelperContent={PasswordInputHelperContent}
+        />
+        <RegisterationPageFormField
+          label={LOGIN_FORM_DATA.confirmPassword.label}
+          name={LOGIN_FORM_DATA.confirmPassword.name}
+          placeholder={LOGIN_FORM_DATA.confirmPassword.placeholder}
+          type={InputType.PASSWORD}
+          fieldValue={confirmPassword}
+          onFieldValueChange={setConfirmPassword}
+          isFieldValueValid={isPasswordMatching}
+          InputHelperContent={ConfirmPasswordInputHelperContent}
+        />
 
-          <PrimaryButton
-            label={LOGIN_FORM_DATA.buttonLabels.register}
-            type={ButtonType.Submit}
-            className="mt-4 w-full"
-            disabled={isSignupButtonDisabled}
-          />
-        </Form>
-        <div className="mt-4 text-center">
-          <span className="text-gray-600">{ALREADY_HAVE_AN_ACCOUNT_TEXT}</span>
-          <TertiaryButton
-            label={LOGIN_FORM_DATA.buttonLabels.signIn}
-            className="ml-2"
-            onClick={navigateToSignInPage}
-            disabled={isLoading}
-          />
-        </div>
+        <PrimaryButton
+          label={LOGIN_FORM_DATA.buttonLabels.register}
+          type={ButtonType.Submit}
+          className="mt-4 w-full"
+          disabled={isSignupButtonDisabled}
+        />
+      </Form>
+      <div className="mt-4 text-center">
+        <span className="text-gray-600">{ALREADY_HAVE_AN_ACCOUNT_TEXT}</span>
+        <TertiaryButton
+          label={LOGIN_FORM_DATA.buttonLabels.signIn}
+          className="ml-2"
+          onClick={navigateToSignInPage}
+          disabled={isLoading}
+        />
       </div>
-    </section>
+    </div>
   );
 };
 

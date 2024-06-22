@@ -12,17 +12,15 @@ const TaskPage = () => {
   } = useTaskPageManagement();
 
   return (
-    <section className="min-h-screen bg-gray-100 p-8">
-      <div className="mx-auto max-w-3xl rounded bg-white p-6 shadow">
-        <h2 className="mb-4 text-2xl font-bold">Task Management</h2>
-        <TaskForm initialTask={editingTask} onSubmit={handleTaskSubmit} />
-        <TaskList
-          tasks={tasks}
-          onEdit={setEditingTask}
-          onDelete={handleDeleteTask}
-        />
-      </div>
-    </section>
+    <div className="w-full max-w-md space-y-8 rounded bg-white p-10 shadow">
+      <h2 className="mb-4 text-2xl font-bold">Task Management</h2>
+      <TaskForm initialTask={editingTask} onSubmit={handleTaskSubmit} />
+      <TaskList
+        tasks={tasks}
+        onEdit={setEditingTask}
+        onDelete={handleDeleteTask}
+      />
+    </div>
   );
 };
 
