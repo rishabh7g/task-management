@@ -3,12 +3,15 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiRoutes } from "src/constant/api-routes";
 import { LocalStorageKeys } from "src/constant/local-storage.constant";
+import { useAuth } from "src/context/auth-context";
 import { RoutePath } from "src/routes";
 import { HttpMethod } from "src/services/api/api.types";
 import useApi from "src/services/api/use-api";
 import { localStorageService } from "src/services/local-storage/local-storage";
 
 export const useLoginPageManagement = () => {
+  const { loginUser } = useAuth();
+
   const emailRef = useRef<HTMLInputElement>(null);
   const errorRef = useRef<HTMLDivElement>(null);
 
@@ -31,12 +34,16 @@ export const useLoginPageManagement = () => {
     const isTokenExist = data && data.accessToken;
     if (isTokenExist) {
       localStorageService.setItem(LocalStorageKeys.TOKEN, data.accessToken);
+      loginUser(email, password, data.accessToken);
       navigate(RoutePath.Tasks);
     }
-  }, [data, navigate]);
+  }, [data, email, loginUser, navigate, password]);
 
   useEffect(() => {
     setErrorMessage(_getErrorMessage(status));
+
+    const isErrorRefExist = !!errorRef.current;
+    if (isErrorRefExist) errorRef.current.focus();
   }, [status]);
 
   useEffect(() => {
