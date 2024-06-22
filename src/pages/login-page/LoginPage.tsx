@@ -22,6 +22,7 @@ const LoginPage = () => {
     handleSignUp,
     isLoading,
     emailRef,
+    isSignInButtonDisabled,
   } = useLoginPageManagement();
 
   return (
@@ -54,7 +55,7 @@ const LoginPage = () => {
               isLoading ? LOADING_TEXT : LOGIN_FORM_DATA.buttonLabels.signIn
             }
             type={ButtonType.Submit}
-            disabled={isLoading}
+            disabled={isSignInButtonDisabled}
             className="mt-4 w-full"
           />
         </Form>

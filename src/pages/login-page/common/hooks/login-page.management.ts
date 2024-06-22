@@ -55,6 +55,8 @@ export const useLoginPageManagement = () => {
     navigate(RoutePath.Register);
   };
 
+  const isSignInButtonDisabled = isLoading || !email || !password;
+
   return {
     email,
     setEmail,
@@ -66,8 +68,10 @@ export const useLoginPageManagement = () => {
     handleSignUp,
     isLoading,
     emailRef,
+    isSignInButtonDisabled,
   };
 };
+
 const _getErrorMessage = (status: number | null) => {
   const isStatusNotExist = status === null;
   if (isStatusNotExist) return "";

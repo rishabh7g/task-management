@@ -66,6 +66,9 @@ export const useRegistrationPageManagement = () => {
     navigate(RoutePath.Home);
   };
 
+  const isSignupButtonDisabled =
+    isLoading || !isEmailValid || !isPasswordValid || !isPasswordMatching;
+
   return {
     email,
     setEmail,
@@ -81,5 +84,6 @@ export const useRegistrationPageManagement = () => {
     errorRef,
     navigateToSignInPage,
     isLoading,
+    isSignupButtonDisabled,
   };
 };
