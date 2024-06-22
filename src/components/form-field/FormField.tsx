@@ -17,6 +17,7 @@ interface FormFieldProps {
   onBlur: () => void;
   isFocused: boolean;
   InputHelperContent: ReactNode;
+  placeholder: string;
 }
 
 export const FormField = ({
@@ -34,6 +35,7 @@ export const FormField = ({
   onBlur,
   isFocused,
   InputHelperContent,
+  placeholder = "",
 }: FormFieldProps) => {
   return (
     <>
@@ -51,6 +53,7 @@ export const FormField = ({
         ariaDescribedby={`${id}-error`}
         onFocus={onFocus}
         onBlur={onBlur}
+        placeholder={placeholder}
       />
       <InputHelper
         isVisible={isFocused && !!value && !isValid}

@@ -23,6 +23,7 @@ interface InputProps {
   onFocus?: () => void;
   onBlur?: () => void;
   htmlRef?: React.RefObject<HTMLInputElement>;
+  placeholder?: string;
 }
 
 const Input = ({
@@ -40,6 +41,7 @@ const Input = ({
   onFocus = () => {},
   onBlur = () => {},
   htmlRef,
+  placeholder = "",
 }: InputProps) => {
   return (
     <div className={`mb-4 ${className}`}>
@@ -60,6 +62,7 @@ const Input = ({
         aria-describedby={ariaDescribedby}
         aria-invalid={ariaInvalid}
         ref={htmlRef}
+        placeholder={placeholder}
       />
     </div>
   );

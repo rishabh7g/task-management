@@ -26,7 +26,7 @@ const LoginPage = () => {
 
   return (
     <section className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md space-y-8 rounded-xl p-10 shadow-lg">
+      <div className="w-full max-w-md bg-white space-y-8 rounded-xl p-10 shadow-lg">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
         </h2>
@@ -35,6 +35,7 @@ const LoginPage = () => {
           <Input
             label={LOGIN_FORM_DATA.email.label}
             name={LOGIN_FORM_DATA.email.name}
+            placeholder={LOGIN_FORM_DATA.email.placeholder}
             type={InputType.EMAIL}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -43,6 +44,7 @@ const LoginPage = () => {
           <Input
             label={LOGIN_FORM_DATA.password.label}
             name={LOGIN_FORM_DATA.password.name}
+            placeholder={LOGIN_FORM_DATA.password.placeholder}
             type={InputType.PASSWORD}
             value={password}
             onChange={(e) => setPassword(e.target.value)}

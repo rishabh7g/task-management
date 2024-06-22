@@ -61,6 +61,11 @@ export const useRegistrationPageManagement = () => {
       password,
     });
   };
+
+  const navigateToSignInPage = () => {
+    navigate(RoutePath.Home);
+  };
+
   return {
     email,
     setEmail,
@@ -74,5 +79,6 @@ export const useRegistrationPageManagement = () => {
     isPasswordMatching,
     errorMessage,
     errorRef,
+    navigateToSignInPage,
   };
 };

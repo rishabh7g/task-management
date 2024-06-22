@@ -1,5 +1,5 @@
 import { ReactNode, useState } from "react";
-import { PrimaryButton } from "src/components/button/Button";
+import { PrimaryButton, TertiaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import { ErrorMessage } from "src/components/error-message/ErrorMessage";
 import { FormField } from "src/components/form-field/FormField";
@@ -12,6 +12,8 @@ import { FormLabel } from "src/pages/registration-page/common/components/FormLab
 import { InfoPointList } from "src/pages/registration-page/common/components/InfoPointList";
 import { useRegistrationPageManagement } from "src/pages/registration-page/common/hooks/registration-page.management";
 import { InputType } from "src/types/form.types";
+
+const ALREADY_HAVE_AN_ACCOUNT_TEXT = "Already have an account?";
 
 const RegistrationPage = () => {
   const {
@@ -27,6 +29,7 @@ const RegistrationPage = () => {
     isPasswordMatching,
     errorMessage,
     errorRef,
+    navigateToSignInPage,
   } = useRegistrationPageManagement();
 
   const EmailInputHelperContent = (
@@ -61,6 +64,7 @@ const RegistrationPage = () => {
           <RegisterationPageFormField
             label={LOGIN_FORM_DATA.email.label}
             name={LOGIN_FORM_DATA.email.name}
+            placeholder={LOGIN_FORM_DATA.email.placeholder}
             type={InputType.TEXT}
             fieldValue={email}
             onFieldValueChange={setEmail}
@@ -70,6 +74,7 @@ const RegistrationPage = () => {
           <RegisterationPageFormField
             label={LOGIN_FORM_DATA.password.label}
             name={LOGIN_FORM_DATA.password.name}
+            placeholder={LOGIN_FORM_DATA.password.placeholder}
             type={InputType.PASSWORD}
             fieldValue={password}
             onFieldValueChange={setPassword}
@@ -79,6 +84,7 @@ const RegistrationPage = () => {
           <RegisterationPageFormField
             label={LOGIN_FORM_DATA.confirmPassword.label}
             name={LOGIN_FORM_DATA.confirmPassword.name}
+            placeholder={LOGIN_FORM_DATA.confirmPassword.placeholder}
             type={InputType.PASSWORD}
             fieldValue={confirmPassword}
             onFieldValueChange={setConfirmPassword}
@@ -93,6 +99,14 @@ const RegistrationPage = () => {
             onClick={() => {}}
           />
         </Form>
+        <div className="mt-4 text-center">
+          <span className="text-gray-600">{ALREADY_HAVE_AN_ACCOUNT_TEXT}</span>
+          <TertiaryButton
+            label={LOGIN_FORM_DATA.buttonLabels.signIn}
+            className="ml-2"
+            onClick={navigateToSignInPage}
+          />
+        </div>
       </div>
     </section>
   );
@@ -107,6 +121,7 @@ interface RegisterFormFieldProps {
   type: string;
   label: string;
   InputHelperContent: ReactNode;
+  placeholder: string;
 }
 
 const RegisterationPageFormField = ({
@@ -118,6 +133,7 @@ const RegisterationPageFormField = ({
   label,
   InputHelperContent,
   id = name,
+  placeholder = "",
 }: RegisterFormFieldProps) => {
   const [isFieldFocussed, setIsFieldFocussed] = useState(false);
 
@@ -143,6 +159,7 @@ const RegisterationPageFormField = ({
       onBlur={() => setIsFieldFocussed(false)}
       isFocused={isFieldFocussed}
       InputHelperContent={InputHelperContent}
+      placeholder={placeholder}
     />
   );
 };
