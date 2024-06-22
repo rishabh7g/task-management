@@ -7,10 +7,12 @@ import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
 import { apiRoutes } from "src/constant/api-routes";
 import { LocalStorageKeys } from "src/constant/local-storage.constant";
+import { FORM_DATA } from "src/constant/login-form.constant";
 import { RoutePath } from "src/routes";
 import { HttpMethod } from "src/services/api/api.types";
 import useApi from "src/services/api/use-api";
 import { localStorageService } from "src/services/local-storage/local-storage";
+import { InputType } from "src/types/form.types";
 
 const LoginPage = () => {
   const emailRef = useRef<HTMLInputElement>(null);
@@ -61,22 +63,22 @@ const LoginPage = () => {
         <ErrorMessage errorMessage={error} htmlRef={errorRef} />
         <Form onSubmit={handleSignIn}>
           <Input
-            label="Email"
-            name="email"
-            type="text"
+            label={FORM_DATA.email.label}
+            name={FORM_DATA.email.name}
+            type={InputType.EMAIL}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             htmlRef={emailRef}
           />
           <Input
-            label="Password"
-            name="password"
-            type="password"
+            label={FORM_DATA.password.label}
+            name={FORM_DATA.password.name}
+            type={InputType.PASSWORD}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <PrimaryButton
-            label="Sign In"
+            label={FORM_DATA.buttonLabels.signIn}
             type={ButtonType.Submit}
             className="mt-4 w-full"
             onClick={() => {}}
@@ -85,7 +87,7 @@ const LoginPage = () => {
         <div className="mt-4 text-center">
           <span className="text-gray-600">{`Don't have an account?`}</span>
           <TertiaryButton
-            label="Sign Up"
+            label={FORM_DATA.buttonLabels.signUp}
             className="ml-2"
             onClick={handleSignUp}
           />

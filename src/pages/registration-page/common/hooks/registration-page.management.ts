@@ -1,10 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiRoutes } from "src/constant/api-routes";
-import {
-  EMAIL_REGEX,
-  PASSWORD_REGEX,
-} from "src/pages/registration-page/common/constants/registration-page.constant";
+import { EMAIL_REGEX, PASSWORD_REGEX } from "src/constant/login-form.constant";
+
 import { RoutePath } from "src/routes";
 import { HttpMethod } from "src/services/api/api.types";
 import useApi from "src/services/api/use-api";

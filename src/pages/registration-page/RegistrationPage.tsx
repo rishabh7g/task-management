@@ -4,13 +4,11 @@ import { ButtonType } from "src/components/button/common/types/Button.types";
 import { ErrorMessage } from "src/components/error-message/ErrorMessage";
 import { FormField } from "src/components/form-field/FormField";
 import Form from "src/components/form/Form";
+import { FORM_DATA, VALIDATION_DATA } from "src/constant/login-form.constant";
 import { FormLabel } from "src/pages/registration-page/common/components/FormLabel";
-import {
-  ConfirmPasswordInputHelperContent,
-  EmailInputHelperContent,
-  PasswordInputHelperContent,
-} from "src/pages/registration-page/common/constants/registration-page.constant";
+import { InfoPointList } from "src/pages/registration-page/common/components/InfoPointList";
 import { useRegistrationPageManagement } from "src/pages/registration-page/common/hooks/registration-page.management";
+import { InputType } from "src/types/form.types";
 
 const RegistrationPage = () => {
   const {
@@ -28,6 +26,26 @@ const RegistrationPage = () => {
     errorRef,
   } = useRegistrationPageManagement();
 
+  const EmailInputHelperContent = (
+    <InfoPointList
+      title={VALIDATION_DATA.email.title}
+      points={VALIDATION_DATA.email.rules}
+    />
+  );
+  const PasswordInputHelperContent = (
+    <InfoPointList
+      title={VALIDATION_DATA.password.title}
+      points={VALIDATION_DATA.password.rules}
+    />
+  );
+
+  const ConfirmPasswordInputHelperContent = (
+    <InfoPointList
+      title={VALIDATION_DATA.confirmPassword.title}
+      points={VALIDATION_DATA.confirmPassword.rules}
+    />
+  );
+
   return (
     <section className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
@@ -38,27 +56,27 @@ const RegistrationPage = () => {
 
         <Form onSubmit={handleRegister}>
           <RegisterationPageFormField
-            label="Email"
-            name="email"
-            type="text"
+            label={FORM_DATA.email.label}
+            name={FORM_DATA.email.name}
+            type={InputType.TEXT}
             fieldValue={email}
             onFieldValueChange={setEmail}
             isFieldValueValid={isEmailValid}
             InputHelperContent={EmailInputHelperContent}
           />
           <RegisterationPageFormField
-            label="Password"
-            name="password"
-            type="password"
+            label={FORM_DATA.password.label}
+            name={FORM_DATA.password.name}
+            type={InputType.PASSWORD}
             fieldValue={password}
             onFieldValueChange={setPassword}
             isFieldValueValid={isPasswordValid}
             InputHelperContent={PasswordInputHelperContent}
           />
           <RegisterationPageFormField
-            label="Confirm password"
-            name="confirmPassword"
-            type="password"
+            label={FORM_DATA.confirmPassword.label}
+            name={FORM_DATA.confirmPassword.name}
+            type={InputType.PASSWORD}
             fieldValue={confirmPassword}
             onFieldValueChange={setConfirmPassword}
             isFieldValueValid={isPasswordMatching}
@@ -66,7 +84,7 @@ const RegistrationPage = () => {
           />
 
           <PrimaryButton
-            label="Register"
+            label={FORM_DATA.buttonLabels.register}
             type={ButtonType.Submit}
             className="mt-4 w-full"
             onClick={() => {}}
