@@ -5,6 +5,7 @@ const express = require("express");
 
 const authRoutes = require("./routes/auth.routes");
 const swaggerSetup = require("./swagger");
+const delayMiddleware = require("./middleware/delay.middleware");
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(delayMiddleware);
 app.use(authRoutes);
 
 // Swagger setup

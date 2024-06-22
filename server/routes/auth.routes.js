@@ -136,6 +136,6 @@ router.post("/token", generateNewToken);
  *       204:
  *         description: Successfully logged out and refresh token invalidated
  */
-router.delete("/logout", logout);
+router.delete("/sign-out", logout);
 
 module.exports = router;

@@ -4,6 +4,7 @@ const express = require("express");
 
 const taskRoutes = require("./routes/tasks.routes");
 const swaggerSetup = require("./swagger");
+const delayMiddleware = require("./middleware/delay.middleware");
 
 const app = express();
 
@@ -14,7 +15,7 @@ app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
   next();
 });
-
+app.use(delayMiddleware);
 app.use(taskRoutes);
 
 // Swagger setup
