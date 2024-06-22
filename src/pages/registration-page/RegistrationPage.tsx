@@ -4,7 +4,10 @@ import { ButtonType } from "src/components/button/common/types/Button.types";
 import { ErrorMessage } from "src/components/error-message/ErrorMessage";
 import { FormField } from "src/components/form-field/FormField";
 import Form from "src/components/form/Form";
-import { FORM_DATA, VALIDATION_DATA } from "src/constant/login-form.constant";
+import {
+  LOGIN_FORM_DATA,
+  VALIDATION_DATA,
+} from "src/constant/login-form.constant";
 import { FormLabel } from "src/pages/registration-page/common/components/FormLabel";
 import { InfoPointList } from "src/pages/registration-page/common/components/InfoPointList";
 import { useRegistrationPageManagement } from "src/pages/registration-page/common/hooks/registration-page.management";
@@ -56,8 +59,8 @@ const RegistrationPage = () => {
 
         <Form onSubmit={handleRegister}>
           <RegisterationPageFormField
-            label={FORM_DATA.email.label}
-            name={FORM_DATA.email.name}
+            label={LOGIN_FORM_DATA.email.label}
+            name={LOGIN_FORM_DATA.email.name}
             type={InputType.TEXT}
             fieldValue={email}
             onFieldValueChange={setEmail}
@@ -65,8 +68,8 @@ const RegistrationPage = () => {
             InputHelperContent={EmailInputHelperContent}
           />
           <RegisterationPageFormField
-            label={FORM_DATA.password.label}
-            name={FORM_DATA.password.name}
+            label={LOGIN_FORM_DATA.password.label}
+            name={LOGIN_FORM_DATA.password.name}
             type={InputType.PASSWORD}
             fieldValue={password}
             onFieldValueChange={setPassword}
@@ -74,8 +77,8 @@ const RegistrationPage = () => {
             InputHelperContent={PasswordInputHelperContent}
           />
           <RegisterationPageFormField
-            label={FORM_DATA.confirmPassword.label}
-            name={FORM_DATA.confirmPassword.name}
+            label={LOGIN_FORM_DATA.confirmPassword.label}
+            name={LOGIN_FORM_DATA.confirmPassword.name}
             type={InputType.PASSWORD}
             fieldValue={confirmPassword}
             onFieldValueChange={setConfirmPassword}
@@ -84,7 +87,7 @@ const RegistrationPage = () => {
           />
 
           <PrimaryButton
-            label={FORM_DATA.buttonLabels.register}
+            label={LOGIN_FORM_DATA.buttonLabels.register}
             type={ButtonType.Submit}
             className="mt-4 w-full"
             onClick={() => {}}

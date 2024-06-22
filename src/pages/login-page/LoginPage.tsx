@@ -1,101 +1,69 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { PrimaryButton, TertiaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import { ErrorMessage } from "src/components/error-message/ErrorMessage";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
-import { apiRoutes } from "src/constant/api-routes";
-import { LocalStorageKeys } from "src/constant/local-storage.constant";
-import { FORM_DATA } from "src/constant/login-form.constant";
-import { RoutePath } from "src/routes";
-import { HttpMethod } from "src/services/api/api.types";
-import useApi from "src/services/api/use-api";
-import { localStorageService } from "src/services/local-storage/local-storage";
+import { LOGIN_FORM_DATA } from "src/constant/login-form.constant";
+import { useLoginPageManagement } from "src/pages/login-page/common/hooks/login-page.management";
 import { InputType } from "src/types/form.types";
 
+const DONT_HAVE_ACCOUNT_TEXT = "Don't have an account?";
+const LOADING_TEXT = "Loading...";
+
 const LoginPage = () => {
-  const emailRef = useRef<HTMLInputElement>(null);
-  const errorRef = useRef<HTMLDivElement>(null);
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const navigate = useNavigate();
-
-  const { error, data, execute, isLoading } = useApi<{
-    accessToken: string;
-  }>();
-
-  useEffect(() => {
-    const isEmailFieldExist = !!emailRef.current;
-    if (isEmailFieldExist) emailRef.current.focus();
-  }, []);
-
-  useEffect(() => {
-    const isTokenExist = data && data.accessToken;
-    if (isTokenExist) {
-      localStorageService.setItem(LocalStorageKeys.TOKEN, data.accessToken);
-      navigate(RoutePath.Tasks);
-    }
-  }, [data, navigate]);
-
-  const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Handle sign-in logic here
-    execute(apiRoutes.createSignInUrl(), HttpMethod.POST, {
-      email,
-      password,
-    });
-  };
-
-  const handleSignUp = () => {
-    // Redirect to registration page
-    navigate(RoutePath.Register);
-  };
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    error,
+    errorRef,
+    handleSignIn,
+    handleSignUp,
+    isLoading,
+    emailRef,
+  } = useLoginPageManagement();
 
   return (
     <section className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
+      <div className="w-full max-w-md space-y-8 rounded-xl p-10 shadow-lg">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
         </h2>
         <ErrorMessage errorMessage={error} htmlRef={errorRef} />
         <Form onSubmit={handleSignIn}>
           <Input
-            label={FORM_DATA.email.label}
-            name={FORM_DATA.email.name}
+            label={LOGIN_FORM_DATA.email.label}
+            name={LOGIN_FORM_DATA.email.name}
             type={InputType.EMAIL}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             htmlRef={emailRef}
           />
           <Input
-            label={FORM_DATA.password.label}
-            name={FORM_DATA.password.name}
+            label={LOGIN_FORM_DATA.password.label}
+            name={LOGIN_FORM_DATA.password.name}
             type={InputType.PASSWORD}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <PrimaryButton
-            label={FORM_DATA.buttonLabels.signIn}
+            label={
+              isLoading ? LOADING_TEXT : LOGIN_FORM_DATA.buttonLabels.signIn
+            }
             type={ButtonType.Submit}
             className="mt-4 w-full"
-            onClick={() => {}}
           />
         </Form>
         <div className="mt-4 text-center">
-          <span className="text-gray-600">{`Don't have an account?`}</span>
+          <span className="text-gray-600">{DONT_HAVE_ACCOUNT_TEXT}</span>
           <TertiaryButton
-            label={FORM_DATA.buttonLabels.signUp}
+            label={LOGIN_FORM_DATA.buttonLabels.signUp}
             className="ml-2"
             onClick={handleSignUp}
           />
         </div>
       </div>
-
-      {isLoading && <div>Loading...</div>}
-      {error && <div>Error: {error}</div>}
     </section>
   );
 };

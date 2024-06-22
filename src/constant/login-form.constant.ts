@@ -1,4 +1,4 @@
-export const FORM_DATA = {
+export const LOGIN_FORM_DATA = {
   email: {
     label: "Email",
     name: "email",
