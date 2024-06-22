@@ -1,18 +1,10 @@
-import {
-  BASE_STYLES,
-  VARIANT_STYLES,
-} from "src/components/button/common/constant/Button.constant";
-import {
-  ButtonType,
-  ButtonVariant,
-} from "src/components/button/common/types/Button.types";
+import { ButtonType } from "src/components/button/common/types/Button.types";
 
 interface ButtonProps {
   label: string;
-  onClick: () => void;
+  onClick?: () => void;
   type?: ButtonType;
   className?: string;
-  variant?: ButtonVariant;
 }
 
 const Button = ({
@@ -20,12 +12,13 @@ const Button = ({
   onClick,
   type = ButtonType.Button,
   className = "",
-  variant = ButtonVariant.Primary,
 }: ButtonProps) => {
-  const combinedStyles = `${BASE_STYLES} ${VARIANT_STYLES[variant]} ${className}`;
-
   return (
-    <button type={type} onClick={onClick} className={combinedStyles}>
+    <button
+      type={type}
+      onClick={onClick}
+      className={`px-4 py-2 rounded text-white ${className}`}
+    >
       {label}
     </button>
   );
@@ -42,8 +35,7 @@ export const PrimaryButton = ({
       label={label}
       onClick={onClick}
       type={type}
-      className={className}
-      variant={ButtonVariant.Primary}
+      className={`bg-blue-500 hover:bg-blue-600 ${className}`}
     />
   );
 };
@@ -59,8 +51,7 @@ export const SecondaryButton = ({
       label={label}
       onClick={onClick}
       type={type}
-      className={className}
-      variant={ButtonVariant.Secondary}
+      className={`bg-white border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white ${className}`}
     />
   );
 };
@@ -76,8 +67,7 @@ export const TertiaryButton = ({
       label={label}
       onClick={onClick}
       type={type}
-      className={className}
-      variant={ButtonVariant.Tertiary}
+      className={`px-0 py-1 text-blue-500 hover:underline hover:underline-offset-4 ${className}`}
     />
   );
 };
