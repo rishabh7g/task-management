@@ -5,9 +5,7 @@ const LoginPage = lazy(() => import("src/pages/login-page/LoginPage"));
 const RegistrationPage = lazy(
   () => import("src/pages/registration-page/RegistrationPage"),
 );
-const TaskManagementPage = lazy(
-  () => import("src/pages/task-management-page/TaskManagementPage"),
-);
+const TaskManagementPage = lazy(() => import("src/pages/task-page/TaskPage"));
 
 export enum RoutePath {
   Home = "/",
