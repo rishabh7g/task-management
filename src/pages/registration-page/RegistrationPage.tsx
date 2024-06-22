@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { PrimaryButton, TertiaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 import { ErrorMessage } from "src/components/error-message/ErrorMessage";
@@ -70,6 +70,7 @@ const RegistrationPage = () => {
             onFieldValueChange={setEmail}
             isFieldValueValid={isEmailValid}
             InputHelperContent={EmailInputHelperContent}
+            shouldFocousOnLoad
           />
           <RegisterationPageFormField
             label={LOGIN_FORM_DATA.password.label}
@@ -122,6 +123,7 @@ interface RegisterFormFieldProps {
   label: string;
   InputHelperContent: ReactNode;
   placeholder: string;
+  shouldFocousOnLoad?: boolean;
 }
 
 const RegisterationPageFormField = ({
@@ -134,8 +136,17 @@ const RegisterationPageFormField = ({
   InputHelperContent,
   id = name,
   placeholder = "",
+  shouldFocousOnLoad = false,
 }: RegisterFormFieldProps) => {
+  const formFieldRef = useRef<HTMLInputElement>(null);
   const [isFieldFocussed, setIsFieldFocussed] = useState(false);
+
+  useEffect(() => {
+    const isFormFieldRefAvailable = !!formFieldRef.current;
+    if (isFormFieldRefAvailable && shouldFocousOnLoad) {
+      formFieldRef.current.focus();
+    }
+  }, [shouldFocousOnLoad]);
 
   const ConfirmPasswordLabel = (
     <FormLabel
@@ -160,6 +171,7 @@ const RegisterationPageFormField = ({
       isFocused={isFieldFocussed}
       InputHelperContent={InputHelperContent}
       placeholder={placeholder}
+      htmlRef={formFieldRef}
     />
   );
 };
