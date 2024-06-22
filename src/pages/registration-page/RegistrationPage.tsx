@@ -1,7 +1,7 @@
-import classNames from "classnames";
 import { ReactNode, useState } from "react";
 import { PrimaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
+import { ErrorMessage } from "src/components/error-message/ErrorMessage";
 import { FormField } from "src/components/form-field/FormField";
 import Form from "src/components/form/Form";
 import { FormLabel } from "src/pages/registration-page/common/components/FormLabel";
@@ -34,16 +34,7 @@ const RegistrationPage = () => {
         <h1 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Create your account
         </h1>
-        <p
-          ref={errorRef}
-          className={classNames({
-            "text-red-600": !!errorMessage,
-            hidden: !errorMessage,
-          })}
-          aria-live="assertive"
-        >
-          {errorMessage}
-        </p>
+        <ErrorMessage errorMessage={errorMessage} htmlRef={errorRef} />
 
         <Form onSubmit={handleRegister}>
           <RegisterationPageFormField

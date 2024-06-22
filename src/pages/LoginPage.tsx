@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PrimaryButton, TertiaryButton } from "src/components/button/Button";
 import { ButtonType } from "src/components/button/common/types/Button.types";
+import { ErrorMessage } from "src/components/error-message/ErrorMessage";
 import Form from "src/components/form/Form";
 import Input from "src/components/input/Input";
 import { apiRoutes } from "src/constant/api-routes";
@@ -12,13 +13,22 @@ import useApi from "src/services/api/use-api";
 import { localStorageService } from "src/services/local-storage/local-storage";
 
 const LoginPage = () => {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const errorRef = useRef<HTMLDivElement>(null);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const { error, data, execute, isLoading } = useApi<{
     accessToken: string;
   }>();
+
+  useEffect(() => {
+    const isEmailFieldExist = !!emailRef.current;
+    if (isEmailFieldExist) emailRef.current.focus();
+  }, []);
 
   useEffect(() => {
     const isTokenExist = data && data.accessToken;
@@ -31,7 +41,10 @@ const LoginPage = () => {
   const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Handle sign-in logic here
-    execute(apiRoutes.createSignInUrl(), HttpMethod.POST, { email, password });
+    execute(apiRoutes.createSignInUrl(), HttpMethod.POST, {
+      email,
+      password,
+    });
   };
 
   const handleSignUp = () => {
@@ -45,6 +58,7 @@ const LoginPage = () => {
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
         </h2>
+        <ErrorMessage errorMessage={error} htmlRef={errorRef} />
         <Form onSubmit={handleSignIn}>
           <Input
             label="Email"
@@ -52,6 +66,7 @@ const LoginPage = () => {
             type="text"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            htmlRef={emailRef}
           />
           <Input
             label="Password"
