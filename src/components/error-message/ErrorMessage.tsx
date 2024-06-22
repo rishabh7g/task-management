@@ -11,8 +11,8 @@ export const ErrorMessage = ({
 }: ErrorMessageProps) => (
   <p
     ref={htmlRef}
-    className={classNames({
-      "text-red-600": !!errorMessage,
+    className={classNames("px-4 p-2 bg-red-200 rounded", {
+      "text-red-700": !!errorMessage,
       hidden: !errorMessage,
     })}
     aria-live="assertive"
