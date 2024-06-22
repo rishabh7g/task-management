@@ -21,7 +21,7 @@ export const useRegistrationPageManagement = () => {
   const errorRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
-  const { status, execute } = useApi();
+  const { status, execute, isLoading } = useApi();
 
   useEffect(() => {
     setErrorMessage("");
@@ -80,5 +80,6 @@ export const useRegistrationPageManagement = () => {
     errorMessage,
     errorRef,
     navigateToSignInPage,
+    isLoading,
   };
 };

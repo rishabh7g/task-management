@@ -35,7 +35,11 @@ export const VALIDATION_DATA = {
   },
   password: {
     title: "Password requirments",
-    rules: ["6 characters minimum", "At least one letter and one number."],
+    rules: [
+      "6 characters minimum",
+      "At least one letter and one number.",
+      "At least one special character.",
+    ],
   },
   confirmPassword: {
     title: "Passwords must match",
@@ -44,4 +48,5 @@ export const VALIDATION_DATA = {
 };
 
 export const EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-export const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+export const PASSWORD_REGEX =
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&.])[A-Za-z\d@$!%*?&.]{6,}$/;

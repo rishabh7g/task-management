@@ -54,6 +54,7 @@ const LoginPage = () => {
               isLoading ? LOADING_TEXT : LOGIN_FORM_DATA.buttonLabels.signIn
             }
             type={ButtonType.Submit}
+            disabled={isLoading}
             className="mt-4 w-full"
           />
         </Form>
@@ -62,6 +63,7 @@ const LoginPage = () => {
           <TertiaryButton
             label={LOGIN_FORM_DATA.buttonLabels.signUp}
             className="ml-2"
+            disabled={isLoading}
             onClick={handleSignUp}
           />
         </div>

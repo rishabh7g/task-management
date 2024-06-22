@@ -30,6 +30,7 @@ const RegistrationPage = () => {
     errorMessage,
     errorRef,
     navigateToSignInPage,
+    isLoading,
   } = useRegistrationPageManagement();
 
   const EmailInputHelperContent = (
@@ -97,7 +98,7 @@ const RegistrationPage = () => {
             label={LOGIN_FORM_DATA.buttonLabels.register}
             type={ButtonType.Submit}
             className="mt-4 w-full"
-            onClick={() => {}}
+            disabled={isLoading}
           />
         </Form>
         <div className="mt-4 text-center">
@@ -106,6 +107,7 @@ const RegistrationPage = () => {
             label={LOGIN_FORM_DATA.buttonLabels.signIn}
             className="ml-2"
             onClick={navigateToSignInPage}
+            disabled={isLoading}
           />
         </div>
       </div>

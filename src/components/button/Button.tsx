@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { ButtonType } from "src/components/button/common/types/Button.types";
 
 interface ButtonProps {
@@ -5,6 +6,7 @@ interface ButtonProps {
   onClick?: () => void;
   type?: ButtonType;
   className?: string;
+  disabled?: boolean;
 }
 
 const Button = ({
@@ -12,12 +14,16 @@ const Button = ({
   onClick,
   type = ButtonType.Button,
   className = "",
+  disabled = false,
 }: ButtonProps) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      className={`px-4 py-2 rounded text-white ${className}`}
+      className={classNames("px-4 py-2 rounded text-white", className, {
+        "cursor-not-allowed": disabled,
+      })}
+      disabled={disabled}
     >
       {label}
     </button>
@@ -29,13 +35,21 @@ export const PrimaryButton = ({
   onClick,
   type,
   className,
+  disabled,
 }: ButtonProps) => {
   return (
     <Button
       label={label}
       onClick={onClick}
       type={type}
-      className={`bg-blue-500 hover:bg-blue-600 ${className}`}
+      className={classNames(
+        "bg-blue-500 hover:bg-blue-700 text-white",
+        className,
+        {
+          "bg-gray-500 text-white hover:bg-gray-500": disabled,
+        },
+      )}
+      disabled={disabled}
     />
   );
 };
@@ -45,13 +59,21 @@ export const SecondaryButton = ({
   onClick,
   type,
   className,
+  disabled,
 }: ButtonProps) => {
   return (
     <Button
       label={label}
       onClick={onClick}
       type={type}
-      className={`bg-white border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white ${className}`}
+      className={classNames(
+        "bg-white border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white",
+        className,
+        {
+          "border-gray-500 text-gray-600 hover:border-gray-500": disabled,
+        },
+      )}
+      disabled={disabled}
     />
   );
 };
@@ -61,13 +83,21 @@ export const TertiaryButton = ({
   onClick,
   type,
   className,
+  disabled,
 }: ButtonProps) => {
   return (
     <Button
       label={label}
       onClick={onClick}
       type={type}
-      className={`px-0 py-1 text-blue-500 hover:underline hover:underline-offset-4 ${className}`}
+      disabled={disabled}
+      className={classNames(
+        "px-0 py-1 text-blue-500 hover:underline hover:underline-offset-4",
+        className,
+        {
+          "text-gray-500 cursor-not-allowed hover:no-underline": disabled,
+        },
+      )}
     />
   );
 };
