@@ -9,9 +9,12 @@ interface InfoPointListProps {
 export const InfoPointList = ({ title, points }: InfoPointListProps) => {
   return (
     <ul>
-      <FontAwesomeIcon icon={faInfoCircle} /> {title}
+      <FontAwesomeIcon icon={faInfoCircle} />{" "}
+      <span className="ml-1">{title}</span>
       {points.map((point) => (
-        <li key={point}>{point}</li>
+        <li key={point} className="ml-7 list-disc">
+          {point}
+        </li>
       ))}
     </ul>
   );

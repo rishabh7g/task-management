@@ -15,7 +15,6 @@ interface FormFieldProps {
   isValid: boolean;
   onFocus: () => void;
   onBlur: () => void;
-  isFocused: boolean;
   InputHelperContent: ReactNode;
   placeholder: string;
 }
@@ -33,12 +32,11 @@ export const FormField = ({
   isValid,
   onFocus,
   onBlur,
-  isFocused,
   InputHelperContent,
   placeholder = "",
 }: FormFieldProps) => {
   return (
-    <>
+    <div className="my-7 flex flex-col gap-2">
       <Input
         id={id}
         label={label}
@@ -56,12 +54,12 @@ export const FormField = ({
         placeholder={placeholder}
       />
       <InputHelper
-        isVisible={isFocused && !!value && !isValid}
-        isHidden={!isFocused || !value || isValid}
+        isVisible={true}
+        isHidden={false}
         content={InputHelperContent}
         id={`${id}-error`}
       />
-    </>
+    </div>
   );
 };
 
@@ -81,7 +79,7 @@ const InputHelper = ({
   return (
     <div
       id={id}
-      className={classNames({
+      className={classNames("rounded bg-amber-100 p-5", {
         visible: isVisible,
         hidden: isHidden,
       })}

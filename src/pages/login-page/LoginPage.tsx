@@ -27,12 +27,12 @@ const LoginPage = () => {
 
   return (
     <section className="flex min-h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white space-y-8 rounded-xl p-10 shadow-lg">
+      <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
         </h2>
         <ErrorMessage errorMessage={errorMessage} htmlRef={errorRef} />
-        <Form onSubmit={handleSignIn}>
+        <Form onSubmit={handleSignIn} className="flex flex-col gap-5">
           <Input
             label={LOGIN_FORM_DATA.email.label}
             name={LOGIN_FORM_DATA.email.name}

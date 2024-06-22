@@ -44,7 +44,7 @@ const Input = ({
   placeholder = "",
 }: InputProps) => {
   return (
-    <div className={`mb-4 ${className}`}>
+    <div className={`${className}`}>
       <label className="block text-sm font-medium text-gray-700" htmlFor={id}>
         {label}
       </label>
