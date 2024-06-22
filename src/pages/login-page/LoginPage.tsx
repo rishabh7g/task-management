@@ -16,7 +16,7 @@ const LoginPage = () => {
     setEmail,
     password,
     setPassword,
-    error,
+    errorMessage,
     errorRef,
     handleSignIn,
     handleSignUp,
@@ -30,7 +30,7 @@ const LoginPage = () => {
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
         </h2>
-        <ErrorMessage errorMessage={error} htmlRef={errorRef} />
+        <ErrorMessage errorMessage={errorMessage} htmlRef={errorRef} />
         <Form onSubmit={handleSignIn}>
           <Input
             label={LOGIN_FORM_DATA.email.label}

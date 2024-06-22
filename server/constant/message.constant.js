@@ -1,4 +1,5 @@
 const MESSAGE_AUTH_FAILED = "Authentication failed.";
+const MESSAGE_EMAIL_NOT_EXISTS = "No account found for the given email.";
 const MESSAGE_EMAIL_EXISTS = "Email exists already.";
 const MESSAGE_INVALID_EMAIL_OR_PASSWORD = "Invalid email or password entered.";
 const MESSAGE_INVALID_PASSWORD =
@@ -23,6 +24,7 @@ const MESSAGE_TASK_NOT_FOUND = "Task not found";
 module.exports = {
   MESSAGE_AUTH_FAILED,
   MESSAGE_EMAIL_EXISTS,
+  MESSAGE_EMAIL_NOT_EXISTS,
   MESSAGE_INVALID_EMAIL_OR_PASSWORD,
   MESSAGE_INVALID_PASSWORD,
   MESSAGE_INVALID_CREDENTIALS,

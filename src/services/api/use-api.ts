@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, isAxiosError } from "axios";
 import { useCallback, useState } from "react";
 import apiService from "src/services/api/api-service";
-import { UseApiResponse, HttpMethod } from "src/services/api/api.types";
+import { HttpMethod, UseApiResponse } from "src/services/api/api.types";
 
 function useApi<T>(): UseApiResponse<T> {
   const [data, setData] = useState<T | null>(null);
@@ -40,6 +40,7 @@ function useApi<T>(): UseApiResponse<T> {
       } catch (err) {
         if (isAxiosError(err)) {
           setError(err.message);
+          if (err && err.response) setStatus(err.response.status);
         } else {
           setError("An unexpected error occurred");
         }

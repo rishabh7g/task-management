@@ -10,10 +10,10 @@ const {
   MESSAGE_INVALID_PASSWORD,
   MESSAGE_USER_SIGNUP_FAILED,
   MESSAGE_USER_CREATED,
-  MESSAGE_AUTH_FAILED,
   MESSAGE_REFRESH_TOKEN_NOT_FOUND,
   MESSAGE_INVALID_REFRESH_TOKEN,
   MESSAGE_ERROR_GENERATING_REFRESH_TOKEN,
+  MESSAGE_EMAIL_NOT_EXISTS,
 } = require("../constant/message.constant");
 const { ACCESS_TOKEN_EXPIRES_IN } = require("../constant/time.constant");
 
@@ -28,8 +28,8 @@ const signIn = async (req, res) => {
     user = await get(email);
   } catch (error) {
     return res
-      .status(HttpStatusCode.Unauthorized)
-      .json({ message: MESSAGE_AUTH_FAILED });
+      .status(HttpStatusCode.NotFound)
+      .json({ message: MESSAGE_EMAIL_NOT_EXISTS });
   }
 
   const pwIsValid = await isValidPassword(password, user.password);
@@ -111,9 +111,9 @@ const generateNewToken = async (req, res) => {
       process.env.REFRESH_ACCESS_TOKEN_SECRET,
       (err, user) => {
         if (err) {
-          return res
-            .status(HttpStatusCode.Forbidden)
-            .json({ message: MESSAGE_ERROR_VERIFYING_REFRESH_TOKEN });
+          return res.status(HttpStatusCode.Forbidden).json({
+            message: MESSAGE_ERROR_VERIFYING_REFRESH_TOKEN,
+          });
         }
         const { id, email } = user;
         const userPayload = { id, email };

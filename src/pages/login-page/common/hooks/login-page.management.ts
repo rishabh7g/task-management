@@ -1,3 +1,4 @@
+import { HttpStatusCode } from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiRoutes } from "src/constant/api-routes";
@@ -13,10 +14,11 @@ export const useLoginPageManagement = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
 
-  const { error, data, execute, isLoading } = useApi<{
+  const { status, data, execute, isLoading } = useApi<{
     accessToken: string;
   }>();
 
@@ -32,6 +34,14 @@ export const useLoginPageManagement = () => {
       navigate(RoutePath.Tasks);
     }
   }, [data, navigate]);
+
+  useEffect(() => {
+    setErrorMessage(_getErrorMessage(status));
+  }, [status]);
+
+  useEffect(() => {
+    setErrorMessage("");
+  }, [email, password]);
 
   const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,11 +60,28 @@ export const useLoginPageManagement = () => {
     setEmail,
     password,
     setPassword,
-    error,
+    errorMessage,
     errorRef,
     handleSignIn,
     handleSignUp,
     isLoading,
     emailRef,
   };
+};
+const _getErrorMessage = (status: number | null) => {
+  const isStatusNotExist = status === null;
+  if (isStatusNotExist) return "";
+
+  switch (status) {
+    case HttpStatusCode.NotFound:
+      return "No account found for the entered email.";
+    case HttpStatusCode.UnprocessableEntity:
+      return "Invalid email or password. Please try again.";
+    case HttpStatusCode.Unauthorized:
+      return "Your session has expired. Please log in again.";
+    case HttpStatusCode.InternalServerError:
+      return "An unexpected error occurred. Please try again later.";
+    default:
+      return "An error occurred. Please check your connection and try again.";
+  }
 };
