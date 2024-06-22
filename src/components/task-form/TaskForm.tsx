@@ -89,7 +89,6 @@ const TaskForm = ({ initialTask = EMPTY_TASK, onSubmit }: TaskFormProps) => {
         label="Submit"
         type={ButtonType.Submit}
         className="mt-4 w-full"
-        onClick={() => {}}
       />
     </Form>
   );
