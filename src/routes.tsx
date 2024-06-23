@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { RouteObject } from "react-router-dom";
+import { RequireAuth } from "src/components/require-auth/RequireAuth";
 
 const LoginPage = lazy(() => import("src/pages/login-page/LoginPage"));
 const RegistrationPage = lazy(
@@ -8,14 +9,14 @@ const RegistrationPage = lazy(
 const TaskManagementPage = lazy(() => import("src/pages/task-page/TaskPage"));
 
 export enum RoutePath {
-  Home = "/",
+  Signin = "/sign-in",
   Register = "/register",
-  Tasks = "/tasks",
+  Home = "/",
 }
 
 const routes: RouteObject[] = [
   {
-    path: RoutePath.Home,
+    path: RoutePath.Signin,
     element: <LoginPage />,
   },
   {
@@ -23,8 +24,9 @@ const routes: RouteObject[] = [
     element: <RegistrationPage />,
   },
   {
-    path: RoutePath.Tasks,
-    element: <TaskManagementPage />,
+    path: RoutePath.Home,
+    element: <RequireAuth />,
+    children: [{ index: true, element: <TaskManagementPage /> }],
   },
 ];
 

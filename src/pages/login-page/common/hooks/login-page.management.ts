@@ -1,6 +1,6 @@
 import { HttpStatusCode } from "axios";
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { apiRoutes } from "src/constant/api-routes";
 import { LocalStorageKeys } from "src/constant/local-storage.constant";
 import { useAuth } from "src/context/auth-context";
@@ -20,6 +20,8 @@ export const useLoginPageManagement = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || RoutePath.Home;
 
   const { status, data, execute, isLoading } = useApi<{
     accessToken: string;
@@ -35,9 +37,9 @@ export const useLoginPageManagement = () => {
     if (isTokenExist) {
       localStorageService.setItem(LocalStorageKeys.TOKEN, data.accessToken);
       loginUser(email, password, data.accessToken);
-      navigate(RoutePath.Tasks);
+      navigate(from);
     }
-  }, [data, email, loginUser, navigate, password]);
+  }, [data, email, from, loginUser, navigate, password]);
 
   useEffect(() => {
     setErrorMessage(_getErrorMessage(status));

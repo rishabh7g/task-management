@@ -31,7 +31,7 @@ export const useRegistrationPageManagement = () => {
   useEffect(() => {
     const isUserRegistered = status === 201;
     if (isUserRegistered) {
-      navigate(RoutePath.Home);
+      navigate(RoutePath.Signin);
     }
   }, [navigate, status]);
 
@@ -74,7 +74,7 @@ export const useRegistrationPageManagement = () => {
   };
 
   const navigateToSignInPage = () => {
-    navigate(RoutePath.Home);
+    navigate(RoutePath.Signin);
   };
 
   const isSignupButtonDisabled =
