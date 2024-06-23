@@ -40,7 +40,7 @@ const login = async (req, res) => {
     });
   }
 
-  const { id } = user;
+  const { id, roles } = user;
 
   const userPayload = { email, id };
   const accessToken = _generateAccessToken(userPayload);
@@ -50,7 +50,7 @@ const login = async (req, res) => {
   );
   refreshTokenList.push(refreshToken);
 
-  res.json({ accessToken, refreshToken });
+  res.json({ accessToken, roles, refreshToken });
 };
 
 const register = async (req, res, next) => {
@@ -80,7 +80,8 @@ const register = async (req, res, next) => {
   }
 
   try {
-    await add(data);
+    const dataWithRoles = { ...data, roles: ["user"] };
+    await add(dataWithRoles);
     res.status(HttpStatusCode.Created).json({
       message: MESSAGE_USER_CREATED,
     });
@@ -88,6 +89,7 @@ const register = async (req, res, next) => {
     next(error);
   }
 };
+
 const generateNewToken = async (req, res) => {
   const refreshToken = req.body.refreshToken;
 
