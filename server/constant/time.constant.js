@@ -1,5 +1,5 @@
-const ACCESS_TOKEN_EXPIRES_IN = "60s";
+const ACCESS_TOKEN_EXPIRES_IN = '10s';
 
 module.exports = {
-  ACCESS_TOKEN_EXPIRES_IN,
+    ACCESS_TOKEN_EXPIRES_IN,
 };
