@@ -25,6 +25,7 @@ export const useLoginPageManagement = () => {
 
   const { status, data, execute, isLoading } = useApi<{
     accessToken: string;
+    roles: string[];
   }>();
 
   useEffect(() => {
@@ -36,7 +37,7 @@ export const useLoginPageManagement = () => {
     const isTokenExist = data && data.accessToken;
     if (isTokenExist) {
       localStorageService.setItem(LocalStorageKeys.TOKEN, data.accessToken);
-      loginUser(email, password, data.accessToken);
+      loginUser(email, password, data.accessToken, data.roles);
       navigate(from);
     }
   }, [data, email, from, loginUser, navigate, password]);

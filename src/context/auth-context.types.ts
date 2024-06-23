@@ -4,6 +4,7 @@ export interface AuthState {
   email: string;
   password: string;
   accessToken: string;
+  roles: string[];
 }
 
 export enum AuthActionType {

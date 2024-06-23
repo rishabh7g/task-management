@@ -12,6 +12,7 @@ const INITIAL_AUTH_STATE: AuthState = {
   email: "",
   password: "",
   accessToken: "",
+  roles: [],
 };
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
@@ -19,7 +20,7 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
     case AuthActionType.LOGIN:
       return action.payload;
     case AuthActionType.LOGOUT:
-      return { accessToken: "", email: "", password: "" };
+      return { accessToken: "", email: "", password: "", roles: [] };
     default:
       return state;
   }
@@ -49,10 +50,15 @@ export const useAuth = () => {
   }
   const { authState, dispatch } = context;
 
-  const loginUser = (email: string, password: string, accessToken: string) => {
+  const loginUser = (
+    email: string,
+    password: string,
+    accessToken: string,
+    roles: string[],
+  ) => {
     dispatch({
       type: AuthActionType.LOGIN,
-      payload: { email, password, accessToken },
+      payload: { email, password, accessToken, roles },
     });
   };
 
