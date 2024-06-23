@@ -16,9 +16,9 @@ const INITIAL_AUTH_STATE: AuthState = {
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {
   switch (action.type) {
-    case AuthActionType.SIGN_IN:
+    case AuthActionType.LOGIN:
       return action.payload;
-    case AuthActionType.SIGN_OUT:
+    case AuthActionType.LOGOUT:
       return { accessToken: "", email: "", password: "" };
     default:
       return state;
@@ -51,13 +51,13 @@ export const useAuth = () => {
 
   const loginUser = (email: string, password: string, accessToken: string) => {
     dispatch({
-      type: AuthActionType.SIGN_IN,
+      type: AuthActionType.LOGIN,
       payload: { email, password, accessToken },
     });
   };
 
   const logoutUser = () => {
-    dispatch({ type: AuthActionType.SIGN_OUT });
+    dispatch({ type: AuthActionType.LOGOUT });
   };
 
   return { authState, loginUser, logoutUser };

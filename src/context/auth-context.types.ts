@@ -7,13 +7,13 @@ export interface AuthState {
 }
 
 export enum AuthActionType {
-  SIGN_IN = "SIGN_IN",
-  SIGN_OUT = "SIGN_OUT",
+  LOGIN = "LOGIN",
+  LOGOUT = "LOGOUT",
 }
 
 export type AuthAction =
-  | { type: AuthActionType.SIGN_IN; payload: AuthState }
-  | { type: AuthActionType.SIGN_OUT };
+  | { type: AuthActionType.LOGIN; payload: AuthState }
+  | { type: AuthActionType.LOGOUT };
 
 export type AuthContextValue = {
   authState: AuthState;

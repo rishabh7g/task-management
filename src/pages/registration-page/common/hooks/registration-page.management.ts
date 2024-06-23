@@ -31,7 +31,7 @@ export const useRegistrationPageManagement = () => {
   useEffect(() => {
     const isUserRegistered = status === 201;
     if (isUserRegistered) {
-      navigate(RoutePath.Signin);
+      navigate(RoutePath.Login);
     }
   }, [navigate, status]);
 
@@ -51,9 +51,10 @@ export const useRegistrationPageManagement = () => {
   }, [confirmPassword, password]);
 
   useEffect(() => {
-    const isSignupFailed = status !== null && status !== HttpStatusCode.Created;
-    if (isSignupFailed) {
-      setErrorMessage("Failed to sign up");
+    const isRegistrationFailed =
+      status !== null && status !== HttpStatusCode.Created;
+    if (isRegistrationFailed) {
+      setErrorMessage("Failed to register");
     }
 
     const isErrorRefExist = !!errorRef.current;
@@ -67,17 +68,17 @@ export const useRegistrationPageManagement = () => {
       return;
     }
 
-    execute(apiRoutes.createSignUpUrl(), HttpMethod.POST, {
+    execute(apiRoutes.createRegisterUrl(), HttpMethod.POST, {
       email,
       password,
     });
   };
 
-  const navigateToSignInPage = () => {
-    navigate(RoutePath.Signin);
+  const navigateToLoginPage = () => {
+    navigate(RoutePath.Login);
   };
 
-  const isSignupButtonDisabled =
+  const isRegistrationButtonDisabled =
     isLoading || !isEmailValid || !isPasswordValid || !isPasswordMatching;
 
   return {
@@ -93,8 +94,8 @@ export const useRegistrationPageManagement = () => {
     isPasswordMatching,
     errorMessage,
     errorRef,
-    navigateToSignInPage,
+    navigateToLoginPage,
     isLoading,
-    isSignupButtonDisabled,
+    isRegistrationButtonDisabled,
   };
 };

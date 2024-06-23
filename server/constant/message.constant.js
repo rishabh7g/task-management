@@ -5,8 +5,8 @@ const MESSAGE_INVALID_EMAIL_OR_PASSWORD = "Invalid email or password entered.";
 const MESSAGE_INVALID_PASSWORD =
   "Invalid password. Must be at least 6 characters long.";
 const MESSAGE_INVALID_CREDENTIALS = "Invalid credentials.";
-const MESSAGE_USER_SIGNUP_FAILED =
-  "User signup failed due to validation errors.";
+const MESSAGE_USER_REGISTER_FAILED =
+  "User registeration failed due to validation errors.";
 
 const MESSAGE_USER_CREATED = "User created.";
 const MESSAGE_REFRESH_TOKEN_NOT_FOUND =
@@ -28,7 +28,7 @@ module.exports = {
   MESSAGE_INVALID_EMAIL_OR_PASSWORD,
   MESSAGE_INVALID_PASSWORD,
   MESSAGE_INVALID_CREDENTIALS,
-  MESSAGE_USER_SIGNUP_FAILED,
+  MESSAGE_USER_REGISTER_FAILED,
   MESSAGE_USER_CREATED,
   MESSAGE_USER_NOT_FOUND,
   MESSAGE_TASK_NOT_FOUND,

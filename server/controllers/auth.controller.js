@@ -8,7 +8,7 @@ const {
   MESSAGE_INVALID_EMAIL_OR_PASSWORD,
   MESSAGE_EMAIL_EXISTS,
   MESSAGE_INVALID_PASSWORD,
-  MESSAGE_USER_SIGNUP_FAILED,
+  MESSAGE_USER_REGISTER_FAILED,
   MESSAGE_USER_CREATED,
   MESSAGE_REFRESH_TOKEN_NOT_FOUND,
   MESSAGE_INVALID_REFRESH_TOKEN,
@@ -19,7 +19,7 @@ const { ACCESS_TOKEN_EXPIRES_IN } = require("../constant/time.constant");
 
 let refreshTokenList = [];
 
-const signIn = async (req, res) => {
+const login = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
@@ -53,7 +53,7 @@ const signIn = async (req, res) => {
   res.json({ accessToken, refreshToken });
 };
 
-const signUp = async (req, res, next) => {
+const register = async (req, res, next) => {
   const data = req.body;
   let errors = {};
 
@@ -74,7 +74,7 @@ const signUp = async (req, res, next) => {
 
   if (Object.keys(errors).length > 0) {
     return res.status(HttpStatusCode.UnprocessableEntity).json({
-      message: MESSAGE_USER_SIGNUP_FAILED,
+      message: MESSAGE_USER_REGISTER_FAILED,
       errors,
     });
   }
@@ -144,4 +144,4 @@ const _generateAccessToken = (payload) => {
   return accessToken;
 };
 
-module.exports = { signIn, signUp, generateNewToken, logout };
+module.exports = { login, register, generateNewToken, logout };

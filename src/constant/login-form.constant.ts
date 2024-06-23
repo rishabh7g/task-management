@@ -19,8 +19,7 @@ export const LOGIN_FORM_DATA = {
   },
   buttonLabels: {
     register: "Register",
-    signIn: "Sign In",
-    signUp: "Sign Up",
+    login: "Login",
   },
 };
 

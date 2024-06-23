@@ -18,20 +18,20 @@ const LoginPage = () => {
     setPassword,
     errorMessage,
     errorRef,
-    handleSignIn,
-    handleSignUp,
+    handleLogin,
+    handleRegister,
     isLoading,
     emailRef,
-    isSignInButtonDisabled,
+    isLoginButtonDisabled,
   } = useLoginPageManagement();
 
   return (
     <div className="w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg">
       <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-        Sign in to your account
+        Login to your account
       </h2>
       <ErrorMessage errorMessage={errorMessage} htmlRef={errorRef} />
-      <Form onSubmit={handleSignIn} className="flex flex-col gap-5">
+      <Form onSubmit={handleLogin} className="flex flex-col gap-5">
         <Input
           label={LOGIN_FORM_DATA.email.label}
           name={LOGIN_FORM_DATA.email.name}
@@ -50,19 +50,19 @@ const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <PrimaryButton
-          label={isLoading ? LOADING_TEXT : LOGIN_FORM_DATA.buttonLabels.signIn}
+          label={isLoading ? LOADING_TEXT : LOGIN_FORM_DATA.buttonLabels.login}
           type={ButtonType.Submit}
-          disabled={isSignInButtonDisabled}
+          disabled={isLoginButtonDisabled}
           className="mt-4 w-full"
         />
       </Form>
       <div className="mt-4 text-center">
         <span className="text-gray-600">{DONT_HAVE_ACCOUNT_TEXT}</span>
         <TertiaryButton
-          label={LOGIN_FORM_DATA.buttonLabels.signUp}
+          label={LOGIN_FORM_DATA.buttonLabels.register}
           className="ml-2"
           disabled={isLoading}
-          onClick={handleSignUp}
+          onClick={handleRegister}
         />
       </div>
     </div>

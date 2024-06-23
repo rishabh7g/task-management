@@ -9,14 +9,14 @@ const RegistrationPage = lazy(
 const TaskManagementPage = lazy(() => import("src/pages/task-page/TaskPage"));
 
 export enum RoutePath {
-  Signin = "/sign-in",
+  Login = "/login",
   Register = "/register",
   Home = "/",
 }
 
 const routes: RouteObject[] = [
   {
-    path: RoutePath.Signin,
+    path: RoutePath.Login,
     element: <LoginPage />,
   },
   {

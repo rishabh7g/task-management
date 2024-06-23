@@ -29,9 +29,9 @@ const RegistrationPage = () => {
     isPasswordMatching,
     errorMessage,
     errorRef,
-    navigateToSignInPage,
+    navigateToLoginPage,
     isLoading,
-    isSignupButtonDisabled,
+    isRegistrationButtonDisabled,
   } = useRegistrationPageManagement();
 
   const EmailInputHelperContent = (
@@ -98,15 +98,15 @@ const RegistrationPage = () => {
           label={LOGIN_FORM_DATA.buttonLabels.register}
           type={ButtonType.Submit}
           className="mt-4 w-full"
-          disabled={isSignupButtonDisabled}
+          disabled={isRegistrationButtonDisabled}
         />
       </Form>
       <div className="mt-4 text-center">
         <span className="text-gray-600">{ALREADY_HAVE_AN_ACCOUNT_TEXT}</span>
         <TertiaryButton
-          label={LOGIN_FORM_DATA.buttonLabels.signIn}
+          label={LOGIN_FORM_DATA.buttonLabels.login}
           className="ml-2"
-          onClick={navigateToSignInPage}
+          onClick={navigateToLoginPage}
           disabled={isLoading}
         />
       </div>

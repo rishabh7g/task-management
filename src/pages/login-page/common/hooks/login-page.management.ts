@@ -52,19 +52,19 @@ export const useLoginPageManagement = () => {
     setErrorMessage("");
   }, [email, password]);
 
-  const handleSignIn = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    execute(apiRoutes.createSignInUrl(), HttpMethod.POST, {
+    execute(apiRoutes.createLoginUrl(), HttpMethod.POST, {
       email,
       password,
     });
   };
 
-  const handleSignUp = () => {
+  const handleRegister = () => {
     navigate(RoutePath.Register);
   };
 
-  const isSignInButtonDisabled = isLoading || !email || !password;
+  const isLoginButtonDisabled = isLoading || !email || !password;
 
   return {
     email,
@@ -73,11 +73,11 @@ export const useLoginPageManagement = () => {
     setPassword,
     errorMessage,
     errorRef,
-    handleSignIn,
-    handleSignUp,
+    handleLogin,
+    handleRegister,
     isLoading,
     emailRef,
-    isSignInButtonDisabled,
+    isLoginButtonDisabled,
   };
 };
 

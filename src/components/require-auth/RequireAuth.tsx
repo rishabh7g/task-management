@@ -9,8 +9,6 @@ export const RequireAuth = () => {
   if (isAuthenticated) {
     return <Outlet />;
   } else {
-    return (
-      <Navigate to={RoutePath.Signin} state={{ from: location }} replace />
-    );
+    return <Navigate to={RoutePath.Login} state={{ from: location }} replace />;
   }
 };

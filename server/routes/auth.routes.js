@@ -1,7 +1,7 @@
 const express = require("express");
 const {
-  signIn,
-  signUp,
+  login,
+  register,
   generateNewToken,
   logout,
 } = require("../controllers/auth.controller");
@@ -17,7 +17,7 @@ const router = express.Router();
 
 /**
  * @swagger
- * /sign-up:
+ * /register:
  *   post:
  *     summary: User registration
  *     description: Endpoint for user registration. Validates the provided email and password, checks for existing users, and creates a new user if validation passes.
@@ -43,13 +43,13 @@ const router = express.Router();
  *       201:
  *         description: User created successfully. Returns user details and authentication token.
  *       422:
- *         description: User signup failed due to validation errors. Returns error messages.
+ *         description: User registration failed due to validation errors. Returns error messages.
  */
-router.post("/sign-up", signUp);
+router.post("/register", register);
 
 /**
  * @swagger
- * /sign-in:
+ * /login:
  *   post:
  *     summary: User login
  *     description: Authenticates a user by validating the provided email and password. Returns a token upon successful authentication.
@@ -79,7 +79,7 @@ router.post("/sign-up", signUp);
  *       422:
  *         description: Validation error for incorrect email or password format.
  */
-router.post("/sign-in", signIn);
+router.post("/login", login);
 
 /**
  * @swagger
@@ -136,6 +136,6 @@ router.post("/token", generateNewToken);
  *       204:
  *         description: Successfully logged out and refresh token invalidated
  */
-router.delete("/sign-out", logout);
+router.delete("/logout", logout);
 
 module.exports = router;
