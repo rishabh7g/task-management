@@ -1,9 +1,8 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const tasksController = require("../controllers/task.controller");
-const taskSchema = require("../schemas/task.schema.js");
-const validateSchemaMiddleware = require("../middleware/validate.middleware.js");
-const authorizeAccessTokenMiddleware = require("../middleware/authorize.middleware.js");
+const tasksController = require('../controllers/tasks.controller.js');
+const taskSchema = require('../schemas/task.schema.js');
+const validateSchemaMiddleware = require('../middleware/validate.middleware.js');
 
 /**
  * @swagger
@@ -42,10 +41,9 @@ const authorizeAccessTokenMiddleware = require("../middleware/authorize.middlewa
  *         description: Invalid input
  */
 router.post(
-  "/tasks",
-  authorizeAccessTokenMiddleware,
-  validateSchemaMiddleware(taskSchema),
-  tasksController.createTask,
+    '/tasks',
+    validateSchemaMiddleware(taskSchema),
+    tasksController.createTask,
 );
 
 /**
@@ -66,7 +64,7 @@ router.post(
  *       404:
  *         description: Tasks not found
  */
-router.get("/tasks", authorizeAccessTokenMiddleware, tasksController.getTasks);
+router.get('/tasks', tasksController.getTasks);
 
 /**
  * @swagger
@@ -91,11 +89,7 @@ router.get("/tasks", authorizeAccessTokenMiddleware, tasksController.getTasks);
  *       404:
  *         description: Task not found
  */
-router.get(
-  "/tasks/:taskId",
-  authorizeAccessTokenMiddleware,
-  tasksController.getTask,
-);
+router.get('/tasks/:taskId', tasksController.getTask);
 
 /**
  * @swagger
@@ -134,10 +128,9 @@ router.get(
  *         description: Invalid input
  */
 router.put(
-  "/tasks/:taskId",
-  authorizeAccessTokenMiddleware,
-  validateSchemaMiddleware(taskSchema),
-  tasksController.updateTask,
+    '/tasks/:taskId',
+    validateSchemaMiddleware(taskSchema),
+    tasksController.updateTask,
 );
 
 /**
@@ -159,10 +152,6 @@ router.put(
  *       404:
  *         description: Task not found
  */
-router.delete(
-  "/tasks/:taskId",
-  authorizeAccessTokenMiddleware,
-  tasksController.deleteTask,
-);
+router.delete('/tasks/:taskId', tasksController.deleteTask);
 
 module.exports = router;
