@@ -7,7 +7,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 const swaggerSetup = require('./swagger');
-const delayMiddleware = require('./middleware/delay.middleware');
 const headerMiddleware = require('./middleware/headers.middleware');
 const registerRoutes = require('./routes/register.routes');
 const loginRoutes = require('./routes/login.routes');
@@ -15,7 +14,6 @@ const logoutRoutes = require('./routes/logout.routes');
 const refreshTokenRoutes = require('./routes/refresh-token.routes');
 const taskRoutes = require('./routes/tasks.routes');
 const networkErrorMiddleware = require('./middleware/network-error.middleware');
-const allowedOrigins = require('./config/allowed-origins.config');
 const credentials = require('./middleware/credentials.middleware');
 const corsOptions = require('./config/cors-options.config');
 const verifyJWT = require('./middleware/verify-jwt.middleware');
@@ -23,13 +21,12 @@ const verifyJWT = require('./middleware/verify-jwt.middleware');
 const PORT = process.env.PORT || 8090;
 
 app.use(credentials);
+swaggerSetup(app);
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-
-app.use(headerMiddleware(allowedOrigins));
-app.use(delayMiddleware);
+app.use(headerMiddleware(process.env.FRONTEND_URL));
 
 // auth routes
 app.use(registerRoutes);
@@ -38,12 +35,13 @@ app.use(logoutRoutes);
 app.use(refreshTokenRoutes);
 
 // verify JWT for the following routes
-swaggerSetup(app);
 app.use(verifyJWT);
 
 // task routes
 app.use(taskRoutes);
+// create route for getting all the tasks
 
+// 404 error handler
 app.all('*', (req, res) => {
     res.status(404);
     if (req.accepts('html')) {
