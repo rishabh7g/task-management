@@ -12,7 +12,9 @@ export const Header: React.FC = () => {
     const isUserLoggedIn = !!authState.accessToken;
 
     const handleLogout = async () => {
-        await apiClient.delete(apiRoutes.createLogoutUrl());
+        await apiClient.delete(apiRoutes.createLogoutUrl(), {
+            withCredentials: true,
+        });
         logoutUser();
     };
 

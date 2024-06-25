@@ -13,6 +13,7 @@ const CLEAR_COOKIE_CONFIG = {
 const logout = async (req, res) => {
     const cookies = req.cookies;
     const isCookiesNotContainsJWT = !cookies?.jwt;
+
     if (isCookiesNotContainsJWT)
         return res.sendStatus(HttpStatusCode.NoContent);
 
