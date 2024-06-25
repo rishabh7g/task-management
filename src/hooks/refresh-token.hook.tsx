@@ -4,7 +4,6 @@ import { apiClient } from 'src/services/api/api-service';
 
 export const useRefreshToken = () => {
     const { authState, loginUser } = useAuth();
-
     const fetchRefreshToken = async () => {
         const response = await apiClient.post<{
             accessToken: string;

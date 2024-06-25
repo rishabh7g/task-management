@@ -2,20 +2,18 @@
 /* eslint-disable no-console */
 import axios, { AxiosInstance } from 'axios';
 
-// Create an Axios instance with default configurations
-export const apiClient: AxiosInstance = axios.create({
+const AXIOS_BASE_CONFIG = {
     baseURL: process.env.REACT_APP_API_BASE_URL,
     timeout: 10000, // Request timeout in milliseconds
     headers: {
         'Content-Type': 'application/json',
     },
-});
+};
+
+// Create an Axios instance with default configurations
+export const apiClient: AxiosInstance = axios.create(AXIOS_BASE_CONFIG);
 
 export const apiClientPrivate: AxiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL,
-    timeout: 10000, // Request timeout in milliseconds
-    headers: {
-        'Content-Type': 'application/json',
-    },
+    ...AXIOS_BASE_CONFIG,
     withCredentials: true,
 });

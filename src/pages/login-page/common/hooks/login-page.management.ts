@@ -35,10 +35,16 @@ export const useLoginPageManagement = () => {
         e.preventDefault();
         setIsLoading(true);
         apiClient
-            .post(apiRoutes.createLoginUrl(), {
-                email,
-                password,
-            })
+            .post(
+                apiRoutes.createLoginUrl(),
+                {
+                    email,
+                    password,
+                },
+                {
+                    withCredentials: true,
+                },
+            )
             .then((response) => {
                 const { accessToken, roles } = response.data;
                 loginUser(email, password, accessToken, roles);
