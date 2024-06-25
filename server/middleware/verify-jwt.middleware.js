@@ -11,19 +11,19 @@ const { HttpStatusCode } = require('axios');
 const verifyJWT = (req, res, next) => {
     // Extract the token from the Authorization header
     const authHeader = req.headers.authorization;
-    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+    const token = authHeader && authHeader.split(' ')[1];
 
     if (token == null) {
-        return res.sendStatus(HttpStatusCode.Unauthorized); // Unauthorized if token is not provided
+        return res.sendStatus(HttpStatusCode.Unauthorized);
     }
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if (err) {
-            return res.sendStatus(HttpStatusCode.Forbidden); // Forbidden if token is invalid
+            return res.sendStatus(HttpStatusCode.Forbidden);
         }
 
-        req.user = user; // Add the user payload to the request object
-        next(); // Proceed to the next middleware
+        req.user = user;
+        next();
     });
 };
 

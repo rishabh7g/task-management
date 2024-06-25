@@ -9,26 +9,24 @@ const {
 
 const createTask = async (req, res) => {
     const user = users.find((u) => u.id === req.user.id);
-
-    if (!user) {
+    const isUserNotFound = !user;
+    if (isUserNotFound) {
         return res
             .status(HttpStatusCode.NotFound)
             .json({ error: MESSAGE_USER_NOT_FOUND });
     }
-
     const task = {
         id: uuidv4(),
         ...req.body,
     };
 
     user.tasks.push(task);
-    writeData({ users });
+    await writeData({ users });
     res.status(HttpStatusCode.Created).json(task);
 };
 
 const getTasks = async (req, res) => {
     const user = users.find((u) => u.id === req.user.id);
-
     if (!user) {
         return res
             .status(HttpStatusCode.NotFound)
