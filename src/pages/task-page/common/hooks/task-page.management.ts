@@ -1,3 +1,4 @@
+import { HttpStatusCode } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { apiRoutes } from 'src/constant/api-routes';
 import { useAxiosPrivate } from 'src/hooks/axios-private.hook';
@@ -7,13 +8,13 @@ export const useTaskPageManagement = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [editingTask, setEditingTask] = useState<Task>();
     const { apiClientPrivate } = useAxiosPrivate();
-
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
 
     const closeModal = () => {
-        setEditingTask(undefined);
+        clearForm();
         setIsModalOpen(false);
     };
 
@@ -41,7 +42,7 @@ export const useTaskPageManagement = () => {
             },
         );
         const addTaskStatus = response.status;
-        const isTaskAdded = addTaskStatus === 201;
+        const isTaskAdded = addTaskStatus === HttpStatusCode.Created;
         if (isTaskAdded) {
             fetchTasks();
         }
@@ -68,12 +69,18 @@ export const useTaskPageManagement = () => {
 
     const handleTaskSubmit = async (task: Task) => {
         const isFreshTask = !task.id;
+        setIsSubmitting(true);
         if (isFreshTask) {
             await handleCreateTask(task);
         } else {
             await handleEditTask(task);
         }
+        setIsSubmitting(false);
         closeModal();
+    };
+
+    const clearForm = () => {
+        setEditingTask(undefined);
     };
 
     return {
@@ -85,5 +92,6 @@ export const useTaskPageManagement = () => {
         isModalOpen,
         closeModal,
         openModal,
+        isSubmitting,
     };
 };

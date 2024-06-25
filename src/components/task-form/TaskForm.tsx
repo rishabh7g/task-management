@@ -15,14 +15,22 @@ const EMPTY_TASK: Task = {
 interface TaskFormProps {
     initialTask?: Task;
     onSubmit: (task: Task) => void;
+    isSubmitting: boolean;
 }
 
 export const TaskForm = ({
     initialTask = EMPTY_TASK,
     onSubmit,
+    isSubmitting,
 }: TaskFormProps) => {
-    const { title, description, setTitle, setDescription, handleSubmit } =
-        useTaskFormManagement(onSubmit, initialTask);
+    const {
+        title,
+        description,
+        setTitle,
+        setDescription,
+        handleSubmit,
+        isSubmitButtonDisabled,
+    } = useTaskFormManagement(onSubmit, initialTask, isSubmitting);
 
     const TitleField = (
         <Input
@@ -53,9 +61,10 @@ export const TaskForm = ({
             {TitleField}
             {DescriptionField}
             <PrimaryButton
-                label='Submit'
+                label={`${isSubmitting ? 'Submitting...' : 'Submit'}`}
                 type={ButtonType.Submit}
                 className='mt-4 w-full'
+                disabled={isSubmitButtonDisabled}
             />
         </Form>
     );

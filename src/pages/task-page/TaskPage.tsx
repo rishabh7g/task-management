@@ -14,6 +14,7 @@ const TaskPage = () => {
         openModal,
         isModalOpen,
         closeModal,
+        isSubmitting,
     } = useTaskPageManagement();
 
     return (
@@ -36,6 +37,7 @@ const TaskPage = () => {
                 <TaskForm
                     initialTask={editingTask}
                     onSubmit={handleTaskSubmit}
+                    isSubmitting={isSubmitting}
                 />
             </Modal>
         </div>

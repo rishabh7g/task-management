@@ -2,6 +2,8 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ReactNode, useEffect, useRef } from 'react';
 
+const MOUSEDOWN_EVENT = 'mousedown';
+
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -22,13 +24,13 @@ export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
         };
 
         if (isOpen) {
-            document.addEventListener('mousedown', handleClickOutside);
+            document.addEventListener(MOUSEDOWN_EVENT, handleClickOutside);
         } else {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener(MOUSEDOWN_EVENT, handleClickOutside);
         }
 
         return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
+            document.removeEventListener(MOUSEDOWN_EVENT, handleClickOutside);
         };
     }, [isOpen, onClose]);
 
