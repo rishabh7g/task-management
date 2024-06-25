@@ -1,8 +1,7 @@
 export const apiRoutes = {
-    createRefreshTokenUrl: () =>
-        process.env.REACT_APP_AUTH_API_BASE_URL + '/token',
-    createLoginUrl: () => process.env.REACT_APP_AUTH_API_BASE_URL + '/login',
-    createRegisterUrl: () =>
-        process.env.REACT_APP_AUTH_API_BASE_URL + '/register',
+    createRefreshTokenUrl: () => '/refresh-token',
+    createLoginUrl: () => '/login',
+    createLogoutUrl: () => '/logout',
+    createRegisterUrl: () => '/register',
     createTaskAddUrl: () => '/tasks',
 };
