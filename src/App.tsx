@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
 import routes from './routes';
-import { Header } from 'src/components/header/header';
+import { Header } from 'src/components/header/Header';
 
 const Routes = () => {
     const routing = useRoutes(routes);
