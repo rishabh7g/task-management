@@ -4,7 +4,7 @@ import { Task } from 'src/types/task.types';
 interface TaskListProps {
     tasks: Task[];
     onEdit: (task: Task) => void;
-    onDelete: (taskId: number) => void;
+    onDelete: (taskId: string) => void;
 }
 
 export const TaskList = ({ tasks, onEdit, onDelete }: TaskListProps) => {

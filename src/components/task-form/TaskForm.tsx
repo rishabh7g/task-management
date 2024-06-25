@@ -6,7 +6,7 @@ import { useTaskFormManagement } from 'src/components/task-form/common/hooks/tas
 import { Task, TaskFieldType, TaskStatus } from 'src/types/task.types';
 
 const EMPTY_TASK: Task = {
-    id: 0,
+    id: '',
     title: '',
     description: '',
     status: TaskStatus.TODO,

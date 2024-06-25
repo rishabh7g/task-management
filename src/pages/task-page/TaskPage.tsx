@@ -8,7 +8,7 @@ const TaskPage = () => {
     const {
         tasks,
         editingTask,
-        handleEditTask,
+        updateEditingTask,
         handleTaskSubmit,
         handleDeleteTask,
         openModal,
@@ -29,7 +29,7 @@ const TaskPage = () => {
             </div>
             <TaskList
                 tasks={tasks}
-                onEdit={handleEditTask}
+                onEdit={updateEditingTask}
                 onDelete={handleDeleteTask}
             />
             <Modal isOpen={isModalOpen} onClose={closeModal}>

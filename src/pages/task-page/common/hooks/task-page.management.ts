@@ -28,43 +28,58 @@ export const useTaskPageManagement = () => {
         fetchTasks();
     }, [fetchTasks]);
 
-    const handleCreateTask = (task: Task) => {
+    const handleCreateTask = async (task: Task) => {
         const isTaskEmpty = !task;
         if (isTaskEmpty) return;
         const { description, status, title } = task;
-        apiClientPrivate
-            .post(apiRoutes.createTaskAddUrl(), {
+        const response = await apiClientPrivate.post(
+            apiRoutes.createTaskAddUrl(),
+            {
                 description,
                 status,
                 title,
-            })
-            .then((response) => {
-                const addTaskStatus = response.status;
-                const isTaskAdded = addTaskStatus === 201;
-                if (isTaskAdded) {
-                    fetchTasks();
-                }
-            });
+            },
+        );
+        const addTaskStatus = response.status;
+        const isTaskAdded = addTaskStatus === 201;
+        if (isTaskAdded) {
+            fetchTasks();
+        }
     };
 
-    const handleEditTask = (task: Task) => {
+    const updateEditingTask = (task: Task) => {
         setEditingTask(task);
         openModal();
     };
 
-    const handleDeleteTask = (taskId: number) => {
-        alert(`${taskId} is getting deleted.`);
+    const handleEditTask = async (task: Task) => {
+        const { title, description, status } = task;
+        await apiClientPrivate.put(apiRoutes.createTaskEditUrl(task.id), {
+            title,
+            description,
+            status,
+        });
     };
 
-    const handleTaskSubmit = (task: Task) => {
-        handleCreateTask(task);
+    const handleDeleteTask = async (taskId: string) => {
+        await apiClientPrivate.delete(apiRoutes.createTaskDeleteUrl(taskId));
+        await fetchTasks();
+    };
+
+    const handleTaskSubmit = async (task: Task) => {
+        const isFreshTask = !task.id;
+        if (isFreshTask) {
+            await handleCreateTask(task);
+        } else {
+            await handleEditTask(task);
+        }
         closeModal();
     };
 
     return {
         tasks,
         editingTask,
-        handleEditTask,
+        updateEditingTask,
         handleTaskSubmit,
         handleDeleteTask,
         isModalOpen,
