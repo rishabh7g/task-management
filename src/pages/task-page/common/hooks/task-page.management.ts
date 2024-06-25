@@ -8,6 +8,15 @@ export const useTaskPageManagement = () => {
     const [editingTask, setEditingTask] = useState<Task>();
     const { apiClientPrivate } = useAxiosPrivate();
 
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const openModal = () => setIsModalOpen(true);
+
+    const closeModal = () => {
+        setEditingTask(undefined);
+        setIsModalOpen(false);
+    };
+
     const fetchTasks = useCallback(async () => {
         apiClientPrivate.get(apiRoutes.createTaskAddUrl()).then((response) => {
             const tasks = response.data;
@@ -22,10 +31,9 @@ export const useTaskPageManagement = () => {
     const handleCreateTask = (task: Task) => {
         const isTaskEmpty = !task;
         if (isTaskEmpty) return;
-        const { category, description, status, title } = task;
+        const { description, status, title } = task;
         apiClientPrivate
             .post(apiRoutes.createTaskAddUrl(), {
-                category,
                 description,
                 status,
                 title,
@@ -40,29 +48,27 @@ export const useTaskPageManagement = () => {
     };
 
     const handleEditTask = (task: Task) => {
-        const isTaskEmpty = !task;
-        if (isTaskEmpty) return;
-        setTasks(tasks.map((t) => (t.id === task.id ? task : t)));
+        setEditingTask(task);
+        openModal();
     };
 
     const handleDeleteTask = (taskId: number) => {
-        setTasks(tasks.filter((t) => t.id !== taskId));
+        alert(`${taskId} is getting deleted.`);
     };
 
     const handleTaskSubmit = (task: Task) => {
-        if (task.id) {
-            handleEditTask(task);
-        } else {
-            handleCreateTask(task);
-        }
-        setEditingTask(undefined);
+        handleCreateTask(task);
+        closeModal();
     };
 
     return {
         tasks,
         editingTask,
-        setEditingTask,
+        handleEditTask,
         handleTaskSubmit,
         handleDeleteTask,
+        isModalOpen,
+        closeModal,
+        openModal,
     };
 };

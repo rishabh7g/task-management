@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoUrl from 'src/assets/task-app.logo.jpg';
 import { TertiaryButton } from 'src/components/button/Button';
@@ -6,29 +7,14 @@ import { useAuth } from 'src/context/auth-context';
 import { RoutePath } from 'src/routes';
 import { apiClient } from 'src/services/api/api-service';
 
-export const Header = () => {
+export const Header: React.FC = () => {
     const { authState, logoutUser } = useAuth();
-
     const isUserLoggedIn = !!authState.accessToken;
 
     const handleLogout = async () => {
-        await apiClient.delete(apiRoutes.createLogoutUrl(), {
-            withCredentials: true,
-        });
+        await apiClient.delete(apiRoutes.createLogoutUrl());
         logoutUser();
     };
-
-    const LogoutButton = () =>
-        isUserLoggedIn ? (
-            <li>
-                <TertiaryButton
-                    label='Logout'
-                    className='text-white focus:outline-none focus:ring-2 focus:ring-white'
-                    onClick={handleLogout}
-                    aria-label='Logout'
-                />
-            </li>
-        ) : null;
 
     return (
         <header className='fixed left-0 right-0 top-0 z-50 h-16 bg-sky-600 text-white shadow-md'>
@@ -53,7 +39,16 @@ export const Header = () => {
                             ariaLabel='Go to Admin page'
                             menuLabel='Admin'
                         />
-                        <LogoutButton />
+                        {isUserLoggedIn && (
+                            <li>
+                                <TertiaryButton
+                                    label='Logout'
+                                    className='text-white focus:outline-none focus:ring-2 focus:ring-white'
+                                    onClick={handleLogout}
+                                    aria-label='Logout'
+                                />
+                            </li>
+                        )}
                     </ul>
                 </nav>
             </div>

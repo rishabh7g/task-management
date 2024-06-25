@@ -1,47 +1,30 @@
-import { useReducer } from "react";
-import { Task, TaskCategory, TaskFieldType } from "src/types/task.types";
-
-type TaskAction = {
-  type: TaskFieldType;
-  payload: string;
-};
-
-const taskReducer = (state: Task, action: TaskAction) => {
-  switch (action.type) {
-    case TaskFieldType.TITLE:
-      return { ...state, title: action.payload };
-    case TaskFieldType.DESCRIPTION:
-      return { ...state, description: action.payload };
-    case TaskFieldType.CATEGORY:
-      return { ...state, category: action.payload as TaskCategory };
-    default:
-      return state;
-  }
-};
+import { useState } from 'react';
+import { Task } from 'src/types/task.types';
 
 export const useTaskFormManagement = (
-  onSubmit: (task: Task) => void,
-  initialTask: Task,
+    onSubmit: (task: Task) => void,
+    task: Task,
 ) => {
-  const [task, taskDispatch] = useReducer(taskReducer, initialTask);
+    const [title, setTitle] = useState(task.title);
+    const [description, setDescription] = useState(task.description);
 
-  const handleChange = (value: string, name: TaskFieldType) => {
-    taskDispatch({ type: name, payload: value });
-  };
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        task.title = title;
+        task.description = description;
+        const isTaskEmpty = task.title === '' || task.description === '';
+        if (isTaskEmpty) {
+            alert('Title and description are required');
+            return;
+        }
+        onSubmit(task);
+    };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const isTaskEmpty = task.title === "" || task.description === "";
-    if (isTaskEmpty) {
-      alert("Title and description are required");
-      return;
-    }
-    onSubmit(task);
-  };
-
-  return {
-    task,
-    handleChange,
-    handleSubmit,
-  };
+    return {
+        title,
+        setTitle,
+        description,
+        setDescription,
+        handleSubmit,
+    };
 };

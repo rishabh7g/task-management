@@ -30,8 +30,6 @@ const validateSchemaMiddleware = require('../middleware/validate.middleware.js')
  *                 type: string
  *               description:
  *                 type: string
- *               category:
- *                 type: string
  *               status:
  *                 type: string
  *     responses:
@@ -114,8 +112,6 @@ router.get('/tasks/:taskId', tasksController.getTask);
  *               title:
  *                 type: string
  *               description:
- *                 type: string
- *               category:
  *                 type: string
  *               status:
  *                 type: string

@@ -13,7 +13,7 @@ const App = () => {
         <Router>
             <Suspense fallback={<div>Loading...</div>}>
                 <Header />
-                <main className='flex min-h-screen items-start justify-center bg-sky-700 pt-40'>
+                <main className='flex min-h-screen items-start justify-center bg-cyan-900 pt-40'>
                     <Routes />
                 </main>
             </Suspense>
