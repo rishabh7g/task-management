@@ -23,11 +23,8 @@ The Task Management React App is a comprehensive application designed to help us
 task-management-app/
 │
 ├── .husky/
-│
 ├── build/
-│
 ├── jest/
-│
 ├── node_modules/
 │
 ├── server/
@@ -65,6 +62,9 @@ task-management-app/
 │   └── routes.tsx
 │
 ├── webpack/
+│   ├── webpack.common.js
+│   ├── webpack.dev.js
+│   └── webpack.prod.js
 │
 ├── .babelrc
 ├── .env
@@ -210,3 +210,10 @@ We welcome contributions from the community. To contribute, follow these steps:
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+## Features
+
+- **Husky + Prettier + ESLint + lint-staged**: To enable effective coding practices, we use Husky for Git hooks, Prettier for code formatting, ESLint for linting, and lint-staged to run these tools pre-commit.
+- **Tailwind CSS**: We advise against using external CSS files. Instead, use Tailwind CSS for styling to maintain consistency and utility-first CSS principles.
+- **Clean Code**: All code should be written in a clean, concise, and descriptive format. Follow best practices for readability and maintainability.
+- **Accessibility (a11y)**: All code is written based on accessibility principles to ensure the application is usable by everyone, including those with disabilities.
