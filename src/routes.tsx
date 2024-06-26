@@ -29,10 +29,6 @@ const routes: RouteObject[] = [
         element: <RegistrationPage />,
     },
     {
-        path: RoutePath.Unauthorized,
-        element: <UnauthorizedPage />,
-    },
-    {
         path: '/',
         element: <PersistLogin />,
         children: [
@@ -45,6 +41,10 @@ const routes: RouteObject[] = [
                 path: RoutePath.Admin,
                 element: <RequireAuth allowedRoles={['admin']} />,
                 children: [{ index: true, element: <AdminPage /> }],
+            },
+            {
+                path: RoutePath.Unauthorized,
+                element: <UnauthorizedPage />,
             },
         ],
     },
