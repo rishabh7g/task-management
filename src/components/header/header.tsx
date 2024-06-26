@@ -26,9 +26,14 @@ export const Header = () => {
                         alt='Task Management App logo'
                         className='h-10 w-10 rounded-2xl'
                     />
-                    <h1 className='text-2xl font-bold'>Task Management App</h1>
+                    <h1
+                        className='text-2xl font-bold'
+                        aria-label='Task Management App'
+                    >
+                        Task Management App
+                    </h1>
                 </div>
-                <nav>
+                <nav aria-label='Main Navigation'>
                     <ul className='flex items-center gap-6'>
                         <CustomLink
                             to={RoutePath.Home}
