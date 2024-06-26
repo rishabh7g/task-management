@@ -1,15 +1,15 @@
 interface FormProps {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  className?: string;
-  children: React.ReactNode;
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+    className?: string;
+    children: React.ReactNode;
 }
 
 const Form = ({ onSubmit, className, children }: FormProps) => {
-  return (
-    <form onSubmit={onSubmit} className={className}>
-      {children}
-    </form>
-  );
+    return (
+        <form onSubmit={onSubmit} className={className} aria-live='polite'>
+            {children}
+        </form>
+    );
 };
 
 export default Form;
