@@ -14,9 +14,16 @@ export const TaskList = ({ tasks, onEdit, onDelete }: TaskListProps) => {
                 <div
                     key={task.id}
                     className='flex items-center justify-between rounded bg-white p-4 px-5 shadow'
+                    role='group'
+                    aria-labelledby={`task-${task.id}`}
                 >
                     <div>
-                        <h3 className='text-xl font-bold'>{task.title}</h3>
+                        <h3
+                            id={`task-${task.id}`}
+                            className='text-xl font-bold'
+                        >
+                            {task.title}
+                        </h3>
                         <p>{task.description}</p>
                     </div>
                     <div>
@@ -24,12 +31,12 @@ export const TaskList = ({ tasks, onEdit, onDelete }: TaskListProps) => {
                             label='Edit'
                             onClick={() => onEdit(task)}
                             className='mr-2'
-                            aria-label={`Edit task: ${task.title}`}
+                            ariaLabel={`Edit task: ${task.title}`}
                         />
                         <SecondaryButton
                             label='Delete'
                             onClick={() => onDelete(task.id)}
-                            aria-label={`Delete task: ${task.title}`}
+                            ariaLabel={`Delete task: ${task.title}`}
                         />
                     </div>
                 </div>
