@@ -5,6 +5,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     label: string;
     onClick?: () => void;
     className?: string;
+    ariaLabel?: string;
 }
 
 const Button = ({
@@ -13,6 +14,7 @@ const Button = ({
     type = 'button',
     className = '',
     disabled = false,
+    ariaLabel = label,
     ...props
 }: ButtonProps) => {
     return (
@@ -27,7 +29,7 @@ const Button = ({
                 className,
             )}
             disabled={disabled}
-            aria-label={label}
+            aria-label={ariaLabel}
             {...props}
         >
             {label}
@@ -43,6 +45,7 @@ export const PrimaryButton = ({
     type,
     className,
     disabled,
+    ariaLabel,
 }: ButtonProps) => {
     return (
         <Button
@@ -57,6 +60,7 @@ export const PrimaryButton = ({
                 className,
             )}
             disabled={disabled}
+            ariaLabel={ariaLabel}
         />
     );
 };
@@ -67,6 +71,7 @@ export const SecondaryButton = ({
     type,
     className,
     disabled,
+    ariaLabel,
 }: ButtonProps) => {
     return (
         <Button
@@ -81,6 +86,7 @@ export const SecondaryButton = ({
                         disabled,
                 },
             )}
+            ariaLabel={ariaLabel}
             disabled={disabled}
         />
     );
@@ -92,6 +98,7 @@ export const TertiaryButton = ({
     type,
     className,
     disabled,
+    ariaLabel,
 }: ButtonProps) => {
     return (
         <Button
@@ -99,6 +106,7 @@ export const TertiaryButton = ({
             onClick={onClick}
             type={type}
             disabled={disabled}
+            ariaLabel={ariaLabel}
             className={classNames(
                 'px-0 py-1 text-blue-500 hover:underline hover:underline-offset-4',
                 {
