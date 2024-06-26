@@ -63,6 +63,7 @@ const Input = ({
                 onBlur={onBlur}
                 aria-describedby={ariaDescribedby}
                 aria-invalid={ariaInvalid}
+                aria-required={required ? true : undefined}
                 ref={htmlRef}
                 placeholder={placeholder}
             />

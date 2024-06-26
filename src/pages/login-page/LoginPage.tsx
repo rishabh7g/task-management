@@ -32,12 +32,22 @@ const LoginPage = () => {
     } = useLoginPageManagement();
 
     return (
-        <section className='w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg'>
-            <h2 className='mt-6 text-center text-3xl font-extrabold text-gray-900'>
+        <section
+            className='w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg'
+            aria-labelledby='login-heading'
+        >
+            <h2
+                id='login-heading'
+                className='mt-6 text-center text-3xl font-extrabold text-gray-900'
+            >
                 Login to your account
             </h2>
             <ErrorMessage errorMessage={errorMessage} htmlRef={errorRef} />
-            <Form onSubmit={handleLogin} className='flex flex-col gap-5'>
+            <Form
+                onSubmit={handleLogin}
+                className='flex flex-col gap-5'
+                aria-describedby='error-message'
+            >
                 <Input
                     label={LOGIN_FORM_DATA.email.label}
                     name={LOGIN_FORM_DATA.email.name}
@@ -46,6 +56,7 @@ const LoginPage = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     htmlRef={emailRef}
+                    required
                 />
                 <Input
                     label={LOGIN_FORM_DATA.password.label}
@@ -54,6 +65,7 @@ const LoginPage = () => {
                     type={InputType.PASSWORD}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                 />
                 <CheckboxInput
                     label='Trust this device'
@@ -65,7 +77,6 @@ const LoginPage = () => {
                     }
                     onChange={toggleIsPersistLogin}
                 />
-
                 <PrimaryButton
                     label={
                         isLoading
