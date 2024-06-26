@@ -11,8 +11,8 @@ The Task Management React App is a comprehensive application designed to help us
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
-- [Running the Backend](#running-the-backend)
 - [Running the Frontend](#running-the-frontend)
+- [Running the Backend](#running-the-backend)
 - [API Documentation](#api-documentation)
 - [Contributing](#contributing)
 - [License](#license)
@@ -22,23 +22,64 @@ The Task Management React App is a comprehensive application designed to help us
 ```
 task-management-app/
 │
-├── backend/
+├── .husky/
+│
+├── build/
+│
+├── jest/
+│
+├── node_modules/
+│
+├── server/
+│   ├── config/
+│   ├── constant/
+│   ├── controllers/
+│   ├── data/
+│   ├── middleware/
+│   ├── node_modules/
+│   ├── routes/
+│   ├── schemas/
+│   ├── util/
+│   ├── views/
 │   ├── .env
+│   ├── db.json
+│   ├── package-lock.json
 │   ├── package.json
 │   ├── server.js
 │   └── swagger.js
 │
-├── frontend/
-│   ├── .env
-│   ├── package.json
-│   └── src/
-│       ├── components/
-│       ├── pages/
-│       ├── App.tsx
-│       └── index.tsx
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── constant/
+│   ├── context/
+│   ├── hooks/
+│   ├── pages/
+│   ├── services/
+│   ├── types/
+│   ├── App.tsx
+│   ├── declarations.d.ts
+│   ├── index.css
+│   ├── index.html
+│   ├── index.tsx
+│   └── routes.tsx
 │
+├── webpack/
+│
+├── .babelrc
+├── .env
+├── .eslintignore
+├── .eslintrc.js
+├── .gitignore
+├── .prettierrc
+├── jest.config.js
+├── package-lock.json
+├── package.json
+├── postcss.config.js
 ├── README.md
-└── .gitignore
+├── tailwind.config.js
+├── tsconfig.json
+└── webpack.config.js
 ```
 
 ## Getting Started
@@ -55,30 +96,51 @@ Ensure you have the following installed on your machine:
 1. **Clone the repository**
 
    ```sh
-   git clone https://github.com/your-username/task-management-app.git
+   git clone https://github.com/rishabh7g/task-management.git
    cd task-management-app
    ```
 
 2. **Install dependencies for both backend and frontend**
 
    ```sh
-   # Navigate to the backend directory and install dependencies
-   cd backend
-   npm install
-
    # Navigate to the frontend directory and install dependencies
-   cd ../frontend
+   npm install
+   
+   # Navigate to the backend directory and install dependencies
+   cd server
    npm install
    ```
+   
+
+## Running the Frontend
+
+To start the frontend development server, follow these steps:
+
+1. **Ensure the `.env` file is configured correctly**
+
+   The `.env` file should contain the following environment variable:
+
+   ```env
+   REACT_APP_API_BASE_URL=http://localhost:8090
+   ```
+
+3. **Start the frontend development server**
+
+   ```sh
+   npm start
+   ```
+
+   The frontend server should now be running on [http://localhost:3000](http://localhost:3000).
+
 
 ## Running the Backend
 
 To start the backend server, follow these steps:
 
-1. **Navigate to the backend directory**
+1. **Navigate to the server directory**
 
    ```sh
-   cd backend
+   cd server
    ```
 
 2. **Ensure the `.env` file is configured correctly**
@@ -102,31 +164,6 @@ To start the backend server, follow these steps:
 
    The backend server should now be running on [http://localhost:8090](http://localhost:8090).
 
-## Running the Frontend
-
-To start the frontend development server, follow these steps:
-
-1. **Navigate to the frontend directory**
-
-   ```sh
-   cd frontend
-   ```
-
-2. **Ensure the `.env` file is configured correctly**
-
-   The `.env` file should contain the following environment variable:
-
-   ```env
-   REACT_APP_API_BASE_URL=http://localhost:8090
-   ```
-
-3. **Start the frontend development server**
-
-   ```sh
-   npm start
-   ```
-
-   The frontend server should now be running on [http://localhost:3000](http://localhost:3000).
 
 ## API Documentation
 
