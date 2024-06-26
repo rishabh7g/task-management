@@ -1,9 +1,9 @@
 const { HttpStatusCode } = require('axios');
 const { getUserByEmail, addRefreshToken } = require('../data/user.data');
 const {
-    createJSONToken,
     isValidPassword,
     generateAccessToken,
+    generateRefreshAccessToken,
 } = require('../util/auth.util');
 
 const {
@@ -11,6 +11,10 @@ const {
     MESSAGE_INVALID_EMAIL_OR_PASSWORD,
     MESSAGE_EMAIL_NOT_EXISTS,
 } = require('../constant/message.constant');
+const {
+    ACCESS_TOKEN_EXPIRES_IN,
+    REFRESH_TOKEN_EXPIRES_IN,
+} = require('../constant/time.constant');
 
 const DURATION_24_HOURS = 24 * 60 * 60 * 1000;
 const REFRESH_TOKEN_COOKIE_CONFIG = {
@@ -44,10 +48,13 @@ const login = async (req, res) => {
     const { id, roles } = user;
 
     const userPayload = { id, email, roles };
-    const accessToken = generateAccessToken(userPayload);
-    const refreshToken = createJSONToken(
+    const accessToken = generateAccessToken(
         userPayload,
-        process.env.REFRESH_ACCESS_TOKEN_SECRET,
+        ACCESS_TOKEN_EXPIRES_IN,
+    );
+    const refreshToken = generateRefreshAccessToken(
+        userPayload,
+        REFRESH_TOKEN_EXPIRES_IN,
     );
     await addRefreshToken(id, refreshToken);
 

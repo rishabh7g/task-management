@@ -1,7 +1,6 @@
 const { sign, verify } = require('jsonwebtoken');
 const { compare } = require('bcryptjs');
 const { NotAuthError } = require('./errors.util');
-const { ACCESS_TOKEN_EXPIRES_IN } = require('../constant/time.constant');
 
 function createJSONToken(user, secret, expiresIn) {
     const config = expiresIn ? { expiresIn } : {};
@@ -39,11 +38,20 @@ function checkAuthMiddleware(req, res, next) {
     next();
 }
 
-const generateAccessToken = (payload) => {
+const generateAccessToken = (payload, expiresIn) => {
     const accessToken = createJSONToken(
         payload,
         process.env.ACCESS_TOKEN_SECRET,
-        ACCESS_TOKEN_EXPIRES_IN,
+        expiresIn,
+    );
+    return accessToken;
+};
+
+const generateRefreshAccessToken = (payload, expiresIn) => {
+    const accessToken = createJSONToken(
+        payload,
+        process.env.REFRESH_ACCESS_TOKEN_SECRET,
+        expiresIn,
     );
     return accessToken;
 };
@@ -53,3 +61,4 @@ exports.validateJSONToken = validateJSONToken;
 exports.isValidPassword = isValidPassword;
 exports.checkAuth = checkAuthMiddleware;
 exports.generateAccessToken = generateAccessToken;
+exports.generateRefreshAccessToken = generateRefreshAccessToken;

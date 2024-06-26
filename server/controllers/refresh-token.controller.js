@@ -5,6 +5,7 @@ const {
 } = require('../constant/message.constant');
 const { getUserByRefreshToken } = require('../data/user.data');
 const { generateAccessToken } = require('../util/auth.util');
+const { ACCESS_TOKEN_EXPIRES_IN } = require('../constant/time.constant');
 
 const generateNewToken = async (req, res) => {
     const cookies = req.cookies;
@@ -32,7 +33,10 @@ const generateNewToken = async (req, res) => {
                 }
                 const { id, email, roles } = user;
                 const userPayload = { id, email, roles };
-                const accessToken = generateAccessToken(userPayload);
+                const accessToken = generateAccessToken(
+                    userPayload,
+                    ACCESS_TOKEN_EXPIRES_IN,
+                );
                 res.json({ accessToken, roles });
             },
         );
