@@ -43,7 +43,7 @@ const login = async (req, res) => {
 
     const { id, roles } = user;
 
-    const userPayload = { email, id };
+    const userPayload = { id, email, roles };
     const accessToken = generateAccessToken(userPayload);
     const refreshToken = createJSONToken(
         userPayload,

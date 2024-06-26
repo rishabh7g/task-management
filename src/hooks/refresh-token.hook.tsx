@@ -7,15 +7,11 @@ export const useRefreshToken = () => {
     const fetchRefreshToken = async () => {
         const response = await apiClient.post<{
             accessToken: string;
+            roles: string[];
         }>(apiRoutes.createRefreshTokenUrl(), {}, { withCredentials: true });
 
-        const { accessToken } = response.data;
-        loginUser(
-            authState.email,
-            authState.password,
-            accessToken,
-            authState.roles,
-        );
+        const { accessToken, roles } = response.data;
+        loginUser(authState.email, authState.password, accessToken, roles);
         return accessToken;
     };
 

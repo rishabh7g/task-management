@@ -1,22 +1,22 @@
-import classNames from "classnames";
+import classNames from 'classnames';
 
 interface ErrorMessageProps {
-  errorMessage: string | null;
-  htmlRef: React.RefObject<HTMLParagraphElement>;
+    errorMessage: string | null;
+    htmlRef: React.RefObject<HTMLParagraphElement>;
 }
 
 export const ErrorMessage = ({
-  errorMessage = "",
-  htmlRef,
+    errorMessage = '',
+    htmlRef,
 }: ErrorMessageProps) => (
-  <p
-    ref={htmlRef}
-    className={classNames("px-4 p-2 bg-red-200 rounded", {
-      "text-red-700": !!errorMessage,
-      hidden: !errorMessage,
-    })}
-    aria-live="assertive"
-  >
-    {errorMessage}
-  </p>
+    <p
+        ref={htmlRef}
+        className={classNames('rounded bg-red-200 p-2 px-4', {
+            'text-red-700': !!errorMessage,
+            hidden: !errorMessage,
+        })}
+        aria-live='assertive'
+    >
+        {errorMessage}
+    </p>
 );

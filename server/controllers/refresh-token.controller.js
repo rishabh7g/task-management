@@ -16,8 +16,8 @@ const generateNewToken = async (req, res) => {
     const isRefreshTokenEmpty = !refreshToken;
     if (isRefreshTokenEmpty) return res.sendStatus(HttpStatusCode.Unauthorized);
 
-    const user = await getUserByRefreshToken(refreshToken);
-    const isUserNotFound = !user;
+    const foundUser = await getUserByRefreshToken(refreshToken);
+    const isUserNotFound = !foundUser;
     if (isUserNotFound) return res.sendStatus(HttpStatusCode.Forbidden);
 
     try {
@@ -30,10 +30,10 @@ const generateNewToken = async (req, res) => {
                         message: MESSAGE_ERROR_VERIFYING_REFRESH_TOKEN,
                     });
                 }
-                const { id, email } = user;
-                const userPayload = { id, email };
+                const { id, email, roles } = user;
+                const userPayload = { id, email, roles };
                 const accessToken = generateAccessToken(userPayload);
-                res.json({ accessToken });
+                res.json({ accessToken, roles });
             },
         );
     } catch (error) {

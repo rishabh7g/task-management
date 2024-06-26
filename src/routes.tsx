@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
+import { PersistLogin } from 'src/components/persist-login/PersistLogin';
 import { RequireAuth } from 'src/components/require-auth/RequireAuth';
 import UnauthorizedPage from 'src/pages/unauthorize-page/UnauthorizePage';
 
@@ -32,14 +33,19 @@ const routes: RouteObject[] = [
         element: <UnauthorizedPage />,
     },
     {
-        path: RoutePath.Home,
-        element: <RequireAuth allowedRoles={['user']} />,
-        children: [{ index: true, element: <TaskPage /> }],
-    },
-    {
-        path: RoutePath.Admin,
-        element: <RequireAuth allowedRoles={['admin']} />,
-        children: [{ index: true, element: <AdminPage /> }],
+        element: <PersistLogin />,
+        children: [
+            {
+                path: RoutePath.Home,
+                element: <RequireAuth allowedRoles={['user']} />,
+                children: [{ index: true, element: <TaskPage /> }],
+            },
+            {
+                path: RoutePath.Admin,
+                element: <RequireAuth allowedRoles={['admin']} />,
+                children: [{ index: true, element: <AdminPage /> }],
+            },
+        ],
     },
 ];
 
