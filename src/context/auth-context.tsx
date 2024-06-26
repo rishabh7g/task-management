@@ -1,10 +1,12 @@
 import { createContext, useContext, useReducer } from 'react';
+import { LocalStorageKeys } from 'src/constant/local-storage.constant';
 import {
     AuthAction,
     AuthActionType,
     AuthContextValue,
     AuthState,
 } from 'src/context/auth-context.types';
+import { localStorageService } from 'src/services/local-storage/local-storage';
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
@@ -12,6 +14,8 @@ const INITIAL_AUTH_STATE: AuthState = {
     email: '',
     password: '',
     accessToken: '',
+    isPersistLogin:
+        localStorageService.get(LocalStorageKeys.IS_PERSIST_LOGIN) || false,
     roles: [],
 };
 
@@ -20,7 +24,9 @@ const authReducer = (state: AuthState, action: AuthAction): AuthState => {
         case AuthActionType.LOGIN:
             return action.payload;
         case AuthActionType.LOGOUT:
-            return { accessToken: '', email: '', password: '', roles: [] };
+            return INITIAL_AUTH_STATE;
+        case AuthActionType.TOGGLE_PERSIST_LOGIN:
+            return { ...state, isPersistLogin: !state.isPersistLogin };
         default:
             return state;
     }
@@ -50,21 +56,20 @@ export const useAuth = () => {
     }
     const { authState, dispatch } = context;
 
-    const loginUser = (
-        email: string,
-        password: string,
-        accessToken: string,
-        roles: string[],
-    ) => {
+    const loginUser = (newState: AuthState) => {
         dispatch({
             type: AuthActionType.LOGIN,
-            payload: { email, password, accessToken, roles },
+            payload: newState,
         });
+    };
+
+    const toggleIsPersistLogin = () => {
+        dispatch({ type: AuthActionType.TOGGLE_PERSIST_LOGIN });
     };
 
     const logoutUser = () => {
         dispatch({ type: AuthActionType.LOGOUT });
     };
 
-    return { authState, loginUser, logoutUser };
+    return { authState, toggleIsPersistLogin, loginUser, logoutUser };
 };

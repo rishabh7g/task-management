@@ -9,6 +9,7 @@ export const PersistLogin = () => {
     const { authState } = useAuth();
 
     useEffect(() => {
+        let isMounted = true;
         const verifyRefreshToken = async () => {
             try {
                 await fetchRefreshToken();
@@ -16,16 +17,22 @@ export const PersistLogin = () => {
                 // eslint-disable-next-line no-console
                 console.error(error);
             } finally {
-                setIsLoading(false);
+                isMounted && setIsLoading(false);
             }
         };
 
         const isUserNotLoggedIn = !authState.accessToken;
-        if (isUserNotLoggedIn) {
+        const shouldVerifyRefreshToken =
+            isUserNotLoggedIn && authState.isPersistLogin;
+
+        if (shouldVerifyRefreshToken) {
             verifyRefreshToken();
         } else {
             setIsLoading(false);
         }
+        return () => {
+            isMounted = false;
+        };
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

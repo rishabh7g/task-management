@@ -2,25 +2,34 @@ import { HttpStatusCode } from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { apiRoutes } from 'src/constant/api-routes';
+import { LocalStorageKeys } from 'src/constant/local-storage.constant';
 import { useAuth } from 'src/context/auth-context';
 import { RoutePath } from 'src/routes';
 import { apiClient } from 'src/services/api/api-service';
+import { localStorageService } from 'src/services/local-storage/local-storage';
 
 export const useLoginPageManagement = () => {
-    const { loginUser } = useAuth();
+    const { authState, loginUser, toggleIsPersistLogin } = useAuth();
 
     const emailRef = useRef<HTMLInputElement>(null);
     const errorRef = useRef<HTMLDivElement>(null);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
 
+    const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || RoutePath.Home;
+
+    useEffect(() => {
+        localStorageService.set(
+            LocalStorageKeys.IS_PERSIST_LOGIN,
+            authState.isPersistLogin,
+        );
+    }, [authState.isPersistLogin]);
 
     useEffect(() => {
         const isEmailFieldExist = !!emailRef.current;
@@ -34,20 +43,19 @@ export const useLoginPageManagement = () => {
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsLoading(true);
+        const payload = { email, password };
         apiClient
-            .post(
-                apiRoutes.createLoginUrl(),
-                {
-                    email,
-                    password,
-                },
-                {
-                    withCredentials: true,
-                },
-            )
+            .post(apiRoutes.createLoginUrl(), payload, {
+                withCredentials: true,
+            })
             .then((response) => {
                 const { accessToken, roles } = response.data;
-                loginUser(email, password, accessToken, roles);
+
+                loginUser({
+                    ...authState,
+                    accessToken,
+                    roles,
+                });
                 navigate(from);
             })
             .catch((error) => {
@@ -80,6 +88,8 @@ export const useLoginPageManagement = () => {
         isLoading,
         emailRef,
         isLoginButtonDisabled,
+        isPersistLogin: authState.isPersistLogin,
+        toggleIsPersistLogin,
     };
 };
 

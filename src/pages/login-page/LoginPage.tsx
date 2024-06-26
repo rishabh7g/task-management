@@ -1,5 +1,9 @@
 import { PrimaryButton, TertiaryButton } from 'src/components/button/Button';
 import { ButtonType } from 'src/components/button/common/types/Button.types';
+import {
+    CheckboxInput,
+    CheckboxValue,
+} from 'src/components/checkbox-input/CheckboxInput';
 import { ErrorMessage } from 'src/components/error-message/ErrorMessage';
 import Form from 'src/components/form/Form';
 import Input from 'src/components/input/Input';
@@ -23,6 +27,8 @@ const LoginPage = () => {
         isLoading,
         emailRef,
         isLoginButtonDisabled,
+        isPersistLogin,
+        toggleIsPersistLogin,
     } = useLoginPageManagement();
 
     return (
@@ -49,6 +55,17 @@ const LoginPage = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
+                <CheckboxInput
+                    label='Trust this device'
+                    name='loginPageTrustDevice'
+                    value={
+                        isPersistLogin
+                            ? CheckboxValue.Checked
+                            : CheckboxValue.Unchecked
+                    }
+                    onChange={toggleIsPersistLogin}
+                />
+
                 <PrimaryButton
                     label={
                         isLoading

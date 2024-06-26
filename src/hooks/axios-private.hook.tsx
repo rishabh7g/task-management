@@ -6,7 +6,7 @@ import { apiClientPrivate } from 'src/services/api/api-service';
 
 export const useAxiosPrivate = () => {
     const { fetchRefreshToken } = useRefreshToken();
-    const { authState } = useAuth();
+    const { authState, logoutUser } = useAuth();
 
     useEffect(() => {
         const requestIntercept = apiClientPrivate.interceptors.request.use(
@@ -33,9 +33,15 @@ export const useAxiosPrivate = () => {
                 if (shouldRetryRequest) {
                     previousRequest.sent = true;
                     const newAccessToken = await fetchRefreshToken();
-                    previousRequest.headers['Authorization'] =
-                        `Bearer ${newAccessToken}`;
-                    return apiClientPrivate(previousRequest);
+                    const isNewAccessTokenValid = !!newAccessToken;
+                    if (isNewAccessTokenValid) {
+                        previousRequest.headers['Authorization'] =
+                            `Bearer ${newAccessToken}`;
+                        return apiClientPrivate(previousRequest);
+                    } else {
+                        logoutUser();
+                        return Promise.reject(error);
+                    }
                 }
                 return Promise.reject(error);
             },
@@ -45,7 +51,7 @@ export const useAxiosPrivate = () => {
             apiClientPrivate.interceptors.request.eject(requestIntercept);
             apiClientPrivate.interceptors.response.eject(responseIntercept);
         };
-    }, [authState, fetchRefreshToken]);
+    }, [authState, fetchRefreshToken, logoutUser]);
 
     return { apiClientPrivate };
 };

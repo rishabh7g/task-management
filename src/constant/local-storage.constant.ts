@@ -1,3 +1,4 @@
 export enum LocalStorageKeys {
-  TOKEN = "token",
+    TOKEN = 'token',
+    IS_PERSIST_LOGIN = 'isPersistLogin',
 }

@@ -5,14 +5,22 @@ import { apiClient } from 'src/services/api/api-service';
 export const useRefreshToken = () => {
     const { authState, loginUser } = useAuth();
     const fetchRefreshToken = async () => {
-        const response = await apiClient.post<{
-            accessToken: string;
-            roles: string[];
-        }>(apiRoutes.createRefreshTokenUrl(), {}, { withCredentials: true });
+        try {
+            const response = await apiClient.post<{
+                accessToken: string;
+                roles: string[];
+            }>(
+                apiRoutes.createRefreshTokenUrl(),
+                {},
+                { withCredentials: true },
+            );
 
-        const { accessToken, roles } = response.data;
-        loginUser(authState.email, authState.password, accessToken, roles);
-        return accessToken;
+            const { accessToken, roles } = response.data;
+            loginUser({ ...authState, accessToken, roles });
+            return accessToken;
+        } catch (error) {
+            return null;
+        }
     };
 
     return { fetchRefreshToken };

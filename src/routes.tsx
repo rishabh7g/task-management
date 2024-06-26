@@ -33,6 +33,7 @@ const routes: RouteObject[] = [
         element: <UnauthorizedPage />,
     },
     {
+        path: '/',
         element: <PersistLogin />,
         children: [
             {
