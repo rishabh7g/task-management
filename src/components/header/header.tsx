@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoUrl from 'src/assets/task-app.logo.jpg';
 import { TertiaryButton } from 'src/components/button/Button';
@@ -7,7 +6,7 @@ import { useAuth } from 'src/context/auth-context';
 import { RoutePath } from 'src/routes';
 import { apiClient } from 'src/services/api/api-service';
 
-export const Header: React.FC = () => {
+export const Header = () => {
     const { authState, logoutUser } = useAuth();
     const isUserLoggedIn = !!authState.accessToken;
 
