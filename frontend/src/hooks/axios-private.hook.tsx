@@ -33,6 +33,7 @@ export const useAxiosPrivate = () => {
                 if (shouldRetryRequest) {
                     previousRequest.sent = true;
                     const newAccessToken = await fetchRefreshToken();
+                    console.log("🚀 ~ newAccessToken:", newAccessToken)
                     const isNewAccessTokenValid = !!newAccessToken;
                     if (isNewAccessTokenValid) {
                         previousRequest.headers['Authorization'] =
