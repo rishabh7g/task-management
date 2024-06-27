@@ -1,5 +1,6 @@
 node_modules
 build
-/server/db.json
+dist
+/backend/db.json
 DS_Store
 .env
