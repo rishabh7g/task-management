@@ -1,6 +1,6 @@
-import { HttpStatusCode } from 'axios';
 import { Request, Response } from 'express';
 import { v4 as uuidv4 } from 'uuid';
+import { HttpStatusCode } from '../constant/http-status-code.constant';
 import {
     MESSAGE_TASK_NOT_FOUND,
     MESSAGE_USER_NOT_FOUND,
@@ -92,4 +92,4 @@ export const deleteTask = async (req: Request, res: Response) => {
     }
     await removeTask(taskId, userId);
     res.status(HttpStatusCode.NoContent).send();
-};
+}

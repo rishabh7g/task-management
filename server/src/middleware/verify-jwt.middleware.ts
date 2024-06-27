@@ -1,4 +1,4 @@
-import { HttpStatusCode } from 'axios';
+import { HttpStatusCode } from '../constant/http-status-code.constant';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 

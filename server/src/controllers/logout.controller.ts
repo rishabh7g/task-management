@@ -1,4 +1,4 @@
-import { HttpStatusCode } from 'axios';
+import { HttpStatusCode } from '../constant/http-status-code.constant';
 import { CookieOptions, Request, Response } from 'express';
 import { getUserByRefreshToken, eraseRefreshToken } from '../data/user.data';
 
