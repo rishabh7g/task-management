@@ -22,64 +22,65 @@ The Task Management React App is a comprehensive application designed to help us
 ```
 task-management-app/
 │
-├── .husky/
-├── build/
-├── jest/
-├── node_modules/
-│
-├── server/
-│   ├── config/
-│   ├── constant/
-│   ├── controllers/
-│   ├── data/
-│   ├── middleware/
+├── backend/
 │   ├── node_modules/
-│   ├── routes/
-│   ├── schemas/
-│   ├── util/
-│   ├── views/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── constant/
+│   │   ├── controllers/
+│   │   ├── data/
+│   │   ├── middleware/
+│   │   ├── routes/
+│   │   ├── schemas/
+│   │   ├── types/
+│   │   ├── util/
+│   │   ├── views/
+│   │   ├── express.d.ts
+│   │   ├── server.ts
+│   │   └── swagger.ts
 │   ├── .env
+│   ├── .prettierrc
 │   ├── db.json
 │   ├── package-lock.json
 │   ├── package.json
-│   ├── server.js
-│   └── swagger.js
+│   └── tsconfig.json
 │
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── constant/
-│   ├── context/
-│   ├── hooks/
-│   ├── pages/
-│   ├── services/
-│   ├── types/
-│   ├── App.tsx
-│   ├── declarations.d.ts
-│   ├── index.css
-│   ├── index.html
-│   ├── index.tsx
-│   └── routes.tsx
+├── frontend/
+│   ├── jest/
+│   ├── node_modules/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── constant/
+│   │   ├── context/
+│   │   ├── hooks/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── types/
+│   │   ├── App.tsx
+│   │   ├── declarations.d.ts
+│   │   ├── index.css
+│   │   ├── index.html
+│   │   ├── index.tsx
+│   │   └── routes.tsx
+│   ├── webpack/
+│   ├── .babelrc
+│   ├── .env
+│   ├── .prettierrc
+│   ├── jest.config.js
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── tailwind.config.js
+│   ├── tsconfig.json
+│   ├── webpack.config.js
+│   ├── .eslintignore
+│   ├── .eslintrc.js
+│   ├── .gitignore
+│   └── README.md
 │
-├── webpack/
-│   ├── webpack.common.js
-│   ├── webpack.dev.js
-│   └── webpack.prod.js
-│
-├── .babelrc
-├── .env
-├── .eslintignore
-├── .eslintrc.js
 ├── .gitignore
-├── .prettierrc
-├── jest.config.js
-├── package-lock.json
-├── package.json
-├── postcss.config.js
-├── README.md
-├── tailwind.config.js
-├── tsconfig.json
-└── webpack.config.js
+└── README.md
 ```
 
 ## Getting Started
@@ -116,7 +117,13 @@ Ensure you have the following installed on your machine:
 
 To start the frontend development server, follow these steps:
 
-1. **Ensure the `.env` file is configured correctly**
+1. **Navigate to the server directory**
+
+   ```sh
+   cd frontend
+   ```
+
+2. **Ensure the `.env` file is configured correctly**
 
    The `.env` file should contain the following environment variable:
 
@@ -140,7 +147,7 @@ To start the backend server, follow these steps:
 1. **Navigate to the server directory**
 
    ```sh
-   cd server
+   cd backend
    ```
 
 2. **Ensure the `.env` file is configured correctly**
