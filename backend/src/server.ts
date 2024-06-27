@@ -13,8 +13,6 @@ import registerRoutes from './routes/register.routes';
 import taskRoutes from './routes/tasks.routes';
 import swaggerSetup from './swagger';
 
-
-
 require('dotenv').config();
 
 const app = express();
@@ -25,7 +23,7 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(headerMiddleware(process.env.FRONTEND_URL || ""));
+app.use(headerMiddleware(process.env.FRONTEND_URL || ''));
 app.use('/api-docs', swaggerSetup);
 
 app.use(registerRoutes);
