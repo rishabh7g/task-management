@@ -1,17 +1,20 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Request, Response } from 'express';
-import corsOptions from './config/cors-options.config';
-import credentials from './middleware/credentials.middleware';
-import { headerMiddleware } from './middleware/headers.middleware';
-import networkErrorMiddleware from './middleware/network-error.middleware';
-import verifyJWT from './middleware/verify-jwt.middleware';
-import loginRoutes from './routes/login.routes';
-import logoutRoutes from './routes/logout.routes';
-import refreshTokenRoutes from './routes/refresh-token.routes';
-import registerRoutes from './routes/register.routes';
-import taskRoutes from './routes/tasks.routes';
-import swaggerSetup from './swagger';
+import corsOptions from 'src/config/cors-options.config';
+import credentials from 'src/middleware/credentials.middleware';
+import { headerMiddleware } from 'src/middleware/headers.middleware';
+import networkErrorMiddleware from 'src/middleware/network-error.middleware';
+import verifyJWT from 'src/middleware/verify-jwt.middleware';
+import loginRoutes from 'src/routes/login.routes';
+import logoutRoutes from 'src/routes/logout.routes';
+import refreshTokenRoutes from 'src/routes/refresh-token.routes';
+import registerRoutes from 'src/routes/register.routes';
+import taskRoutes from 'src/routes/tasks.routes';
+import swaggerSetup from 'src/swagger';
+
+// can you generate 16 bytes secret key
+require('crypto').randomBytes(16).toString('hex');
 
 require('dotenv').config();
 

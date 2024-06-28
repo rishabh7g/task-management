@@ -1,6 +1,6 @@
 import { compare } from 'bcryptjs';
 import { sign, verify } from 'jsonwebtoken';
-import { NotAuthError } from './errors.util';
+import { NotAuthError } from 'src/util/errors.util';
 
 export function createJSONToken(
     user: any,

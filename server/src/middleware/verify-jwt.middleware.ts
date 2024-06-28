@@ -1,6 +1,6 @@
-import { HttpStatusCode } from 'axios';
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { HttpStatusCode } from 'src/constant/http-status-code';
 
 /**
  * Middleware to authorize access token from request header.

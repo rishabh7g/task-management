@@ -1,17 +1,17 @@
-import { HttpStatusCode } from 'axios';
 import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
+import { HttpStatusCode } from 'src/constant/http-status-code';
 import {
     MESSAGE_TASK_NOT_FOUND,
     MESSAGE_USER_NOT_FOUND,
-} from '../constant/message.constant';
+} from 'src/constant/message.constant';
 import {
     addNewTask,
     getUserById,
     removeTask,
     updateExistingTask,
-} from '../data/user.data';
-import { Task } from '../types/data.types';
+} from 'src/data/user.data';
+import { Task } from 'src/types/data.types';
+import { v4 as uuidv4 } from 'uuid';
 
 const _userNotFound = (res: Response) => {
     return res

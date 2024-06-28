@@ -1,8 +1,8 @@
 import { hash } from 'bcryptjs';
 import { v4 as generateId } from 'uuid';
-import { StoredData, Task, User } from '../types/data.types';
-import { NotFoundError } from '../util/errors.util';
-import { readData, writeData } from '../util/file.util';
+import { StoredData, Task, User } from 'src/types/data.types';
+import { NotFoundError } from 'src/util/errors.util';
+import { readData, writeData } from 'src/util/file.util';
 
 export async function createUser(data: {
     email: string;
@@ -80,40 +80,24 @@ export async function getUserById(userId?: string): Promise<User | undefined> {
     if (isUserIdNotProvided) {
         return undefined;
     }
-    const storedData = await readData<StoredData>();
-    if (!storedData.users || storedData.users.length === 0) {
-        throw new NotFoundError('Could not find any users.');
-    }
-
+    const storedData = await initializeData();
     const user = storedData.users.find((u) => u.id === userId);
     return user;
 }
 
-export async function getUserByEmail(email: string): Promise<User> {
-    const storedData = await readData<StoredData>();
-    if (!storedData.users || storedData.users.length === 0) {
-        throw new NotFoundError('Could not find any users.');
-    }
+export async function getUserByEmail(email: string): Promise<User | undefined> {
+    const storedData = await initializeData();
 
     const user = storedData.users.find((u) => u.email === email);
-    if (!user) {
-        throw new NotFoundError('Could not find user for email ' + email);
-    }
-
     return user;
 }
 
 export async function getUserByRefreshToken(
     refreshToken: string,
 ): Promise<User> {
-    const storedUserData: StoredData = await readData();
-    if (!storedUserData.users || storedUserData.users.length === 0) {
-        throw new NotFoundError('Could not find any users.');
-    }
+    const storedData = await initializeData();
 
-    const user = storedUserData.users.find(
-        (u) => u.refreshToken === refreshToken,
-    );
+    const user = storedData.users.find((u) => u.refreshToken === refreshToken);
     if (!user) {
         throw new NotFoundError(
             'Could not find user for refresh token ' + refreshToken,
@@ -132,13 +116,11 @@ export async function eraseRefreshToken(userId: string): Promise<void> {
 }
 
 async function _updateUser(user: User) {
-    const storedData = await readData<StoredData>();
-    if (!storedData.users || storedData.users.length === 0) {
-        throw new NotFoundError('Could not find any users.');
-    }
+    const storedData = await initializeData();
 
+    const isUsersFieldNotExists = !storedData.users;
     const isUsersEmmpty = storedData.users.length === 0;
-    if (isUsersEmmpty) {
+    if (isUsersFieldNotExists || isUsersEmmpty) {
         storedData.users = [user];
     } else {
         const index = storedData.users.findIndex((u) => u.id === user.id);
@@ -150,4 +132,17 @@ async function _updateUser(user: User) {
     }
 
     await writeData(storedData);
+}
+
+async function initializeData() {
+    const storedData = await readData<StoredData>();
+    const isUsersFieldNotExists = !storedData.users;
+    const isUsersEmmpty = storedData.users && storedData.users.length === 0;
+    if (isUsersFieldNotExists || isUsersEmmpty) {
+        const storedData = { users: [] };
+        await writeData(storedData);
+        return storedData;
+    } else {
+        return storedData;
+    }
 }

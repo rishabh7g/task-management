@@ -1,20 +1,20 @@
-import { HttpStatusCode } from 'axios';
 import { CookieOptions, Request, Response } from 'express';
+import { HttpStatusCode } from 'src/constant/http-status-code';
 import {
     MESSAGE_EMAIL_NOT_EXISTS,
     MESSAGE_INVALID_CREDENTIALS,
     MESSAGE_INVALID_EMAIL_OR_PASSWORD,
-} from '../constant/message.constant';
+} from 'src/constant/message.constant';
 import {
     ACCESS_TOKEN_EXPIRES_IN,
     REFRESH_TOKEN_EXPIRES_IN,
-} from '../constant/time.constant';
-import { addRefreshToken, getUserByEmail } from '../data/user.data';
+} from 'src/constant/time.constant';
+import { addRefreshToken, getUserByEmail } from 'src/data/user.data';
 import {
     generateAccessToken,
     generateRefreshAccessToken,
     isValidPassword,
-} from '../util/auth.util';
+} from 'src/util/auth.util';
 
 const DURATION_24_HOURS = 24 * 60 * 60 * 1000;
 
@@ -29,10 +29,10 @@ const login = async (req: Request, res: Response): Promise<void> => {
     const email: string = req.body.email;
     const password: string = req.body.password;
 
-    let user;
-    try {
-        user = await getUserByEmail(email);
-    } catch (error) {
+    const user = await getUserByEmail(email);
+
+    const isUserNotFound = !user;
+    if (isUserNotFound) {
         res.status(HttpStatusCode.NotFound).json({
             message: MESSAGE_EMAIL_NOT_EXISTS,
         });

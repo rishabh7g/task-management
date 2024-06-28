@@ -1,14 +1,14 @@
-import { HttpStatusCode } from 'axios';
 import { NextFunction, Request, Response } from 'express';
+import { HttpStatusCode } from 'src/constant/http-status-code';
 import {
     MESSAGE_EMAIL_EXISTS,
     MESSAGE_INVALID_PASSWORD,
     MESSAGE_USER_CREATED,
     MESSAGE_USER_REGISTER_FAILED,
-} from '../constant/message.constant';
-import { createUser, getUserByEmail } from '../data/user.data';
-import { User } from '../types/data.types';
-import { isValidEmail, isValidText } from '../util/validation.util';
+} from 'src/constant/message.constant';
+import { createUser, getUserByEmail } from 'src/data/user.data';
+import { User } from 'src/types/data.types';
+import { isValidEmail, isValidText } from 'src/util/validation.util';
 
 interface ErrorObject {
     email?: string;
@@ -20,24 +20,20 @@ const register = async (
     res: Response,
     next: NextFunction,
 ): Promise<void> => {
-    const data: User = req.body;
+    const newUser: User = req.body;
     const errors: ErrorObject = {};
 
-    if (!isValidEmail(data.email)) {
+    if (!isValidEmail(newUser.email)) {
         errors.email = MESSAGE_EMAIL_EXISTS;
     } else {
-        try {
-            const existingUser = await getUserByEmail(data.email);
-            if (existingUser) {
-                errors.email = MESSAGE_EMAIL_EXISTS;
-            }
-        } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error(error);
+        const existingUser = await getUserByEmail(newUser.email);
+        const isUserAlreadyExist = !!existingUser;
+        if (isUserAlreadyExist) {
+            errors.email = MESSAGE_EMAIL_EXISTS;
         }
     }
 
-    if (!isValidText(data.password, 6)) {
+    if (!isValidText(newUser.password, 6)) {
         errors.password = MESSAGE_INVALID_PASSWORD;
     }
 
@@ -51,7 +47,7 @@ const register = async (
 
     try {
         const user: User = {
-            ...data,
+            ...newUser,
             roles: ['user'],
         };
 

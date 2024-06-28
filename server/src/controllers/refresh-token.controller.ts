@@ -1,10 +1,9 @@
-import { HttpStatusCode } from 'axios';
+import { HttpStatusCode } from 'src/constant/http-status-code';
+
 import { verify } from 'jsonwebtoken';
 import { Request, Response } from 'express';
-import {
-    MESSAGE_ERROR_GENERATING_REFRESH_TOKEN,
-} from '../constant/message.constant';
-import { getUserByRefreshToken } from '../data/user.data';
+import { MESSAGE_ERROR_GENERATING_REFRESH_TOKEN } from 'src/constant/message.constant';
+import { getUserByRefreshToken } from 'src/data/user.data';
 
 const generateNewToken = async (req: Request, res: Response): Promise<void> => {
     const cookies = req.cookies;

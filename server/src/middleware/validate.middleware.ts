@@ -1,4 +1,5 @@
-import { HttpStatusCode } from 'axios';
+import { HttpStatusCode } from 'src/constant/http-status-code';
+
 import { NextFunction, Request, Response } from 'express';
 import { Schema } from 'joi';
 

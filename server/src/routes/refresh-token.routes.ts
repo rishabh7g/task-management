@@ -1,5 +1,5 @@
-const express = require('express');
-const { generateNewToken } = require('../controllers/refresh-token.controller');
+import express from 'express';
+import { generateNewToken } from 'src/controllers/refresh-token.controller';
 
 const router = express.Router();
 

@@ -5,9 +5,9 @@ import {
     getTask,
     getTasks,
     updateTask,
-} from '../controllers/tasks.controller';
-import validateSchemaMiddleware from '../middleware/validate.middleware';
-import { taskSchema } from '../schemas/task.schema';
+} from 'src/controllers/tasks.controller';
+import validateSchemaMiddleware from 'src/middleware/validate.middleware';
+import { taskSchema } from 'src/schemas/task.schema';
 
 const router = express.Router();
 /**

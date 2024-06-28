@@ -1,6 +1,6 @@
-import { HttpStatusCode } from 'axios';
 import { CookieOptions, Request, Response } from 'express';
-import { getUserByRefreshToken, eraseRefreshToken } from '../data/user.data';
+import { HttpStatusCode } from 'src/constant/http-status-code';
+import { eraseRefreshToken, getUserByRefreshToken } from 'src/data/user.data';
 
 const CLEAR_COOKIE_CONFIG: CookieOptions = {
     httpOnly: true,
