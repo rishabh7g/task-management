@@ -17,15 +17,7 @@ export const TaskList = ({ tasks, onEdit, onDelete }: TaskListProps) => {
                     role='group'
                     aria-labelledby={`task-${task.id}`}
                 >
-                    <div>
-                        <h3
-                            id={`task-${task.id}`}
-                            className='text-xl font-bold'
-                        >
-                            {task.title}
-                        </h3>
-                        <p>{task.description}</p>
-                    </div>
+                    <TaskPanel task={task} />
                     <div>
                         <SecondaryButton
                             label='Edit'
@@ -44,3 +36,12 @@ export const TaskList = ({ tasks, onEdit, onDelete }: TaskListProps) => {
         </div>
     );
 };
+
+const TaskPanel = ({ task }: { task: Task }) => (
+    <div>
+        <h3 id={`task-${task.id}`} className='text-xl font-bold'>
+            {task.title}
+        </h3>
+        <p>{task.description}</p>
+    </div>
+);

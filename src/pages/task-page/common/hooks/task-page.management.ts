@@ -83,6 +83,8 @@ export const useTaskPageManagement = () => {
         setEditingTask(undefined);
     };
 
+    const isTaskListEmpty = tasks.length === 0;
+
     return {
         tasks,
         editingTask,
@@ -93,5 +95,6 @@ export const useTaskPageManagement = () => {
         closeModal,
         openModal,
         isSubmitting,
+        isTaskListEmpty,
     };
 };

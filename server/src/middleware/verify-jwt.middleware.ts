@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import jwt from 'jsonwebtoken';
+import { verify } from 'jsonwebtoken';
 import { HttpStatusCode } from 'src/constant/http-status-code';
 
 /**
@@ -18,7 +18,7 @@ const verifyJWT = (req: Request, res: Response, next: NextFunction) => {
         return res.sendStatus(HttpStatusCode.Unauthorized);
     }
 
-    jwt.verify(
+    verify(
         token,
         process.env.ACCESS_TOKEN_SECRET as string,
         (err: any, user: any) => {
