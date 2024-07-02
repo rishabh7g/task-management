@@ -4,8 +4,3 @@ export enum InputType {
     EMAIL = 'email',
     CHECKBOX = 'checkbox',
 }
-
-export enum ButtonType {
-    SUBMIT = 'submit',
-    BUTTON = 'button',
-}
