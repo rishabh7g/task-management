@@ -75,4 +75,14 @@ export const testButtons = (Button: Button) => {
     });
 };
 
-describe('<Button />', () => {});
+describe('<PrimaryButton />', () => {
+    testButtons(PrimaryButton);
+});
+
+describe('<SecondaryButton />', () => {
+    testButtons(SecondaryButton);
+});
+
+describe('<TertiaryButton />', () => {
+    testButtons(TertiaryButton);
+});

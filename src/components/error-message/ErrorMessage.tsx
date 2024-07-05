@@ -15,6 +15,7 @@ export const ErrorMessage = ({
             'text-red-700': !!errorMessage,
             hidden: !errorMessage,
         })}
+        role='alert'
         aria-live='assertive'
     >
         {errorMessage}
