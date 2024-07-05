@@ -1,4 +1,6 @@
 /** @type {import('ts-jest').JestConfigWithTsJest} */
+const path = require('path');
+
 module.exports = {
     preset: 'ts-jest',
     rootDir: '.',
@@ -9,6 +11,7 @@ module.exports = {
     moduleNameMapper: {
         'src/(.*)$': '<rootDir>/src/$1',
     },
+    coverageDirectory: path.join(__dirname, 'coverage/frontend'),
     testEnvironmentOptions: {
         customExportConditions: [''],
     },

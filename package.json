@@ -6,7 +6,7 @@
   "scripts": {
     "start": "clear && webpack serve --config webpack.config.js --env env=dev",
     "build": "clear && webpack --config webpack.config.js --env env=prod",
-    "test": "jest",
+    "test": "jest --coverage",
     "prepare": "husky",
     "lint": "npm eslint ."
   },
