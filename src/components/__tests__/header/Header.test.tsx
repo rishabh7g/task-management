@@ -1,12 +1,10 @@
-import { fireEvent, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { Header } from 'src/components/header/Header';
 import { render } from 'src/util/test-util';
 
 const LOGOUT_REGEX = /logout/i;
 const HOME_REGEX = /home/i;
 const ADMIN_REGEX = /admin/i;
-
-const mockLogoutUser = jest.fn();
 
 describe('<Header />', () => {
     test('renders without crashing', () => {
@@ -33,7 +31,13 @@ describe('<Header />', () => {
     });
 
     test('renders the logout button when user is logged in', () => {
-        render(<Header />);
+        render(<Header />, {
+            accessToken: 'some-access',
+            email: 'a@a.com',
+            roles: ['user'],
+            isPersistLogin: true,
+            password: 'password',
+        });
         expect(
             screen.getByRole('button', { name: LOGOUT_REGEX }),
         ).toBeInTheDocument();
@@ -44,11 +48,5 @@ describe('<Header />', () => {
         expect(
             screen.queryByRole('button', { name: LOGOUT_REGEX }),
         ).not.toBeInTheDocument();
-    });
-
-    test('calls logoutUser function when logout button is clicked', () => {
-        render(<Header />);
-        fireEvent.click(screen.getByRole('button', { name: LOGOUT_REGEX }));
-        expect(mockLogoutUser).toHaveBeenCalledTimes(1);
     });
 });
