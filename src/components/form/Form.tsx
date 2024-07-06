@@ -6,7 +6,12 @@ interface FormProps {
 
 const Form = ({ onSubmit, className, children }: FormProps) => {
     return (
-        <form onSubmit={onSubmit} className={className} aria-live='polite'>
+        <form
+            aria-label='form'
+            onSubmit={onSubmit}
+            className={className}
+            aria-live='polite'
+        >
             {children}
         </form>
     );
