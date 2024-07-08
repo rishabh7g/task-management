@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from 'src/util/test-util';
 import { FormField } from 'src/components/form-field/FormField';
 
 const DEFAULT_PROPS = {

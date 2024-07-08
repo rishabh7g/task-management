@@ -1,15 +1,15 @@
-import { RenderOptions, render as RtlRender } from '@testing-library/react';
+import { RenderOptions, render } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from 'src/context/auth-context';
 import { AuthState } from 'src/context/auth-context.types';
 
-const render = (
+const renderWithProvider = (
     ui: React.ReactElement,
     initialAuthState?: AuthState,
     renderOptions?: RenderOptions,
 ) => {
-    return RtlRender(
+    return render(
         <Router>
             <AuthProvider initialAuthState={initialAuthState}>
                 {ui}
@@ -19,7 +19,6 @@ const render = (
     );
 };
 
-// eslint-disable-next-line import/export
+export { renderWithProvider };
 export * from '@testing-library/react';
-// eslint-disable-next-line import/export
-export { render };
+export * from '@testing-library/user-event';

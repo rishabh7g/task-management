@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from 'src/util/test-util';
 import Form from 'src/components/form/Form';
 
 describe('<Form />', () => {

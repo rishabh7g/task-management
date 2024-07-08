@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from 'src/util/test-util';
 import { TaskList } from 'src/components/task-list/TaskList';
 import { Task, TaskStatus } from 'src/types/task.types';
 

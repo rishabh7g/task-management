@@ -1,5 +1,4 @@
-import { render, screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
+import { render, screen, userEvent } from 'src/util/test-util';
 import { Modal } from 'src/components/modal/Modal';
 
 describe('<Modal />', () => {

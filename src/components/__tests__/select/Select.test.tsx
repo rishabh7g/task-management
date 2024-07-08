@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from '@testing-library/react';
 import Select from 'src/components/select/Select';
+import { fireEvent, render, screen } from 'src/util/test-util';
 
 describe('<Select />', () => {
     const label = 'Test Select';

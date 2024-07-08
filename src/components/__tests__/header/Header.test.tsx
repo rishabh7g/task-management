@@ -1,6 +1,5 @@
-import { screen } from '@testing-library/react';
 import { Header } from 'src/components/header/Header';
-import { render } from 'src/util/test-util';
+import { render, renderWithProvider, screen } from 'src/util/test-util';
 
 const LOGOUT_REGEX = /logout/i;
 const HOME_REGEX = /home/i;
@@ -31,7 +30,7 @@ describe('<Header />', () => {
     });
 
     test('renders the logout button when user is logged in', () => {
-        render(<Header />, {
+        renderWithProvider(<Header />, {
             accessToken: 'some-access',
             email: 'a@a.com',
             roles: ['user'],

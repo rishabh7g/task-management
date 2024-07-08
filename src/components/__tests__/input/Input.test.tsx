@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from 'src/util/test-util';
 import Input, { AriaInvalidStatus } from 'src/components/input/Input';
 
 const TEST_DATA = {
