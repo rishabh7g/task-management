@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from 'src/util/test-util';
 import { TaskForm } from 'src/components/task-form/TaskForm';
 import { Task, TaskStatus } from 'src/types/task.types';
+import { fireEvent, render, screen } from 'src/util/test-util';
 
 const EMPTY_TASK: Task = {
     id: '',
@@ -43,13 +43,17 @@ describe('<TaskForm />', () => {
             />,
         );
 
-        fireEvent.change(screen.getByLabelText('Title'), {
+        const titleInput = screen.getByLabelText('Title');
+        const descriptionInput = screen.getByLabelText('Description');
+        const submitButton = screen.getByRole('button', { name: /submit/i });
+
+        fireEvent.change(titleInput, {
             target: { value: 'New Task' },
         });
-        fireEvent.change(screen.getByLabelText('Description'), {
+        fireEvent.change(descriptionInput, {
             target: { value: 'Task description' },
         });
-        fireEvent.click(screen.getByRole('button', { name: /submit/i }));
+        fireEvent.click(submitButton);
 
         expect(onSubmit).toHaveBeenCalledTimes(1);
         expect(onSubmit).toHaveBeenCalledWith({
