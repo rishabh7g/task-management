@@ -1,6 +1,6 @@
 import { TaskForm } from 'src/components/task-form/TaskForm';
 import { Task, TaskStatus } from 'src/types/task.types';
-import { fireEvent, render, screen } from 'src/util/test-util';
+import { render, screen } from 'src/util/test-util';
 
 const EMPTY_TASK: Task = {
     id: '',
@@ -34,8 +34,8 @@ describe('<TaskForm />', () => {
         ).toBeInTheDocument();
     });
 
-    test('calls onSubmit with the correct data when the form is submitted', () => {
-        render(
+    test('calls onSubmit with the correct data when the form is submitted', async () => {
+        const { user } = render(
             <TaskForm
                 initialTask={initialTask}
                 onSubmit={onSubmit}
@@ -47,13 +47,9 @@ describe('<TaskForm />', () => {
         const descriptionInput = screen.getByLabelText('Description');
         const submitButton = screen.getByRole('button', { name: /submit/i });
 
-        fireEvent.change(titleInput, {
-            target: { value: 'New Task' },
-        });
-        fireEvent.change(descriptionInput, {
-            target: { value: 'Task description' },
-        });
-        fireEvent.click(submitButton);
+        await user.type(titleInput, 'New Task');
+        await user.type(descriptionInput, 'Task description');
+        await user.click(submitButton);
 
         expect(onSubmit).toHaveBeenCalledTimes(1);
         expect(onSubmit).toHaveBeenCalledWith({

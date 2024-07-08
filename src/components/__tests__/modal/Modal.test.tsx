@@ -1,5 +1,5 @@
-import { render, screen, userEvent } from 'src/util/test-util';
 import { Modal } from 'src/components/modal/Modal';
+import { render, screen } from 'src/util/test-util';
 
 describe('<Modal />', () => {
     test('renders the modal content when open', () => {
@@ -27,33 +27,33 @@ describe('<Modal />', () => {
         expect(modalContent).toBeNull();
     });
 
-    test('calls onClose when clicking outside the modal', () => {
+    test('calls onClose when clicking outside the modal', async () => {
         const mockedOnClose = jest.fn();
-        render(
+        const { user } = render(
             <Modal isOpen onClose={mockedOnClose}>
                 <div>Modal Content</div>
             </Modal>,
         );
-        userEvent.click(document.body);
+        await user.click(document.body);
         expect(mockedOnClose).toHaveBeenCalledTimes(1);
     });
 
-    test('does not call onClose when clicking inside the modal', () => {
+    test('does not call onClose when clicking inside the modal', async () => {
         const mockedOnClose = jest.fn();
-        render(
+        const { user } = render(
             <Modal isOpen onClose={mockedOnClose}>
                 <div>Modal Content</div>
             </Modal>,
         );
 
         const modalContent = screen.getByText('Modal Content');
-        userEvent.click(modalContent);
+        await user.click(modalContent);
         expect(mockedOnClose).not.toHaveBeenCalled();
     });
 
-    test('calls onClose when clicking the close button', () => {
+    test('calls onClose when clicking the close button', async () => {
         const mockedOnClose = jest.fn();
-        render(
+        const { user } = render(
             <Modal isOpen onClose={mockedOnClose}>
                 <div>Modal Content</div>
             </Modal>,
@@ -61,7 +61,7 @@ describe('<Modal />', () => {
         const closeButton = screen.getByRole('button', {
             name: /close modal/i,
         });
-        userEvent.click(closeButton);
+        await user.click(closeButton);
         expect(mockedOnClose).toHaveBeenCalledTimes(1);
     });
 
