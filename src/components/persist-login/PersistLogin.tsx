@@ -38,5 +38,5 @@ export const PersistLogin = () => {
 
     if (isLoading) return <span>Loading...</span>;
 
-    return <Outlet />;
+    return <Outlet data-testid='outlet' />;
 };
