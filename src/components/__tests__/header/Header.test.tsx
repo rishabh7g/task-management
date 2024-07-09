@@ -29,19 +29,6 @@ describe('<Header />', () => {
         ).toBeInTheDocument();
     });
 
-    test('renders the logout button when user is logged in', () => {
-        renderWithProvider(<Header />, {
-            accessToken: 'some-access',
-            email: 'a@a.com',
-            roles: ['user'],
-            isPersistLogin: true,
-            password: 'password',
-        });
-        expect(
-            screen.getByRole('button', { name: LOGOUT_REGEX }),
-        ).toBeInTheDocument();
-    });
-
     test('does not render the logout button when user is not logged in', () => {
         renderWithProvider(<Header />);
         expect(

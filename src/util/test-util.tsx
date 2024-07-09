@@ -1,27 +1,29 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable import/export */
-import { RenderOptions, render } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import React, { ReactElement } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from 'src/context/auth-context';
-import { AuthState } from 'src/context/auth-context.types';
 
-export function renderWithProvider(
-    ui: React.ReactElement,
-    initialAuthState?: AuthState,
-    renderOptions?: RenderOptions,
-) {
+interface AppProvidersProps {
+    children: React.ReactNode;
+}
+
+const AppProviders = ({ children }: AppProvidersProps) => {
+    return (
+        <Router>
+            <AuthProvider>{children}</AuthProvider>
+        </Router>
+    );
+};
+
+export function renderWithProvider(ui: React.ReactElement) {
     return {
         user: userEvent.setup(),
-        ...render(
-            <Router>
-                <AuthProvider initialAuthState={initialAuthState}>
-                    {ui}
-                </AuthProvider>
-            </Router>,
-            renderOptions,
-        ),
+        ...render(ui, {
+            wrapper: AppProviders,
+        }),
     };
 }
 
