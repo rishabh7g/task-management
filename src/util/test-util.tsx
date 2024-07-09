@@ -1,6 +1,6 @@
 // eslint-disable-next-line eslint-comments/disable-enable-pair
 /* eslint-disable import/export */
-import { RenderOptions, render as rtlRender } from '@testing-library/react';
+import { RenderOptions, render } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import React, { ReactElement } from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -14,7 +14,7 @@ export function renderWithProvider(
 ) {
     return {
         user: userEvent.setup(),
-        ...rtlRender(
+        ...render(
             <Router>
                 <AuthProvider initialAuthState={initialAuthState}>
                     {ui}
@@ -25,12 +25,14 @@ export function renderWithProvider(
     };
 }
 
-export function render(jsx: ReactElement) {
+function customRender(jsx: ReactElement) {
     return {
         user: userEvent.setup(),
-        ...rtlRender(jsx),
+        ...render(jsx),
     };
 }
+
+export { customRender as render };
 
 export * from '@testing-library/react';
 export * from '@testing-library/user-event';
