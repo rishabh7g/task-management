@@ -14,6 +14,18 @@ module.exports = {
         'src/(.*)$': '<rootDir>/src/$1',
     },
     coverageDirectory: path.join(__dirname, 'coverage/frontend'),
+    collectCoverageFrom: [
+        'src/components/**/*.{ts,tsx}',
+        '!src/components/**/*.{types,stories,test,spec,constant}.{ts,tsx}',
+    ],
+    coverageThreshold: {
+        global: {
+            branches: 80,
+            functions: 80,
+            lines: 80,
+            statements: 80,
+        },
+    },
     testEnvironmentOptions: {
         customExportConditions: [''],
     },
