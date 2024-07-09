@@ -7,7 +7,8 @@ module.exports = {
     testEnvironment: 'jest-environment-jsdom',
     displayName: 'frontend',
     moduleDirectories: ['node_modules', 'src'],
-    setupFilesAfterEnv: ['@testing-library/jest-dom'],
+    setupFiles: ['<rootDir>/jest/jest.polyfills.ts'],
+    setupFilesAfterEnv: ['<rootDir>/jest/jest.setup.ts'],
     moduleNameMapper: {
         '\\.(css|less)$': '<rootDir>/__mocks__/style-mock.ts',
         '\\.(jpg|jpeg|png|gif|svg)$': '<rootDir>/__mocks__/file-mock.ts',
