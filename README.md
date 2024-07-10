@@ -245,13 +245,7 @@ This will start the Storybook server and you can view the UI components in your 
 Cypress is used for end-to-end testing. To open the Cypress Test Runner, run the following command:
 
 ```bash
-npm run cypress:open
-```
-
-To run Cypress tests in headless mode, run:
-
-```bash
-npm run cypress:run
+npm run test:cypress
 ```
 
 ### Running Jest Tests
