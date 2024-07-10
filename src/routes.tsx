@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import React, { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 import { PersistLogin } from 'src/components/persist-login/PersistLogin';
 import { RequireAuth } from 'src/components/require-auth/RequireAuth';
