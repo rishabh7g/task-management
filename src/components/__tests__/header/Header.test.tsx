@@ -1,3 +1,4 @@
+import React from 'react';
 import { Header } from 'src/components/header/Header';
 import { renderWithProvider, screen } from 'src/util/test-util';
 

@@ -1,7 +1,7 @@
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
-import routes from './routes';
 import { Header } from 'src/components/header/Header';
+import routes from './routes';
 
 const Routes = () => {
     const routing = useRoutes(routes);

@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoUrl from 'src/assets/task-app.logo.jpg';
 import { TertiaryButton } from 'src/components/button/Button';

@@ -1,5 +1,6 @@
-import { fireEvent, render, screen } from 'src/util/test-util';
+import React from 'react';
 import Form from 'src/components/form/Form';
+import { fireEvent, render, screen } from 'src/util/test-util';
 
 describe('<Form />', () => {
     it('renders children correctly', () => {

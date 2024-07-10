@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import Input, { AriaInvalidStatus } from 'src/components/input/Input';
 
 interface FormFieldProps {

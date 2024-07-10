@@ -1,5 +1,6 @@
-import { fireEvent, render, screen } from 'src/util/test-util';
+import React from 'react';
 import { FormField } from 'src/components/form-field/FormField';
+import { fireEvent, render, screen } from 'src/util/test-util';
 
 const DEFAULT_PROPS = {
     id: 'test-id',

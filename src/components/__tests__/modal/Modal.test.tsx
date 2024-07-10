@@ -1,3 +1,4 @@
+import React from 'react';
 import { Modal } from 'src/components/modal/Modal';
 import { render, screen } from 'src/util/test-util';
 

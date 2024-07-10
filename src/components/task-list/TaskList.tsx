@@ -1,3 +1,4 @@
+import React from 'react';
 import { SecondaryButton } from 'src/components/button/Button';
 import { Task } from 'src/types/task.types';
 

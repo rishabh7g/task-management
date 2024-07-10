@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useAuth } from 'src/context/auth-context';
 import { useRefreshToken } from 'src/hooks/refresh-token.hook';

@@ -1,3 +1,5 @@
+import React from 'react';
+
 const AdminPage = () => {
     return (
         <div className='w-full max-w-md space-y-8 rounded-xl bg-white p-10 shadow-lg'>
