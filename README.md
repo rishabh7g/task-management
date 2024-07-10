@@ -240,14 +240,6 @@ npm run storybook
 
 This will start the Storybook server and you can view the UI components in your browser at `http://localhost:6006`.
 
-### Running Cypress Tests
-
-Cypress is used for end-to-end testing. To open the Cypress Test Runner, run the following command:
-
-```bash
-npm run test:cypress
-```
-
 ### Running Jest Tests
 
 Jest is used for unit testing. To run Jest tests, use the following command:
