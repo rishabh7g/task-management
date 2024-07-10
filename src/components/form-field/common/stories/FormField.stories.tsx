@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { FormField } from '../../FormField';
+import { FormField } from 'src/components/form-field/FormField';
 
 const meta: Meta<typeof FormField> = {
     title: 'UI/Components/FormField',

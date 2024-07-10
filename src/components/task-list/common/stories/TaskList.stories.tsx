@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { TaskList } from '../../TaskList';
+import { TaskList } from 'src/components/task-list/TaskList';
 import { TaskStatus } from 'src/types/task.types';
 
 const meta: Meta<typeof TaskList> = {

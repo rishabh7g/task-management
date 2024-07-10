@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { ErrorMessage } from '../../ErrorMessage';
+import { ErrorMessage } from 'src/components/error-message/ErrorMessage';
 
 const meta: Meta<typeof ErrorMessage> = {
     title: 'UI/Components/ErrorMessage',

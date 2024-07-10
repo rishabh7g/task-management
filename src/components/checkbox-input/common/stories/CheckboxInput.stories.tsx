@@ -1,5 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { CheckboxInput, CheckboxValue } from '../../CheckboxInput';
+import {
+    CheckboxInput,
+    CheckboxValue,
+} from 'src/components/checkbox-input/CheckboxInput';
 
 const meta: Meta<typeof CheckboxInput> = {
     title: 'UI/Components/CheckboxInput',

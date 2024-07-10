@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
+import { TaskForm } from 'src/components/task-form/TaskForm';
 import { TaskStatus } from 'src/types/task.types';
-import { TaskForm } from '../../TaskForm';
 
 const meta: Meta<typeof TaskForm> = {
     title: 'UI/Components/TaskForm',
