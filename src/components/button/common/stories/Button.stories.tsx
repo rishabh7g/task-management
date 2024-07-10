@@ -6,7 +6,7 @@ import {
     PrimaryButton,
     SecondaryButton,
     TertiaryButton,
-} from '../Button';
+} from '../../Button';
 
 // Define the metadata for the Button stories
 const meta: Meta<typeof Button> = {

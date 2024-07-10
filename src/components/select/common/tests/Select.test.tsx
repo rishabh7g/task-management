@@ -1,5 +1,5 @@
 import React from 'react';
-import Select from 'src/components/select/Select';
+import { Select } from 'src/components/select/Select';
 import { fireEvent, render, screen } from 'src/util/test-util';
 
 describe('<Select />', () => {
