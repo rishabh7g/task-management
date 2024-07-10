@@ -217,3 +217,49 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - **Tailwind CSS**: We advise against using external CSS files. Instead, use Tailwind CSS for styling to maintain consistency and utility-first CSS principles.
 - **Clean Code**: All code should be written in a clean, concise, and descriptive format. Follow best practices for readability and maintainability.
 - **Accessibility (a11y)**: All code is written based on accessibility principles to ensure the application is usable by everyone, including those with disabilities.
+
+## Getting Started
+
+### Starting the Main Server
+
+To start the main server, run the following command:
+
+```bash
+npm start
+```
+
+This will start the development server and you can view the application in your browser at `http://localhost:3000`.
+
+### Using Storybook
+
+Storybook is used for developing UI components in isolation. To start Storybook, run the following command:
+
+```bash
+npm run storybook
+```
+
+This will start the Storybook server and you can view the UI components in your browser at `http://localhost:6006`.
+
+### Running Cypress Tests
+
+Cypress is used for end-to-end testing. To open the Cypress Test Runner, run the following command:
+
+```bash
+npm run cypress:open
+```
+
+To run Cypress tests in headless mode, run:
+
+```bash
+npm run cypress:run
+```
+
+### Running Jest Tests
+
+Jest is used for unit testing. To run Jest tests, use the following command:
+
+```bash
+npm test
+```
+
+This will run all the tests using Jest and display the results in the terminal.
