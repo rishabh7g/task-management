@@ -6,8 +6,8 @@ import {
     CheckboxValue,
 } from 'src/components/checkbox-input/CheckboxInput';
 import { ErrorMessage } from 'src/components/error-message/ErrorMessage';
-import Form from 'src/components/form/Form';
-import Input from 'src/components/input/Input';
+import { Form } from 'src/components/form/Form';
+import { Input } from 'src/components/input/Input';
 import { LOGIN_FORM_DATA } from 'src/constant/login-form.constant';
 import { useLoginPageManagement } from 'src/pages/login-page/common/hooks/login-page.management';
 import { InputType } from 'src/types/form.types';
@@ -15,7 +15,7 @@ import { InputType } from 'src/types/form.types';
 const DONT_HAVE_ACCOUNT_TEXT = "Don't have an account?";
 const LOADING_TEXT = 'Loading...';
 
-const LoginPage = () => {
+export const LoginPage = () => {
     const {
         email,
         setEmail,
@@ -101,5 +101,3 @@ const LoginPage = () => {
         </section>
     );
 };
-
-export default LoginPage;

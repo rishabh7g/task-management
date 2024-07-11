@@ -5,7 +5,7 @@ import { TaskForm } from 'src/components/task-form/TaskForm';
 import { TaskList } from 'src/components/task-list/TaskList';
 import { useTaskPageManagement } from 'src/pages/task-page/common/hooks/task-page.management';
 
-const TaskPage = () => {
+export const TaskPage = () => {
     const {
         tasks,
         editingTask,
@@ -62,5 +62,3 @@ const TaskPage = () => {
         </div>
     );
 };
-
-export default TaskPage;

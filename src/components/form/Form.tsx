@@ -6,7 +6,7 @@ interface FormProps {
     children: React.ReactNode;
 }
 
-const Form = ({ onSubmit, className, children }: FormProps) => {
+export const Form = ({ onSubmit, className, children }: FormProps) => {
     return (
         <form
             aria-label='form'
@@ -18,5 +18,3 @@ const Form = ({ onSubmit, className, children }: FormProps) => {
         </form>
     );
 };
-
-export default Form;

@@ -37,8 +37,6 @@ export const Button = ({
     );
 };
 
-export default Button;
-
 export const PrimaryButton = ({
     label,
     onClick,

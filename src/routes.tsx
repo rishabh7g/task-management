@@ -2,14 +2,31 @@ import React, { lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
 import { PersistLogin } from 'src/components/persist-login/PersistLogin';
 import { RequireAuth } from 'src/components/require-auth/RequireAuth';
-import UnauthorizedPage from 'src/pages/unauthorize-page/UnauthorizePage';
+import { UnauthorizedPage } from 'src/pages/unauthorize-page/UnauthorizePage';
 
-const LoginPage = lazy(() => import('src/pages/login-page/LoginPage'));
-const RegistrationPage = lazy(
-    () => import('src/pages/registration-page/RegistrationPage'),
+const LoginPage = lazy(() =>
+    import('src/pages/login-page/LoginPage').then((module) => ({
+        default: module.LoginPage,
+    })),
 );
-const TaskPage = lazy(() => import('src/pages/task-page/TaskPage'));
-const AdminPage = lazy(() => import('src/pages/admin-page/AdminPage'));
+
+const RegistrationPage = lazy(() =>
+    import('src/pages/registration-page/RegistrationPage').then((module) => ({
+        default: module.RegistrationPage,
+    })),
+);
+
+const TaskPage = lazy(() =>
+    import('src/pages/task-page/TaskPage').then((module) => ({
+        default: module.TaskPage,
+    })),
+);
+
+const AdminPage = lazy(() =>
+    import('src/pages/admin-page/AdminPage').then((module) => ({
+        default: module.AdminPage,
+    })),
+);
 
 export enum RoutePath {
     Login = '/login',
@@ -19,7 +36,7 @@ export enum RoutePath {
     Unauthorized = '/unauthorized',
 }
 
-const routes: RouteObject[] = [
+export const routes: RouteObject[] = [
     {
         path: RoutePath.Login,
         element: <LoginPage />,
@@ -49,5 +66,3 @@ const routes: RouteObject[] = [
         ],
     },
 ];
-
-export default routes;

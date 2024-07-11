@@ -3,7 +3,7 @@ import { PrimaryButton, TertiaryButton } from 'src/components/button/Button';
 import { ButtonType } from 'src/components/button/common/types/Button.types';
 import { ErrorMessage } from 'src/components/error-message/ErrorMessage';
 import { FormField } from 'src/components/form-field/FormField';
-import Form from 'src/components/form/Form';
+import { Form } from 'src/components/form/Form';
 import {
     LOGIN_FORM_DATA,
     VALIDATION_DATA,
@@ -15,7 +15,7 @@ import { InputType } from 'src/types/form.types';
 
 const ALREADY_HAVE_AN_ACCOUNT_TEXT = 'Already have an account?';
 
-const RegistrationPage = () => {
+export const RegistrationPage = () => {
     const {
         email,
         setEmail,
@@ -178,5 +178,3 @@ const RegisterationPageFormField = ({
         />
     );
 };
-
-export default RegistrationPage;
