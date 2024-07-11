@@ -1,0 +1,24 @@
+{
+	"name": "task-management-app",
+	"version": "1.0.0",
+	"description": "",
+	"main": ".eslintrc.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"devDependencies": {
+		"husky": "^9.0.11",
+		"lint-staged": "^12.0.2",
+    "prettier": "^3.2.5",
+    "eslint": "^8.57.0"
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx}": [
+			"prettier --write",
+			"eslint --max-warnings=0 --fix"
+		]
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
+}
