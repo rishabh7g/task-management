@@ -90,7 +90,6 @@ To start the frontend development server, follow these steps:
     npm run install-deps
     ```
 
-
 ### Running Unit Tests of frontend(jest)
 
 1. Jest is used for unit testing. To run Jest tests, use the following command:
@@ -99,6 +98,7 @@ To start the frontend development server, follow these steps:
     # From the root directory
     npm run test:unit
     ```
+
     This will run all the tests using Jest and display the results in the terminal.
 
 ### Running the E2E tests
@@ -177,3 +177,8 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 -   **Tailwind CSS**: We advise against using external CSS files. Instead, use Tailwind CSS for styling to maintain consistency and utility-first CSS principles.
 -   **Clean Code**: All code should be written in a clean, concise, and descriptive format. Follow best practices for readability and maintainability.
 -   **Accessibility (a11y)**: All code is written based on accessibility principles to ensure the application is usable by everyone, including those with disabilities.
+-   **Responsive Design**: The application should be responsive and work on all devices, including desktops, tablets, and mobile phones.
+-   **User Authentication**: The application should have user authentication features, including login, registration, and password reset.
+-   **UI Component Library**: Use Storybook to develop and showcase UI components in isolation.
+-   **API Documentation**: Use Swagger UI to provide interactive documentation for all available API endpoints.
+-   **Testing**: Write unit tests using Jest and E2E tests using Cypress to ensure the application is bug-free and works as expected.
