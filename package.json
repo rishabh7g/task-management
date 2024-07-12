@@ -9,8 +9,14 @@
 	"devDependencies": {
 		"husky": "^9.0.11",
 		"lint-staged": "^12.0.2",
-    "prettier": "^3.2.5",
-    "eslint": "^8.57.0"
+		"prettier": "^3.2.5",
+		"eslint": "^8.57.0",
+		"eslint-import-resolver-jest": "^3.0.2",
+		"eslint-plugin-eslint-comments": "^3.2.0",
+		"eslint-plugin-import": "^2.29.1",
+		"eslint-plugin-unused-imports": "^3.2.0",
+		"@typescript-eslint/eslint-plugin": "^7.9.0",
+    	"@typescript-eslint/parser": "^7.9.0"
 	},
 	"lint-staged": {
 		"*.{js,jsx,ts,tsx}": [

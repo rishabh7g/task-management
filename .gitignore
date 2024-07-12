@@ -1,7 +1,7 @@
+# Common ignore patterns
 node_modules
 build
-/server/db.json
-DS_Store
 .env
+dist
 coverage
-*storybook.log
+.DS_Store

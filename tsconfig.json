@@ -8,6 +8,6 @@
      "forceConsistentCasingInFileNames": true,
      "resolveJsonModule": true
    },
-   "include": ["frontend/src/**/*", "server/src/**/*"],
+   "include": ["frontend/src/**/*", "backend/src/**/*"],
    "exclude": ["node_modules", "build"]
  }

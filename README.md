@@ -43,7 +43,7 @@ Ensure you have the following installed on your machine:
    npm install
    
    # Navigate to the backend directory and install dependencies
-   cd server
+   cd backend
    npm install
    ```
    
@@ -76,7 +76,7 @@ To start the backend server, follow these steps:
 1. **Navigate to the server directory**
 
    ```sh
-   cd server
+   cd backend
    ```
 
 2. **Ensure the `.env` file is configured correctly**
