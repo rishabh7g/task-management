@@ -1,0 +1,13 @@
+{
+   "compilerOptions": {
+     "target": "ES5",
+     "strict": true,
+     "isolatedModules": true,
+     "esModuleInterop": true,
+     "skipLibCheck": true,
+     "forceConsistentCasingInFileNames": true,
+     "resolveJsonModule": true
+   },
+   "include": ["frontend/src/**/*", "server/src/**/*"],
+   "exclude": ["node_modules", "build"]
+ }

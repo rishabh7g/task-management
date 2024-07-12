@@ -7,7 +7,6 @@ The Task Management React App is a comprehensive application designed to help us
 
 ## Table of Contents
 
-- [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -17,70 +16,6 @@ The Task Management React App is a comprehensive application designed to help us
 - [Contributing](#contributing)
 - [License](#license)
 
-## Project Structure
-
-```
-task-management-app/
-│
-├── .husky/
-├── build/
-├── jest/
-├── node_modules/
-│
-├── server/
-│   ├── config/
-│   ├── constant/
-│   ├── controllers/
-│   ├── data/
-│   ├── middleware/
-│   ├── node_modules/
-│   ├── routes/
-│   ├── schemas/
-│   ├── util/
-│   ├── views/
-│   ├── .env
-│   ├── db.json
-│   ├── package-lock.json
-│   ├── package.json
-│   ├── server.js
-│   └── swagger.js
-│
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── constant/
-│   ├── context/
-│   ├── hooks/
-│   ├── pages/
-│   ├── services/
-│   ├── types/
-│   ├── App.tsx
-│   ├── declarations.d.ts
-│   ├── index.css
-│   ├── index.html
-│   ├── index.tsx
-│   └── routes.tsx
-│
-├── webpack/
-│   ├── webpack.common.js
-│   ├── webpack.dev.js
-│   └── webpack.prod.js
-│
-├── .babelrc
-├── .env
-├── .eslintignore
-├── .eslintrc.js
-├── .gitignore
-├── .prettierrc
-├── jest.config.js
-├── package-lock.json
-├── package.json
-├── postcss.config.js
-├── README.md
-├── tailwind.config.js
-├── tsconfig.json
-└── webpack.config.js
-```
 
 ## Getting Started
 
@@ -104,6 +39,7 @@ Ensure you have the following installed on your machine:
 
    ```sh
    # Navigate to the frontend directory and install dependencies
+   cd frontend
    npm install
    
    # Navigate to the backend directory and install dependencies
