@@ -2,6 +2,7 @@
     "formSelector": "form[aria-label='form']",
     "emailInputSelector": "input[id='email']",
     "passwordInputSelector": "input[id='password']",
+    "confirmPasswordInputSelector": "input[id='confirmPassword']",
     "trustDeviceCheckboxSelector": "input[id='loginPageTrustDevice']",
     "loginButtonSelector": "button[type='submit']",
     "errorMessageSelector": "p[role='alert']"

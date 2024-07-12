@@ -2,62 +2,60 @@
 
 describe('Login Page', () => {
     beforeEach(() => {
-        cy.fixture('login').then((data) => (this.loginData = data));
-        cy.fixture('selectors').then((data) => (this.selectorsData = data));
         cy.login();
+        cy.fixture('login.json').as('loginData');
+        cy.fixture('selector.json').as('selectorData');
     });
 
-    it('should display the login form', () => {
-        cy.shouldBeVisible(this.selectorsData.formSelector);
-        cy.shouldBeVisible(this.selectorsData.emailInputSelector);
-        cy.shouldBeVisible(this.selectorsData.passwordInputSelector);
-        cy.shouldBeVisible(this.selectorsData.trustDeviceCheckboxSelector);
-        cy.shouldBeVisible(this.selectorsData.loginButtonSelector).and(
+    it('should display the login form', function () {
+        cy.shouldBeVisible(this.selectorData.formSelector);
+        cy.shouldBeVisible(this.selectorData.emailInputSelector);
+        cy.shouldBeVisible(this.selectorData.passwordInputSelector);
+        cy.shouldBeVisible(this.selectorData.trustDeviceCheckboxSelector);
+        cy.shouldBeVisible(this.selectorData.loginButtonSelector).and(
             'have.text',
             'Login',
         );
     });
 
-    it('should allow the user to fill out the email and password fields', () => {
-        cy.get(this.selectorsData.emailInputSelector)
+    it('should allow the user to fill out the email and password fields', function () {
+        cy.get(this.selectorData.emailInputSelector)
             .type(this.loginData.username)
             .should('have.value', this.loginData.username);
-        cy.get(this.selectorsData.passwordInputSelector)
+        cy.get(this.selectorData.passwordInputSelector)
             .type(this.loginData.password)
             .should('have.value', this.loginData.password);
     });
 
-    it('should allow the user to check the "Trust this device" checkbox', () => {
-        cy.get(this.selectorsData.trustDeviceCheckboxSelector)
+    it('should allow the user to check the "Trust this device" checkbox', function () {
+        cy.get(this.selectorData.trustDeviceCheckboxSelector)
             .check()
             .should('be.checked');
-        cy.get(this.selectorsData.trustDeviceCheckboxSelector)
+        cy.get(this.selectorData.trustDeviceCheckboxSelector)
             .uncheck()
             .should('not.be.checked');
     });
 
-    it('should enable the login button when the form is valid', () => {
-        cy.get(this.selectorsData.emailInputSelector).type(
+    it('should enable the login button when the form is valid', function () {
+        cy.get(this.selectorData.emailInputSelector).type(
             this.loginData.username,
         );
-        cy.get(this.selectorsData.passwordInputSelector).type(
+        cy.get(this.selectorData.passwordInputSelector).type(
             this.loginData.password,
         );
-        cy.get(this.selectorsData.trustDeviceCheckboxSelector).check();
-        cy.get(this.selectorsData.loginButtonSelector).should(
-            'not.be.disabled',
-        );
+        cy.get(this.selectorData.trustDeviceCheckboxSelector).check();
+        cy.get(this.selectorData.loginButtonSelector).should('not.be.disabled');
     });
 
-    it('should display an error message when login fails', () => {
-        cy.get(this.selectorsData.emailInputSelector).type(
+    it('should display an error message when login fails', function () {
+        cy.get(this.selectorData.emailInputSelector).type(
             this.loginData.username,
         );
-        cy.get(this.selectorsData.passwordInputSelector).type(
+        cy.get(this.selectorData.passwordInputSelector).type(
             this.loginData.password,
         );
-        cy.get(this.selectorsData.loginButtonSelector).click();
-        cy.shouldBeVisible(this.selectorsData.errorMessageSelector).and(
+        cy.get(this.selectorData.loginButtonSelector).click();
+        cy.shouldBeVisible(this.selectorData.errorMessageSelector).and(
             'contain.text',
             'No account found for the entered email.',
         );
