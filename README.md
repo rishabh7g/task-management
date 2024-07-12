@@ -83,7 +83,7 @@ To start the frontend development server, follow these steps:
 
 ### Prerequisites
 
-Make sure you have installed all the dependencies for both the frontend and backend:
+1. Make sure you have installed all the dependencies for both the frontend and backend:
 
     ```bash
     # From the root directory
@@ -93,7 +93,7 @@ Make sure you have installed all the dependencies for both the frontend and back
 
 ### Running Unit Tests of frontend(jest)
 
-Jest is used for unit testing. To run Jest tests, use the following command:
+1. Jest is used for unit testing. To run Jest tests, use the following command:
 
     ```bash
     # From the root directory
@@ -103,7 +103,7 @@ Jest is used for unit testing. To run Jest tests, use the following command:
 
 ### Running the E2E tests
 
-To run the Cypress E2E tests, follow these steps:
+1. To run the Cypress E2E tests, follow these steps:
 
     ```bash
     # From the root directory
@@ -114,7 +114,7 @@ To run the Cypress E2E tests, follow these steps:
 
 ## Running Storybook
 
-Storybook is used for developing UI components in isolation. To start Storybook, run the following command:
+1. Storybook is used for developing UI components in isolation. To start Storybook, run the following command:
 
     ```bash
     # From the root directory
