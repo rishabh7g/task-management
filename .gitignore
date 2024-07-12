@@ -4,3 +4,4 @@ screenshots
 build
 .env
 db.json
+.DS_Store 
