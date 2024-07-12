@@ -10,11 +10,12 @@ The Task Management React App is a comprehensive application designed to help us
     -   [Prerequisites](#prerequisites)
     -   [Installation](#installation)
 -   [Running the App](#running-the-app)
--   [Running the Backend](#running-the-backend)
--   [Running the E2E Cypress test cases](#running-the-backend)
+-   [Running the Tests](#running-the-backend)
+-   [Running Storybook](#running-storybook)
 -   [API Documentation](#api-documentation)
 -   [Contributing](#contributing)
 -   [License](#license)
+-   [Features](#features)
 
 ## Getting Started
 
@@ -76,7 +77,7 @@ To start the frontend development server, follow these steps:
     The backend server should now be running on [http://localhost:8090](http://localhost:8090).
     The frontend server should now be running on [http://localhost:3000](http://localhost:3000).
 
-## Running Cypress E2E Tests
+## Running Tests
 
 ### Prerequisites
 
@@ -87,7 +88,18 @@ Make sure you have installed all the dependencies for both the frontend and back
     npm run install-deps
     ```
 
-### Running the tests
+
+### Running Unit Tests of frontend(jest)
+
+Jest is used for unit testing. To run Jest tests, use the following command:
+
+    ```bash
+    # From the root directory
+    npm run test:unit
+    ```
+    This will run all the tests using Jest and display the results in the terminal.
+
+### Running the E2E tests
 
 To run the Cypress E2E tests, follow these steps:
 
@@ -97,6 +109,19 @@ To run the Cypress E2E tests, follow these steps:
     ```
 
     This will open the Cypress Test Runner, where you can select and run the test cases.
+
+## Running Storybook
+
+Storybook is used for developing UI components in isolation. To start Storybook, run the following command:
+
+    ```bash
+    # From the root directory
+    npm run storybook
+    ```
+
+This will start the Storybook server and you can view the UI components in your browser at `http://localhost:6006`.
+
+This will run all the tests using Jest and display the results in the terminal.
 
 ## API Documentation
 
@@ -150,38 +175,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 -   **Tailwind CSS**: We advise against using external CSS files. Instead, use Tailwind CSS for styling to maintain consistency and utility-first CSS principles.
 -   **Clean Code**: All code should be written in a clean, concise, and descriptive format. Follow best practices for readability and maintainability.
 -   **Accessibility (a11y)**: All code is written based on accessibility principles to ensure the application is usable by everyone, including those with disabilities.
-
-## Getting Started
-
-### Starting the Main Server
-
-To start the main server, run the following command:
-
-    ```bash
-    # From the root directory
-    npm run start-servers
-    ```
-
-This will start the development server and you can view the application in your browser at `http://localhost:3000`.
-
-### Using Storybook
-
-Storybook is used for developing UI components in isolation. To start Storybook, run the following command:
-
-    ```bash
-    # From the root directory
-    npm run storybook
-    ```
-
-This will start the Storybook server and you can view the UI components in your browser at `http://localhost:6006`.
-
-### Running Unit Tests of frontend(jest)
-
-Jest is used for unit testing. To run Jest tests, use the following command:
-
-    ```bash
-    # From the root directory
-    npm run test:unit
-    ```
-
-This will run all the tests using Jest and display the results in the terminal.
