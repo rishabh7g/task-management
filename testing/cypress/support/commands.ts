@@ -36,3 +36,27 @@
 //   }
 // }
 import '@testing-library/cypress/add-commands';
+// cypress/support/commands.ts
+
+// Import commands.js using ES2015 syntax:
+import './commands';
+
+// Alternatively you can use CommonJS syntax:
+// require('./commands')
+
+declare global {
+    namespace Cypress {
+        interface Chainable {
+            login(): Chainable<void>;
+            shouldBeVisible(selector: string): Chainable<Element>;
+        }
+    }
+}
+
+Cypress.Commands.add('login', () => {
+    cy.visit('/login');
+});
+
+Cypress.Commands.add('shouldBeVisible', (selector: string) => {
+    cy.get(selector).should('be.visible');
+});

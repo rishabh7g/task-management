@@ -1,0 +1,8 @@
+{
+    "formSelector": "form[aria-label='form']",
+    "emailInputSelector": "input[id='email']",
+    "passwordInputSelector": "input[id='password']",
+    "trustDeviceCheckboxSelector": "input[id='loginPageTrustDevice']",
+    "loginButtonSelector": "button[type='submit']",
+    "errorMessageSelector": "p[role='alert']"
+}
