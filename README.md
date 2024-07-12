@@ -77,7 +77,7 @@ To start the frontend development server, follow these steps:
     The backend server should now be running on [http://localhost:8090](http://localhost:8090).
     The frontend server should now be running on [http://localhost:3000](http://localhost:3000).
 
-## Running Tests
+## Running the Tests
 
 ### Prerequisites
 
