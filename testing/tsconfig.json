@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "target": "es5",
+        "lib": ["es5", "dom"],
+        "types": ["cypress", "node"],
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "preserveValueImports": false
+    },
+    "include": ["**/*.ts", "cypress/**/*.ts"],
+    "exclude": ["cypress.config.ts", "node_modules"]
+}
