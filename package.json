@@ -4,19 +4,30 @@
     "description": "",
     "main": ".eslintrc.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "start-servers": "npx concurrently \"npm run start:frontend\" \"npm run start:backend\" -y",
+        "install-deps": "npx concurrently \"npm install\" \"npm run install-deps-backend\" \"npm run install-deps-frontend\" \"npm run install-deps-testing\" -y",
+        "install-deps-frontend": "cd frontend && npm install",
+        "install-deps-backend": "cd backend && npm install",
+        "install-deps-testing": "cd testing && npm install",
+        "start:backend": "cd backend && npm run start",
+        "start:frontend": "cd frontend && npm run start",
+        "test:ui": "npx concurrently \"npm run start-servers\" \"cd testing && npm run test\" -y",
+        "test:cli": "npx concurrently \"npm run start-servers\" \"cd testing && npm run test:cli\" -y",
+        "test:unit": "cd frontend && npm test",
+        "storybook": "cd frontend && npm run storybook"
     },
     "devDependencies": {
-        "husky": "^9.0.11",
-        "lint-staged": "^12.0.2",
-        "prettier": "^3.2.5",
+        "@typescript-eslint/eslint-plugin": "^7.9.0",
+        "@typescript-eslint/parser": "^7.9.0",
+        "concurrently": "^8.2.2",
         "eslint": "^8.57.0",
         "eslint-import-resolver-jest": "^3.0.2",
         "eslint-plugin-eslint-comments": "^3.2.0",
         "eslint-plugin-import": "^2.29.1",
         "eslint-plugin-unused-imports": "^3.2.0",
-        "@typescript-eslint/eslint-plugin": "^7.9.0",
-        "@typescript-eslint/parser": "^7.9.0"
+        "husky": "^9.0.11",
+        "lint-staged": "^12.0.2",
+        "prettier": "^3.2.5"
     },
     "lint-staged": {
         "*.{js,jsx,ts,tsx}": [

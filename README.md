@@ -1,4 +1,3 @@
-
 # Task Management React App
 
 ## Overview
@@ -7,15 +6,15 @@ The Task Management React App is a comprehensive application designed to help us
 
 ## Table of Contents
 
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Running the Frontend](#running-the-frontend)
-- [Running the Backend](#running-the-backend)
-- [API Documentation](#api-documentation)
-- [Contributing](#contributing)
-- [License](#license)
-
+-   [Getting Started](#getting-started)
+    -   [Prerequisites](#prerequisites)
+    -   [Installation](#installation)
+-   [Running the App](#running-the-app)
+-   [Running the Backend](#running-the-backend)
+-   [Running the E2E Cypress test cases](#running-the-backend)
+-   [API Documentation](#api-documentation)
+-   [Contributing](#contributing)
+-   [License](#license)
 
 ## Getting Started
 
@@ -23,83 +22,81 @@ The Task Management React App is a comprehensive application designed to help us
 
 Ensure you have the following installed on your machine:
 
-- [Node.js](https://nodejs.org/en/download/) (v14.x or later)
-- [npm](https://www.npmjs.com/get-npm) (v6.x or later)
+-   [Node.js](https://nodejs.org/en/download/) (v14.x or later)
+-   [npm](https://www.npmjs.com/get-npm) (v6.x or later)
 
 ### Installation
 
 1. **Clone the repository**
 
-   ```sh
-   git clone https://github.com/rishabh7g/task-management.git
-   cd task-management-app
-   ```
+    ```sh
+    git clone https://github.com/rishabh7g/task-management.git
+    cd task-management-app
+    ```
 
-2. **Install dependencies for both backend and frontend**
+2. **Install dependencies for backend, frontend and testing**
 
-   ```sh
-   # Navigate to the frontend directory and install dependencies
-   cd frontend
-   npm install
-   
-   # Navigate to the backend directory and install dependencies
-   cd backend
-   npm install
-   ```
-   
+    ```bash
+    # From the root directory
+    npm run install-deps
+    ```
 
-## Running the Frontend
+## Running the App
 
 To start the frontend development server, follow these steps:
 
-1. **Ensure the `.env` file is configured correctly**
+1. **Ensure the `.env` file of frontend is configured correctly**
 
-   The `.env` file should contain the following environment variable:
+    The `.env` file should contain the following environment variable:
 
-   ```env
-   REACT_APP_API_BASE_URL=http://localhost:8090
-   ```
+    ```env
+    REACT_APP_API_BASE_URL=http://localhost:8090
+    ```
 
-3. **Start the frontend development server**
+2. **Ensure the `.env` file of backend is configured correctly**
 
-   ```sh
-   npm start
-   ```
+    The `.env` file should contain the following environment variables:
 
-   The frontend server should now be running on [http://localhost:3000](http://localhost:3000).
+    ```env
+    PORT=8090
+    ACCESS_TOKEN_EXPIRES_IN=10s
+    REFRESH_TOKEN_EXPIRES_IN=15m
+    ACCESS_TOKEN_SECRET=your-access-token-secret
+    REFRESH_ACCESS_TOKEN_SECRET=your-refresh-token-secret
+    FRONTEND_URL=http://localhost:3000
+    ```
 
+3. **Start the servers**
 
-## Running the Backend
+    ```bash
+    # From the root directory
+    npm run start-servers
+    ```
 
-To start the backend server, follow these steps:
+    The backend server should now be running on [http://localhost:8090](http://localhost:8090).
+    The frontend server should now be running on [http://localhost:3000](http://localhost:3000).
 
-1. **Navigate to the server directory**
+## Running Cypress E2E Tests
 
-   ```sh
-   cd backend
-   ```
+### Prerequisites
 
-2. **Ensure the `.env` file is configured correctly**
+Make sure you have installed all the dependencies for both the frontend and backend:
 
-   The `.env` file should contain the following environment variables:
+    ```bash
+    # From the root directory
+    npm run install-deps
+    ```
 
-   ```env
-   PORT=8090
-   ACCESS_TOKEN_EXPIRES_IN=10s
-   REFRESH_TOKEN_EXPIRES_IN=15m
-   ACCESS_TOKEN_SECRET=your-access-token-secret
-   REFRESH_ACCESS_TOKEN_SECRET=your-refresh-token-secret
-   FRONTEND_URL=http://localhost:3000
-   ```
+### Running the tests
 
-3. **Start the backend server**
+To run the Cypress E2E tests, follow these steps:
 
-   ```sh
-   npm start
-   ```
+    ```bash
+    # From the root directory
+    npm run test:ui
+    ```
 
-   The backend server should now be running on [http://localhost:8090](http://localhost:8090).
-
+    This will open the Cypress Test Runner, where you can select and run the test cases.
 
 ## API Documentation
 
@@ -109,11 +106,11 @@ To view the API documentation, follow these steps:
 
 2. **Open your browser and navigate to the Swagger UI**
 
-   ```url
-   http://localhost:8090/api-docs
-   ```
+    ```url
+    http://localhost:8090/api-docs
+    ```
 
-   This will display the Swagger UI, which provides interactive documentation for all available API endpoints.
+    This will display the Swagger UI, which provides interactive documentation for all available API endpoints.
 
 ## Contributing
 
@@ -123,23 +120,23 @@ We welcome contributions from the community. To contribute, follow these steps:
 
 2. **Create a new branch**
 
-   ```sh
-   git checkout -b feature/your-feature-name
-   ```
+    ```sh
+    git checkout -b feature/your-feature-name
+    ```
 
 3. **Make your changes**
 
 4. **Commit your changes**
 
-   ```sh
-   git commit -m "Add your commit message"
-   ```
+    ```sh
+    git commit -m "Add your commit message"
+    ```
 
 5. **Push to your branch**
 
-   ```sh
-   git push origin feature/your-feature-name
-   ```
+    ```sh
+    git push origin feature/your-feature-name
+    ```
 
 6. **Create a pull request**
 
@@ -149,10 +146,10 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Features
 
-- **Husky + Prettier + ESLint + lint-staged**: To enable effective coding practices, we use Husky for Git hooks, Prettier for code formatting, ESLint for linting, and lint-staged to run these tools pre-commit.
-- **Tailwind CSS**: We advise against using external CSS files. Instead, use Tailwind CSS for styling to maintain consistency and utility-first CSS principles.
-- **Clean Code**: All code should be written in a clean, concise, and descriptive format. Follow best practices for readability and maintainability.
-- **Accessibility (a11y)**: All code is written based on accessibility principles to ensure the application is usable by everyone, including those with disabilities.
+-   **Husky + Prettier + ESLint + lint-staged**: To enable effective coding practices, we use Husky for Git hooks, Prettier for code formatting, ESLint for linting, and lint-staged to run these tools pre-commit.
+-   **Tailwind CSS**: We advise against using external CSS files. Instead, use Tailwind CSS for styling to maintain consistency and utility-first CSS principles.
+-   **Clean Code**: All code should be written in a clean, concise, and descriptive format. Follow best practices for readability and maintainability.
+-   **Accessibility (a11y)**: All code is written based on accessibility principles to ensure the application is usable by everyone, including those with disabilities.
 
 ## Getting Started
 
@@ -160,9 +157,10 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 To start the main server, run the following command:
 
-```bash
-npm start
-```
+    ```bash
+    # From the root directory
+    npm run start-servers
+    ```
 
 This will start the development server and you can view the application in your browser at `http://localhost:3000`.
 
@@ -170,18 +168,20 @@ This will start the development server and you can view the application in your 
 
 Storybook is used for developing UI components in isolation. To start Storybook, run the following command:
 
-```bash
-npm run storybook
-```
+    ```bash
+    # From the root directory
+    npm run storybook
+    ```
 
 This will start the Storybook server and you can view the UI components in your browser at `http://localhost:6006`.
 
-### Running Jest Tests
+### Running Unit Tests of frontend(jest)
 
 Jest is used for unit testing. To run Jest tests, use the following command:
 
-```bash
-npm test
-```
+    ```bash
+    # From the root directory
+    npm run test:unit
+    ```
 
 This will run all the tests using Jest and display the results in the terminal.
