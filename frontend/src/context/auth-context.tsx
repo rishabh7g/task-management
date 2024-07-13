@@ -13,8 +13,10 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 const INITIAL_AUTH_STATE: AuthState = {
     email: '',
     accessToken: '',
-    isPersistLogin:
-        localStorageService.get(LocalStorageKeys.IS_PERSIST_LOGIN) || false,
+    isPersistLogin: localStorageService.get(
+        LocalStorageKeys.IS_PERSIST_LOGIN,
+        false,
+    ),
 };
 
 const authReducer = (state: AuthState, action: AuthAction): AuthState => {

@@ -1,10 +1,6 @@
 /* eslint-disable eslint-comments/disable-enable-pair */
 /* eslint-disable no-console */
-/**
- * Sets a value for the given key in localStorage.
- * @param key The key under which to store the value.
- * @param value The value to store, will be stringified.
- */
+
 function set(key: string, value: any): void {
     try {
         const stringValue = JSON.stringify(value);
@@ -14,25 +10,17 @@ function set(key: string, value: any): void {
     }
 }
 
-/**
- * Retrieves the value for the given key from localStorage.
- * @param key The key whose value to retrieve.
- * @returns The parsed value from localStorage, or null if not found or on error.
- */
-function get<T>(key: string): T | null {
+function get<T>(key: string, initialValue: T): T {
     try {
         const item = localStorage.getItem(key);
-        return item ? JSON.parse(item) : null;
+        return item ? JSON.parse(item) : initialValue;
     } catch (error) {
         console.error(`Error reading from localStorage: ${error}`);
-        return null;
+    } finally {
+        return initialValue;
     }
 }
 
-/**
- * Removes the value for the given key from localStorage.
- * @param key The key whose value to remove.
- */
 function remove(key: string): void {
     try {
         localStorage.removeItem(key);
@@ -41,9 +29,6 @@ function remove(key: string): void {
     }
 }
 
-/**
- * Clears all values stored in localStorage.
- */
 function clear(): void {
     try {
         localStorage.clear();
