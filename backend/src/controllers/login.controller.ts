@@ -64,7 +64,7 @@ const login = async (req: Request, res: Response): Promise<void> => {
     // Creates Secure Cookie with refresh token
     res.cookie('jwt', refreshToken, REFRESH_TOKEN_COOKIE_CONFIG);
 
-    res.json({ accessToken, roles });
+    res.json({ accessToken });
 };
 
 export { login };
