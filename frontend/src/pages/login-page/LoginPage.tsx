@@ -28,8 +28,8 @@ export const LoginPage = () => {
         isLoading,
         emailRef,
         isLoginButtonDisabled,
-        isPersistLogin,
-        toggleIsPersistLogin,
+        isPersistUser,
+        togglePersistUser,
     } = useLoginPageManagement();
 
     return (
@@ -55,7 +55,7 @@ export const LoginPage = () => {
                     placeholder={LOGIN_FORM_DATA.email.placeholder}
                     type={InputType.EMAIL}
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={setEmail}
                     htmlRef={emailRef}
                     required
                 />
@@ -72,11 +72,11 @@ export const LoginPage = () => {
                     label='Trust this device'
                     name='loginPageTrustDevice'
                     value={
-                        isPersistLogin
+                        isPersistUser
                             ? CheckboxValue.Checked
                             : CheckboxValue.Unchecked
                     }
-                    onChange={toggleIsPersistLogin}
+                    onChange={togglePersistUser}
                 />
                 <PrimaryButton
                     label={

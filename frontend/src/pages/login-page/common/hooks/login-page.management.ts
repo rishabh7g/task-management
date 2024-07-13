@@ -4,21 +4,24 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { apiRoutes } from 'src/constant/api-routes';
 import { LocalStorageKeys } from 'src/constant/local-storage.constant';
 import { useAuth } from 'src/context/auth-context';
+import { useInput } from 'src/hooks/input.hook';
 import { RoutePath } from 'src/routes';
 import { apiClient } from 'src/services/api/api-service';
 import { localStorageService } from 'src/services/local-storage/local-storage';
 
 export const useLoginPageManagement = () => {
-    const { authState, loginUser, toggleIsPersistLogin } = useAuth();
+    const { authState, loginUser } = useAuth();
 
     const emailRef = useRef<HTMLInputElement>(null);
     const errorRef = useRef<HTMLDivElement>(null);
 
-    const [email, setEmail] = useState('');
+    const [email, setEmail] = useInput(LocalStorageKeys.EMAIL, '');
     const [password, setPassword] = useState('');
 
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+
+    const [isPersistUser, setIsPersistUser] = useState(false);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -27,9 +30,9 @@ export const useLoginPageManagement = () => {
     useEffect(() => {
         localStorageService.set(
             LocalStorageKeys.IS_PERSIST_LOGIN,
-            authState.isPersistLogin,
+            isPersistUser,
         );
-    }, [authState.isPersistLogin]);
+    }, [isPersistUser]);
 
     useEffect(() => {
         const isEmailFieldExist = !!emailRef.current;
@@ -40,10 +43,15 @@ export const useLoginPageManagement = () => {
         setErrorMessage('');
     }, [email, password]);
 
+    const togglePersistUser = () => setIsPersistUser((prev) => !prev);
+
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setIsLoading(true);
         const payload = { email, password };
+        if (isPersistUser)
+            localStorageService.set(LocalStorageKeys.EMAIL, email);
+
         apiClient
             .post(apiRoutes.createLoginUrl(), payload, {
                 withCredentials: true,
@@ -86,8 +94,8 @@ export const useLoginPageManagement = () => {
         isLoading,
         emailRef,
         isLoginButtonDisabled,
-        isPersistLogin: authState.isPersistLogin,
-        toggleIsPersistLogin,
+        isPersistUser,
+        togglePersistUser,
     };
 };
 

@@ -10,14 +10,18 @@ function set(key: string, value: any): void {
     }
 }
 
-function get<T>(key: string, initialValue: T): T {
+function get<T>(key: string, initialValue: T | (() => T)): T {
+    const isInitialValueFunction = typeof initialValue === 'function';
+    const updatedInitialValue = isInitialValueFunction
+        ? (initialValue as () => T)()
+        : initialValue;
+
     try {
         const item = localStorage.getItem(key);
-        return item ? JSON.parse(item) : initialValue;
+        return item ? JSON.parse(item) : updatedInitialValue;
     } catch (error) {
         console.error(`Error reading from localStorage: ${error}`);
-    } finally {
-        return initialValue;
+        return updatedInitialValue;
     }
 }
 
