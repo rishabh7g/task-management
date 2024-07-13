@@ -1,5 +1,4 @@
 import { HttpStatusCode } from 'axios';
-import { jwtDecode } from 'jwt-decode';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { apiRoutes } from 'src/constant/api-routes';
@@ -51,11 +50,9 @@ export const useLoginPageManagement = () => {
             })
             .then((response) => {
                 const { accessToken } = response.data;
-                const { roles } = jwtDecode(accessToken) as { roles: string[] };
                 loginUser({
                     ...authState,
                     accessToken,
-                    roles,
                 });
                 navigate(from);
             })

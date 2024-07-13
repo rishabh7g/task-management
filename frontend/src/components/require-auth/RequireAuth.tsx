@@ -1,3 +1,4 @@
+import { jwtDecode } from 'jwt-decode';
 import React from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from 'src/context/auth-context';
@@ -9,8 +10,9 @@ interface RequireAuthProps {
 
 export const RequireAuth = ({ allowedRoles }: RequireAuthProps) => {
     const { authState } = useAuth();
-    const { accessToken, roles } = authState;
+    const { accessToken } = authState;
     const location = useLocation();
+    const { roles } = jwtDecode(accessToken) as { roles: string[] };
 
     if (!accessToken) {
         return (

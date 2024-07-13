@@ -2,10 +2,8 @@ import { Dispatch } from 'react';
 
 export interface AuthState {
     email: string;
-    password: string;
     accessToken: string;
     isPersistLogin: boolean;
-    roles: string[];
 }
 
 export enum AuthActionType {
