@@ -12,7 +12,6 @@ export const RequireAuth = ({ allowedRoles }: RequireAuthProps) => {
     const { authState } = useAuth();
     const { accessToken } = authState;
     const location = useLocation();
-    const { roles } = jwtDecode(accessToken) as { roles: string[] };
 
     if (!accessToken) {
         return (
@@ -20,6 +19,7 @@ export const RequireAuth = ({ allowedRoles }: RequireAuthProps) => {
         );
     }
 
+    const { roles } = jwtDecode(accessToken) as { roles: string[] };
     const isAllowed = allowedRoles.some((role) => roles.includes(role));
     if (!isAllowed) {
         return (
