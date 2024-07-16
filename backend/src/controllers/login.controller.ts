@@ -18,10 +18,18 @@ import {
 
 const DURATION_24_HOURS = 24 * 60 * 60 * 1000;
 
+enum SameSite {
+    None = 'none',
+    Lax = 'lax',
+    Strict = 'strict',
+}
+
+const isEnvProd = process.env.NODE_ENV === 'production';
+
 const REFRESH_TOKEN_COOKIE_CONFIG: CookieOptions = {
     httpOnly: true,
-    secure: true,
-    sameSite: 'none',
+    secure: isEnvProd,
+    sameSite: isEnvProd ? SameSite.None : SameSite.Lax,
     maxAge: DURATION_24_HOURS,
 };
 
