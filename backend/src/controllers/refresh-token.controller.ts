@@ -43,7 +43,7 @@ const generateNewToken = async (req: Request, res: Response): Promise<void> => {
                     ACCESS_TOKEN_EXPIRES_IN,
                 );
 
-                res.json({ accessToken, roles });
+                res.json({ accessToken });
             },
         );
     } catch (error) {
