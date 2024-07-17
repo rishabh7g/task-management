@@ -1,25 +1,27 @@
-import { HttpStatusCode } from 'axios';
 import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { apiRoutes } from 'src/constant/api-routes';
 import { LocalStorageKeys } from 'src/constant/local-storage.constant';
-import { useAuth } from 'src/context/auth-context';
 import { useInput } from 'src/hooks/input.hook';
 import { RoutePath } from 'src/routes';
-import { apiClient } from 'src/services/api/api-service';
 import { localStorageService } from 'src/services/local-storage/local-storage';
+import {
+    LoginPayload,
+    loginUser,
+    userSelectors,
+} from 'src/store/slices/user-slice';
+import { useAppDispatch } from 'src/store/store';
 
 export const useLoginPageManagement = () => {
-    const { authState, loginUser } = useAuth();
+    const dispatch = useAppDispatch();
+    const isLoading = useSelector(userSelectors.isLoading);
+    const errorMessage = useSelector(userSelectors.getErrorMessage);
 
     const emailRef = useRef<HTMLInputElement>(null);
     const errorRef = useRef<HTMLDivElement>(null);
 
     const [email, setEmail] = useInput(LocalStorageKeys.EMAIL, '');
     const [password, setPassword] = useState('');
-
-    const [errorMessage, setErrorMessage] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
 
     const [isPersistUser, setIsPersistUser] = useState(false);
 
@@ -39,41 +41,16 @@ export const useLoginPageManagement = () => {
         if (isEmailFieldExist) emailRef.current.focus();
     }, []);
 
-    useEffect(() => {
-        setErrorMessage('');
-    }, [email, password]);
-
     const togglePersistUser = () => setIsPersistUser((prev) => !prev);
 
     const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setIsLoading(true);
-        const payload = { email, password };
+        const payload: LoginPayload = { email, password };
+
+        dispatch(loginUser(payload)).then(() => navigate(from));
+
         if (isPersistUser)
             localStorageService.set(LocalStorageKeys.EMAIL, email);
-
-        apiClient
-            .post(apiRoutes.createLoginUrl(), payload, {
-                withCredentials: true,
-            })
-            .then((response) => {
-                const { accessToken } = response.data;
-                loginUser({
-                    ...authState,
-                    accessToken,
-                });
-                navigate(from);
-            })
-            .catch((error) => {
-                const status = error.response?.status;
-                setErrorMessage(_getErrorMessage(status));
-
-                const isErrorRefExist = !!errorRef.current;
-                if (isErrorRefExist) errorRef.current.focus();
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
     };
 
     const handleRegister = () => {
@@ -97,22 +74,4 @@ export const useLoginPageManagement = () => {
         isPersistUser,
         togglePersistUser,
     };
-};
-
-const _getErrorMessage = (status: number | null) => {
-    const isStatusNotExist = status === null;
-    if (isStatusNotExist) return '';
-
-    switch (status) {
-        case HttpStatusCode.NotFound:
-            return 'No account found for the entered email.';
-        case HttpStatusCode.UnprocessableEntity:
-            return 'Invalid email or password. Please try again.';
-        case HttpStatusCode.Unauthorized:
-            return 'Your session has expired. Please log in again.';
-        case HttpStatusCode.InternalServerError:
-            return 'An unexpected error occurred. Please try again later.';
-        default:
-            return 'An error occurred. Please check your connection and try again.';
-    }
 };

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 import { LocalStorageKeys } from 'src/constant/local-storage.constant';
-import { useAuth } from 'src/context/auth-context';
 import { useRefreshToken } from 'src/hooks/refresh-token.hook';
 import { localStorageService } from 'src/services/local-storage/local-storage';
+import { userSelectors } from 'src/store/slices/user-slice';
 
 export const PersistLogin = () => {
     const { fetchRefreshToken } = useRefreshToken();
     const [isLoading, setIsLoading] = useState(true);
-    const { authState } = useAuth();
+    const accessToken = useSelector(userSelectors.getAccessToken);
     const isPersistLogin = localStorageService.get(
         LocalStorageKeys.IS_PERSIST_LOGIN,
         false,
@@ -27,7 +28,7 @@ export const PersistLogin = () => {
             }
         };
 
-        const isUserNotLoggedIn = !authState.accessToken;
+        const isUserNotLoggedIn = !accessToken;
         const shouldVerifyRefreshToken = isUserNotLoggedIn && isPersistLogin;
 
         if (shouldVerifyRefreshToken) {

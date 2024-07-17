@@ -1,20 +1,20 @@
 import { HttpStatusCode } from 'axios';
 import { useEffect } from 'react';
-import { useAuth } from 'src/context/auth-context';
-import { useRefreshToken } from 'src/hooks/refresh-token.hook';
+import { useSelector } from 'react-redux';
 import { apiClientPrivate } from 'src/services/api/api-service';
+import { refreshToken, userSelectors } from 'src/store/slices/user-slice';
+import { useAppDispatch } from 'src/store/store';
 
 export const useAxiosPrivate = () => {
-    const { fetchRefreshToken } = useRefreshToken();
-    const { authState, logoutUser } = useAuth();
+    const accessToken = useSelector(userSelectors.getAccessToken);
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         const requestIntercept = apiClientPrivate.interceptors.request.use(
             (config) => {
                 const isFreshRequest = !config.headers['Authorization'];
                 if (isFreshRequest) {
-                    config.headers['Authorization'] =
-                        `Bearer ${authState.accessToken}`;
+                    config.headers['Authorization'] = `Bearer ${accessToken}`;
                 }
                 return config;
             },
@@ -32,16 +32,20 @@ export const useAxiosPrivate = () => {
                     isResponseForbidden && isRetryFirstAttempt;
                 if (shouldRetryRequest) {
                     previousRequest.sent = true;
-                    const newAccessToken = await fetchRefreshToken();
-                    const isNewAccessTokenValid = !!newAccessToken;
-                    if (isNewAccessTokenValid) {
+                    const newAccessToken = await dispatch(refreshToken()).then(
+                        (response) => {
+                            const payload = response.payload as unknown as {
+                                accessToken: string;
+                            };
+                            return payload.accessToken;
+                        },
+                    );
+                    if (newAccessToken) {
                         previousRequest.headers['Authorization'] =
                             `Bearer ${newAccessToken}`;
                         return apiClientPrivate(previousRequest);
-                    } else {
-                        logoutUser();
-                        return Promise.reject(error);
                     }
+                    return Promise.reject(error);
                 }
                 return Promise.reject(error);
             },
@@ -51,7 +55,7 @@ export const useAxiosPrivate = () => {
             apiClientPrivate.interceptors.request.eject(requestIntercept);
             apiClientPrivate.interceptors.response.eject(responseIntercept);
         };
-    }, [authState, fetchRefreshToken, logoutUser]);
+    }, [accessToken, dispatch]);
 
     return { apiClientPrivate };
 };

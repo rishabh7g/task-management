@@ -1,16 +1,16 @@
 import { jwtDecode } from 'jwt-decode';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useAuth } from 'src/context/auth-context';
 import { RoutePath } from 'src/routes';
+import { userSelectors } from 'src/store/slices/user-slice';
 
 interface RequireAuthProps {
     allowedRoles: string[];
 }
 
 export const RequireAuth = ({ allowedRoles }: RequireAuthProps) => {
-    const { authState } = useAuth();
-    const { accessToken } = authState;
+    const accessToken = useSelector(userSelectors.getAccessToken);
     const location = useLocation();
 
     if (!accessToken) {

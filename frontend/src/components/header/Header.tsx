@@ -1,21 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LogoUrl from 'src/assets/task-app.logo.jpg';
 import { TertiaryButton } from 'src/components/button/Button';
-import { apiRoutes } from 'src/constant/api-routes';
-import { useAuth } from 'src/context/auth-context';
 import { RoutePath } from 'src/routes';
-import { apiClient } from 'src/services/api/api-service';
+import { logoutUser, userSelectors } from 'src/store/slices/user-slice';
+import { useAppDispatch } from 'src/store/store';
 
 export const Header = () => {
-    const { authState, logoutUser } = useAuth();
-    const isUserLoggedIn = !!authState.accessToken;
+    const accessToken = useSelector(userSelectors.getAccessToken);
+    const dispatch = useAppDispatch();
+    const isUserLoggedIn = !!accessToken;
 
-    const handleLogout = async () => {
-        await apiClient.delete(apiRoutes.createLogoutUrl(), {
-            withCredentials: true,
-        });
-        logoutUser();
+    const handleLogout = () => {
+        dispatch(logoutUser());
     };
 
     return (
