@@ -2,6 +2,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Request, Response } from 'express';
 import corsOptions from 'src/config/cors-options.config';
+import { EnvVariableName } from 'src/constant/dotenv.constant';
 import credentials from 'src/middleware/credentials.middleware';
 import { headerMiddleware } from 'src/middleware/headers.middleware';
 import networkErrorMiddleware from 'src/middleware/network-error.middleware';
@@ -12,10 +13,10 @@ import refreshTokenRoutes from 'src/routes/refresh-token.routes';
 import registerRoutes from 'src/routes/register.routes';
 import taskRoutes from 'src/routes/tasks.routes';
 import swaggerSetup from 'src/swagger';
-
-require('dotenv').config();
+import { readEnvVariable } from 'src/util/dotenv';
 
 const app = express();
+const frontendUrl = readEnvVariable(EnvVariableName.FRONTEND_URL) || '';
 
 app.use(credentials);
 swaggerSetup(app);
@@ -23,7 +24,7 @@ app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.use(headerMiddleware(process.env.FRONTEND_URL || ''));
+app.use(headerMiddleware(frontendUrl));
 app.use('/api-docs', swaggerSetup);
 
 app.use(registerRoutes);
@@ -40,7 +41,7 @@ app.all('*', (req: Request, res: Response) => {
 
 app.use(networkErrorMiddleware);
 
-const PORT = process.env.PORT || 8090;
+const PORT = readEnvVariable(EnvVariableName.PORT) || 8090;
 
 // eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

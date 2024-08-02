@@ -1,6 +1,8 @@
-require('dotenv').config();
+import { EnvVariableName } from 'src/constant/dotenv.constant';
+import { readEnvVariable } from 'src/util/dotenv';
 
-const PORT = process.env.PORT || 8090;
+const PORT = readEnvVariable(EnvVariableName.PORT) || 8090;
+
 export const allowedOrigins: string[] = [
     `http://localhost:${PORT}`,
     process.env.FRONTEND_URL || '',
