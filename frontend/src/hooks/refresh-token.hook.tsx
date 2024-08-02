@@ -1,26 +1,9 @@
-import { apiRoutes } from 'src/constant/api-routes';
-import { useAuth } from 'src/context/auth-context';
-import { apiClient } from 'src/services/api/api-service';
+import { refreshToken } from 'src/store/slices/user-slice';
+import { useAppDispatch } from 'src/store/store';
 
 export const useRefreshToken = () => {
-    const { authState, loginUser } = useAuth();
-    const fetchRefreshToken = async () => {
-        try {
-            const response = await apiClient.post<{
-                accessToken: string;
-            }>(
-                apiRoutes.createRefreshTokenUrl(),
-                {},
-                { withCredentials: true },
-            );
-
-            const { accessToken } = response.data;
-            loginUser({ ...authState, accessToken });
-            return accessToken;
-        } catch (error) {
-            return null;
-        }
-    };
+    const dispatch = useAppDispatch();
+    const fetchRefreshToken = async () => dispatch(refreshToken());
 
     return { fetchRefreshToken };
 };

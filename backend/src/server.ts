@@ -13,9 +13,6 @@ import registerRoutes from 'src/routes/register.routes';
 import taskRoutes from 'src/routes/tasks.routes';
 import swaggerSetup from 'src/swagger';
 
-// can you generate 16 bytes secret key
-require('crypto').randomBytes(16).toString('hex');
-
 require('dotenv').config();
 
 const app = express();
