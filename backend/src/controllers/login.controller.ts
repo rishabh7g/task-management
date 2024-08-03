@@ -9,7 +9,7 @@ import {
     ACCESS_TOKEN_EXPIRES_IN,
     REFRESH_TOKEN_EXPIRES_IN,
 } from 'src/constant/time.constant';
-import { addRefreshToken, getUserByEmail } from 'src/data/user.data';
+import { UserModel } from 'src/model/user.modal';
 import {
     generateAccessToken,
     generateRefreshAccessToken,
@@ -37,7 +37,7 @@ const login = async (req: Request, res: Response): Promise<void> => {
     const email: string = req.body.email;
     const password: string = req.body.password;
 
-    const user = await getUserByEmail(email);
+    const user = await UserModel.findOne({ email });
 
     const isUserNotFound = !user;
     if (isUserNotFound) {
@@ -56,8 +56,7 @@ const login = async (req: Request, res: Response): Promise<void> => {
         return;
     }
 
-    const { id, roles } = user;
-
+    const { _id: id, roles } = user;
     const userPayload = { id, email, roles };
     const accessToken: string = generateAccessToken(
         userPayload,
@@ -67,12 +66,12 @@ const login = async (req: Request, res: Response): Promise<void> => {
         userPayload,
         REFRESH_TOKEN_EXPIRES_IN,
     );
-    await addRefreshToken(id, refreshToken);
+    await UserModel.findByIdAndUpdate(id, { refreshToken });
 
     // Creates Secure Cookie with refresh token
     res.cookie('jwt', refreshToken, REFRESH_TOKEN_COOKIE_CONFIG);
 
-    res.json({ accessToken });
+    res.json({ accessToken, id });
 };
 
 export { login };

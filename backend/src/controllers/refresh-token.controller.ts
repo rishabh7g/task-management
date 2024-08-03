@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { MESSAGE_ERROR_VERIFYING_REFRESH_TOKEN } from 'src/constant/message.constant';
 import { ACCESS_TOKEN_EXPIRES_IN } from 'src/constant/time.constant';
-import { getUserByRefreshToken } from 'src/data/user.data';
+import { UserModel } from 'src/model/user.modal';
 import { generateAccessToken } from 'src/util/auth.util';
 
 const generateNewToken = async (req: Request, res: Response): Promise<void> => {
@@ -18,7 +18,10 @@ const generateNewToken = async (req: Request, res: Response): Promise<void> => {
     }
 
     try {
-        const foundUser = await getUserByRefreshToken(refreshToken);
+        const users = await UserModel.find();
+        const foundUser = users.find(
+            (user) => user.refreshToken === refreshToken,
+        );
         const isUserNotFound = !foundUser;
         if (isUserNotFound) {
             res.sendStatus(HttpStatusCode.Forbidden);

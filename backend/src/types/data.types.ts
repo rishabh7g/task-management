@@ -2,7 +2,7 @@ export interface User {
     id: string;
     email: string;
     password: string;
-    tasks: any[];
+    tasks: Task[];
     roles: string[];
     refreshToken?: string;
 }

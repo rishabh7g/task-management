@@ -4,13 +4,7 @@ import {
     MESSAGE_TASK_NOT_FOUND,
     MESSAGE_USER_NOT_FOUND,
 } from 'src/constant/message.constant';
-import {
-    addNewTask,
-    getUserById,
-    removeTask,
-    updateExistingTask,
-} from 'src/data/user.data';
-import { Task } from 'src/types/data.types';
+import { UserModel } from 'src/model/user.modal';
 import { v4 as uuidv4 } from 'uuid';
 
 const _userNotFound = (res: Response) => {
@@ -21,75 +15,111 @@ const _userNotFound = (res: Response) => {
 
 export const createTask = async (req: Request, res: Response) => {
     const userId = (<any>req).user?.id;
-    const user = await getUserById(userId);
-    const isUserNotFound = !user;
-    if (isUserNotFound) {
-        return _userNotFound(res);
-    }
-
     const task = {
         id: uuidv4(),
         ...req.body,
     };
 
-    await addNewTask(task, userId);
-    res.status(HttpStatusCode.Created).json(task);
+    try {
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            return _userNotFound(res);
+        }
+
+        user.tasks.push(task);
+        await user.save();
+
+        res.status(HttpStatusCode.Created).json(task);
+    } catch (error) {
+        res.status(HttpStatusCode.InternalServerError).json({
+            error,
+        });
+    }
 };
 
 export const getTasks = async (req: Request, res: Response) => {
-    const user = await getUserById((<any>req).user?.id);
-    const isUserNotFound = !user;
-    if (isUserNotFound) {
-        return _userNotFound(res);
-    }
+    const userId = (<any>req).user?.id;
 
-    res.json(user.tasks);
+    try {
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            return _userNotFound(res);
+        }
+
+        res.json(user.tasks);
+    } catch (error) {
+        res.status(HttpStatusCode.InternalServerError).json({
+            error,
+        });
+    }
 };
 
 export const getTask = async (req: Request, res: Response) => {
     const { taskId } = req.params;
-    const user = await getUserById((<any>req).user?.id);
-    const isUserNotFound = !user;
-    if (isUserNotFound) {
-        return _userNotFound(res);
-    }
+    const userId = (<any>req).user?.id;
 
-    const task = user.tasks.find((t) => t.id === taskId);
-    const isTaskNotFound = !task;
-    if (isTaskNotFound) {
-        return res
-            .status(HttpStatusCode.NotFound)
-            .json({ error: MESSAGE_TASK_NOT_FOUND });
-    }
+    try {
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            return _userNotFound(res);
+        }
 
-    res.json(task);
+        const task = user.tasks.find((t) => t.id === taskId);
+        if (!task) {
+            return res
+                .status(HttpStatusCode.NotFound)
+                .json({ error: MESSAGE_TASK_NOT_FOUND });
+        }
+
+        res.json(task);
+    } catch (error) {
+        res.status(HttpStatusCode.InternalServerError).json({
+            error,
+        });
+    }
 };
 
 export const updateTask = async (req: Request, res: Response) => {
     const { taskId } = req.params;
     const userId = (<any>req).user?.id;
-    const user = await getUserById(userId);
-    const isUserNotFound = !user;
 
-    if (isUserNotFound) {
-        return _userNotFound(res);
+    try {
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            return _userNotFound(res);
+        }
+        const updatedTasks = user.tasks.map((t) => {
+            const isTaskFound = t.id === taskId;
+            if (isTaskFound) {
+                return { ...t, ...req.body };
+            }
+        });
+
+        user.tasks = updatedTasks;
+        await user.save();
+        res.status(201).end();
+    } catch (error) {
+        res.status(HttpStatusCode.InternalServerError).json({ error });
     }
-    const newTask: Task = {
-        id: taskId,
-        ...req.body,
-    };
-    await updateExistingTask(newTask, userId);
-    res.json(newTask);
 };
 
 export const deleteTask = async (req: Request, res: Response) => {
     const { taskId } = req.params;
     const userId = (<any>req).user?.id;
-    const user = await getUserById(userId);
-    const isUserNotFound = !user;
-    if (isUserNotFound) {
-        return _userNotFound(res);
+
+    try {
+        const user = await UserModel.findById(userId);
+        if (!user) {
+            return _userNotFound(res);
+        }
+
+        user.tasks = user.tasks.filter((t) => t.id !== taskId);
+        await user.save();
+
+        res.status(HttpStatusCode.NoContent).end();
+    } catch (error) {
+        res.status(HttpStatusCode.InternalServerError).json({
+            error,
+        });
     }
-    await removeTask(taskId, userId);
-    res.status(HttpStatusCode.NoContent).send();
 };

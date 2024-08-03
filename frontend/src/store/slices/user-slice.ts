@@ -15,12 +15,13 @@ interface UserSliceState {
 }
 
 interface UserData {
+    id: string;
     email: string;
     accessToken: string;
 }
 
 const initialState: UserSliceState = {
-    userData: { email: '', accessToken: '' },
+    userData: { id: '', email: '', accessToken: '' },
     isLoading: false,
     errorMessage: '',
 };
@@ -31,6 +32,7 @@ export interface LoginPayload {
 }
 
 interface ResponseType {
+    id: string;
     accessToken: string;
 }
 
@@ -83,6 +85,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<UserSliceState>) => {
             state.isLoading = false;
             state.userData = {
                 email: action.meta.arg.email,
+                id: action.payload.id,
                 accessToken: action.payload.accessToken,
             };
         })
@@ -98,7 +101,7 @@ const extraReducers = (builder: ActionReducerMapBuilder<UserSliceState>) => {
             state.errorMessage = '';
         })
         .addCase(logoutUser.fulfilled, (state) => {
-            state.userData = { email: '', accessToken: '' };
+            state.userData = { id: '', email: '', accessToken: '' };
             state.isLoading = false;
             state.errorMessage = '';
         })

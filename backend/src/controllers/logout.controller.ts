@@ -1,6 +1,6 @@
 import { CookieOptions, Request, Response } from 'express';
 import { HttpStatusCode } from 'src/constant/http-status-code';
-import { eraseRefreshToken, getUserByRefreshToken } from 'src/data/user.data';
+import { UserModel } from 'src/model/user.modal';
 
 const CLEAR_COOKIE_CONFIG: CookieOptions = {
     httpOnly: true,
@@ -18,15 +18,16 @@ const logout = async (req: Request, res: Response): Promise<void> => {
     }
 
     const refreshToken = cookies.jwt;
-    const user = await getUserByRefreshToken(refreshToken);
-    const isUserNotFound = !user;
+    const users = await UserModel.find();
+    const user = users.find((user) => user.refreshToken === refreshToken);
 
+    const isUserNotFound = !user;
     if (isUserNotFound) {
         _clearCookie(res);
         return;
     }
 
-    await eraseRefreshToken(user.id);
+    user.refreshToken = '';
     _clearCookie(res);
 };
 
