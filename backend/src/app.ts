@@ -1,6 +1,7 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express, { Request, Response } from 'express';
+import helmet from 'helmet';
 import corsOptions from 'src/config/cors-options.config';
 import { EnvVariableName } from 'src/constant/dotenv.constant';
 import credentials from 'src/middleware/credentials.middleware';
@@ -18,6 +19,7 @@ import { readEnvVariable } from 'src/util/dotenv';
 export const app = express();
 const frontendUrl = readEnvVariable(EnvVariableName.FRONTEND_URL) || '';
 
+app.use(helmet());
 app.use(credentials);
 swaggerSetup(app);
 app.use(cors(corsOptions));
