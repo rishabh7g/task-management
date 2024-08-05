@@ -22,8 +22,9 @@ export const Default: Story = {
         initialTask: {
             id: '',
             title: '',
-            description: '',
             status: TaskStatus.TODO,
+            createdAt: new Date(),
+            updatedAt: new Date(),
         },
         isSubmitting: false,
     },

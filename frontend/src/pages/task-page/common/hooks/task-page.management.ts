@@ -32,10 +32,10 @@ export const useTaskPageManagement = () => {
     const handleCreateTask = async (task: Task) => {
         const isTaskEmpty = !task;
         if (isTaskEmpty) return;
-        const { createdAt, description, status, title, updatedAt } = task;
+        const { createdAt, status, title, updatedAt } = task;
         const response = await apiClientPrivate.post(
             apiRoutes.createTaskAddUrl(),
-            { createdAt, description, status, title, updatedAt },
+            { createdAt, status, title, updatedAt },
         );
         const addTaskStatus = response.status;
         const isTaskAdded = addTaskStatus === HttpStatusCode.Created;
@@ -50,11 +50,12 @@ export const useTaskPageManagement = () => {
     };
 
     const handleEditTask = async (task: Task) => {
-        const { title, description, status } = task;
+        const { title, status, createdAt, updatedAt } = task;
         await apiClientPrivate.put(apiRoutes.createTaskEditUrl(task.id), {
             title,
-            description,
             status,
+            createdAt,
+            updatedAt,
         });
     };
 

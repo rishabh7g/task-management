@@ -7,15 +7,13 @@ export const useTaskFormManagement = (
     isSubmitting: boolean,
 ) => {
     const [title, setTitle] = useState(task.title);
-    const [description, setDescription] = useState(task.description);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         task.title = title;
-        task.description = description;
-        const isTaskEmpty = task.title === '' || task.description === '';
+        const isTaskEmpty = task.title === '';
         if (isTaskEmpty) {
-            alert('Title and description are required');
+            alert('Please enter task detail to proceed');
             return;
         }
         // Check if task already have createdAt
@@ -27,14 +25,11 @@ export const useTaskFormManagement = (
         onSubmit(task);
     };
 
-    const isSubmitButtonDisabled =
-        title === '' || description === '' || isSubmitting;
+    const isSubmitButtonDisabled = title === '' || isSubmitting;
 
     return {
         title,
         setTitle,
-        description,
-        setDescription,
         handleSubmit,
         isSubmitButtonDisabled,
     };

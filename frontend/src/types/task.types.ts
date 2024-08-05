@@ -1,10 +1,9 @@
 export interface Task {
     id: string;
     title: string;
-    description: string;
     status: TaskStatus;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt?: Date;
+    updatedAt?: Date;
 }
 
 export enum TaskStatus {
@@ -15,6 +14,5 @@ export enum TaskStatus {
 
 export enum TaskFieldType {
     TITLE = 'TITLE',
-    DESCRIPTION = 'DESCRIPTION',
     STATUS = 'STATUS',
 }

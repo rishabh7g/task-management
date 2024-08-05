@@ -39,10 +39,7 @@ export const TaskList = ({ tasks, onEdit, onDelete }: TaskListProps) => {
 };
 
 const TaskPanel = ({ task }: { task: Task }) => (
-    <div>
-        <h3 id={`task-${task.id}`} className='text-xl font-bold'>
-            {task.title}
-        </h3>
-        <p>{task.description}</p>
-    </div>
+    <h3 id={`task-${task.id}`} className='text-xl font-bold'>
+        {task.title}
+    </h3>
 );

@@ -9,7 +9,6 @@ import { Task, TaskFieldType, TaskStatus } from 'src/types/task.types';
 const EMPTY_TASK: Task = {
     id: '',
     title: '',
-    description: '',
     status: TaskStatus.TODO,
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -26,43 +25,22 @@ export const TaskForm = ({
     onSubmit,
     isSubmitting,
 }: TaskFormProps) => {
-    const {
-        title,
-        description,
-        setTitle,
-        setDescription,
-        handleSubmit,
-        isSubmitButtonDisabled,
-    } = useTaskFormManagement(onSubmit, initialTask, isSubmitting);
-
-    const TitleField = (
-        <Input
-            label='Title'
-            name={TaskFieldType.TITLE}
-            placeholder='Enter the task'
-            type='text'
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-        />
-    );
-    const DescriptionField = (
-        <Input
-            label='Description'
-            name={TaskFieldType.DESCRIPTION}
-            placeholder='Add more detail related to the task'
-            type='text'
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-        />
-    );
+    const { title, setTitle, handleSubmit, isSubmitButtonDisabled } =
+        useTaskFormManagement(onSubmit, initialTask, isSubmitting);
 
     return (
         <Form
             onSubmit={handleSubmit}
             className='flex w-96 max-w-md flex-col gap-5'
         >
-            {TitleField}
-            {DescriptionField}
+            <Input
+                label='Title'
+                name={TaskFieldType.TITLE}
+                placeholder='Enter the task'
+                type='text'
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+            />
             <PrimaryButton
                 label={`${isSubmitting ? 'Submitting...' : 'Submit'}`}
                 type={ButtonType.Submit}
