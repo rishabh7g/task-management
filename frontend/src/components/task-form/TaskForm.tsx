@@ -11,6 +11,8 @@ const EMPTY_TASK: Task = {
     title: '',
     description: '',
     status: TaskStatus.TODO,
+    createdAt: new Date(),
+    updatedAt: new Date(),
 };
 
 interface TaskFormProps {

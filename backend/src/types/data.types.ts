@@ -1,5 +1,4 @@
 export interface User {
-    id: string;
     email: string;
     password: string;
     tasks: Task[];
@@ -16,4 +15,6 @@ export interface Task {
     title: string;
     description: string;
     status: string;
+    createdAt: string;
+    updatedAt: string;
 }

@@ -32,14 +32,10 @@ export const useTaskPageManagement = () => {
     const handleCreateTask = async (task: Task) => {
         const isTaskEmpty = !task;
         if (isTaskEmpty) return;
-        const { description, status, title } = task;
+        const { createdAt, description, status, title, updatedAt } = task;
         const response = await apiClientPrivate.post(
             apiRoutes.createTaskAddUrl(),
-            {
-                description,
-                status,
-                title,
-            },
+            { createdAt, description, status, title, updatedAt },
         );
         const addTaskStatus = response.status;
         const isTaskAdded = addTaskStatus === HttpStatusCode.Created;

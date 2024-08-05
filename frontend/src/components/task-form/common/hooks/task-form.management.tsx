@@ -18,6 +18,12 @@ export const useTaskFormManagement = (
             alert('Title and description are required');
             return;
         }
+        // Check if task already have createdAt
+        if (!task.createdAt) {
+            task.createdAt = new Date();
+        }
+        task.updatedAt = new Date();
+
         onSubmit(task);
     };
 
