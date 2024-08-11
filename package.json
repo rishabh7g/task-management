@@ -16,6 +16,15 @@
         "test:unit": "cd frontend && npm test",
         "storybook": "cd frontend && npm run storybook"
     },
+    "lint-staged": {
+        "*.{js,jsx,ts,tsx}": [
+            "prettier --write",
+            "eslint --max-warnings=0 --fix"
+        ]
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
     "devDependencies": {
         "@typescript-eslint/eslint-plugin": "^7.9.0",
         "@typescript-eslint/parser": "^7.9.0",
@@ -28,18 +37,5 @@
         "husky": "^9.0.11",
         "lint-staged": "^12.0.2",
         "prettier": "^3.2.5"
-    },
-    "lint-staged": {
-        "*.{js,jsx,ts,tsx}": [
-            "prettier --write",
-            "eslint --max-warnings=0 --fix"
-        ]
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "mongodb": "^6.8.0",
-        "mongoose": "^8.5.2"
     }
 }
