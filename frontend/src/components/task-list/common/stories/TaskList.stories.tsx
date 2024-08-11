@@ -23,8 +23,9 @@ export const Default: Story = {
             {
                 id: '1',
                 title: 'Task 1',
-                description: 'Task 1 description',
                 status: TaskStatus.TODO,
+                createdAt: new Date(),
+                updatedAt: new Date(),
             },
         ],
     },

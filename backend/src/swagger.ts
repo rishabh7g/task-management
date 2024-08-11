@@ -1,10 +1,10 @@
 import { Express } from 'express';
+import { EnvVariableName } from 'src/constant/dotenv.constant';
+import { readEnvVariable } from 'src/util/dotenv';
 import swaggerJSDoc, { Options } from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
-require('dotenv').config();
-
-const PORT = process.env.PORT || 8090;
+const PORT = readEnvVariable(EnvVariableName.PORT) || 8090;
 
 const swaggerDefinition = {
     openapi: '3.0.0',

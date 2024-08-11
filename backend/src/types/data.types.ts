@@ -1,8 +1,7 @@
 export interface User {
-    id: string;
     email: string;
     password: string;
-    tasks: any[];
+    tasks: Task[];
     roles: string[];
     refreshToken?: string;
 }
@@ -14,6 +13,7 @@ export interface StoredData {
 export interface Task {
     id: string;
     title: string;
-    description: string;
     status: string;
+    createdAt: string;
+    updatedAt: string;
 }

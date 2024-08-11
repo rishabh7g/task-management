@@ -7,14 +7,16 @@ const mockTasks: Task[] = [
     {
         id: '1',
         title: 'Task 1',
-        description: 'Description 1',
         status: TaskStatus.TODO,
+        createdAt: new Date(),
+        updatedAt: new Date(),
     },
     {
         id: '2',
         title: 'Task 2',
-        description: 'Description 2',
         status: TaskStatus.IN_PROGRESS,
+        createdAt: new Date(),
+        updatedAt: new Date(),
     },
 ];
 
@@ -32,10 +34,9 @@ describe('<TaskList />', () => {
         );
     });
 
-    it('renders task titles and descriptions', () => {
+    it('renders task title', () => {
         mockTasks.forEach((task) => {
             expect(screen.getByText(task.title)).toBeInTheDocument();
-            expect(screen.getByText(task.description)).toBeInTheDocument();
         });
     });
 
