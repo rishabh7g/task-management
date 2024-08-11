@@ -60,11 +60,6 @@ export const useRegistrationPageManagement = () => {
                     navigate(RoutePath.Login);
                 }
             })
-            .catch((error) => {
-                setErrorMessage(error.response.data.message);
-                const isErrorRefExist = !!errorRef.current;
-                if (isErrorRefExist) errorRef.current.focus();
-            })
             .finally(() => {
                 setIsLoading(false);
             });

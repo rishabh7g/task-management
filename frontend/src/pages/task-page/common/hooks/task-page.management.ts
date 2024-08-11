@@ -1,5 +1,6 @@
 import { HttpStatusCode } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
 import { apiRoutes } from 'src/constant/api-routes';
 import { useAxiosPrivate } from 'src/hooks/axios-private.hook';
 import { Task } from 'src/types/task.types';
@@ -10,7 +11,7 @@ export const useTaskPageManagement = () => {
     const { apiClientPrivate } = useAxiosPrivate();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const { showBoundary } = useErrorBoundary();
     const openModal = () => setIsModalOpen(true);
 
     const closeModal = () => {
@@ -19,11 +20,14 @@ export const useTaskPageManagement = () => {
     };
 
     const fetchTasks = useCallback(async () => {
-        apiClientPrivate.get(apiRoutes.createTaskAddUrl()).then((response) => {
-            const tasks = response.data;
-            setTasks(tasks);
-        });
-    }, [apiClientPrivate]);
+        apiClientPrivate
+            .get(apiRoutes.createTaskAddUrl())
+            .then((response) => {
+                const tasks = response.data;
+                setTasks(tasks);
+            })
+            .catch((err) => showBoundary(err));
+    }, [apiClientPrivate, showBoundary]);
 
     useEffect(() => {
         fetchTasks();
