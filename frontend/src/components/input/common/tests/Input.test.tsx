@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input, AriaInvalidStatus } from 'src/components/input/Input';
-import { fireEvent, render, screen } from 'src/util/test-util';
+import { fireEvent, render, screen } from 'src/util/test.util';
 
 const TEST_DATA = {
     label: 'Test Label',

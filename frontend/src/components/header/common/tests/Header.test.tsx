@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header } from 'src/components/header/Header';
-import { renderWithProvider, screen } from 'src/util/test-util';
+import { renderWithProvider, screen } from 'src/util/test.util';
 
 const LOGOUT_REGEX = /logout/i;
 const HOME_REGEX = /home/i;

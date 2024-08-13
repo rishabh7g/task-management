@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'src/components/modal/Modal';
-import { render, screen } from 'src/util/test-util';
+import { render, screen } from 'src/util/test.util';
 
 describe('<Modal />', () => {
     test('renders the modal content when open', () => {
