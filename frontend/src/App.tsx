@@ -12,14 +12,14 @@ const Routes = () => {
 export const App = () => {
     return (
         <Router>
-            <Suspense fallback={<div>Loading...</div>}>
-                <Header />
-                <ErrorBoundary fallback={<p>Something went wrong!</p>}>
-                    <main className='flex min-h-screen items-start justify-center bg-cyan-900 pt-40'>
+            <Header />
+            <ErrorBoundary fallback={<p>Something went wrong!</p>}>
+                <main className='flex min-h-screen items-start justify-center bg-cyan-900 pt-40'>
+                    <Suspense fallback={<div>Loading...</div>}>
                         <Routes />
-                    </main>
-                </ErrorBoundary>
-            </Suspense>
+                    </Suspense>
+                </main>
+            </ErrorBoundary>
         </Router>
     );
 };
