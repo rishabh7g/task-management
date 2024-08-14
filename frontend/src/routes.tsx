@@ -5,25 +5,33 @@ import { RequireAuth } from 'src/components/require-auth/RequireAuth';
 import { UnauthorizedPage } from 'src/pages/unauthorize-page/UnauthorizePage';
 
 const LoginPage = lazy(() =>
-    import('src/pages/login-page/LoginPage').then((module) => ({
+    import(
+        /* webpackChunkName: 'login-page' */ 'src/pages/login-page/LoginPage'
+    ).then((module) => ({
         default: module.LoginPage,
     })),
 );
 
 const RegistrationPage = lazy(() =>
-    import('src/pages/registration-page/RegistrationPage').then((module) => ({
+    import(
+        /* webpackChunkName: 'registration-page' */ 'src/pages/registration-page/RegistrationPage'
+    ).then((module) => ({
         default: module.RegistrationPage,
     })),
 );
 
 const TaskPage = lazy(() =>
-    import('src/pages/task-page/TaskPage').then((module) => ({
+    import(
+        /* webpackChunkName: 'task-page' */ 'src/pages/task-page/TaskPage'
+    ).then((module) => ({
         default: module.TaskPage,
     })),
 );
 
 const AdminPage = lazy(() =>
-    import('src/pages/admin-page/AdminPage').then((module) => ({
+    import(
+        /* webpackChunkName: 'admin-page' */ 'src/pages/admin-page/AdminPage'
+    ).then((module) => ({
         default: module.AdminPage,
     })),
 );
