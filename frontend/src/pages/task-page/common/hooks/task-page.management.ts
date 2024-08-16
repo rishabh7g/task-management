@@ -1,59 +1,53 @@
-import { HttpStatusCode } from 'axios';
-import { useCallback, useEffect, useState } from 'react';
-import { useErrorBoundary } from 'react-error-boundary';
+import { useState } from 'react';
 import { apiRoutes } from 'src/constant/api-routes';
-import { useAxiosPrivate } from 'src/hooks/axios-private.hook';
+import { apiClientPrivate } from 'src/services/api/api-service';
 import { Task } from 'src/types/task.types';
+import { wrapPromise } from 'src/util/promise.util';
 
 export const useTaskPageManagement = () => {
-    const [tasks, setTasks] = useState<Task[]>([]);
     const [editingTask, setEditingTask] = useState<Task>();
-    const { apiClientPrivate } = useAxiosPrivate();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { showBoundary } = useErrorBoundary();
     const openModal = () => setIsModalOpen(true);
+
+    const fetchTasks = () => {
+        const url = apiRoutes.createTaskAddUrl();
+        const tasksPromise = apiClientPrivate.get(url).then((response) => {
+            return response.data;
+        });
+        return wrapPromise<Task[]>(tasksPromise);
+    };
+
+    const tasksResource = fetchTasks();
 
     const closeModal = () => {
         clearForm();
         setIsModalOpen(false);
     };
 
-    const fetchTasks = useCallback(async () => {
-        apiClientPrivate
-            .get(apiRoutes.createTaskAddUrl())
-            .then((response) => {
-                const tasks = response.data;
-                setTasks(tasks);
-            })
-            .catch((err) => showBoundary(err));
-    }, [apiClientPrivate, showBoundary]);
-
-    useEffect(() => {
-        fetchTasks();
-    }, [fetchTasks]);
-
-    const handleCreateTask = async (task: Task) => {
+    const createNewTask = async (task: Task) => {
         const isTaskEmpty = !task;
         if (isTaskEmpty) return;
         const { createdAt, status, title, updatedAt } = task;
-        const response = await apiClientPrivate.post(
-            apiRoutes.createTaskAddUrl(),
-            { createdAt, status, title, updatedAt },
-        );
-        const addTaskStatus = response.status;
-        const isTaskAdded = addTaskStatus === HttpStatusCode.Created;
-        if (isTaskAdded) {
-            fetchTasks();
-        }
+        await apiClientPrivate.post(apiRoutes.createTaskAddUrl(), {
+            createdAt,
+            status,
+            title,
+            updatedAt,
+        });
+        // const addTaskStatus = response.status;
+        // const isTaskAdded = addTaskStatus === HttpStatusCode.Created;
+        // if (isTaskAdded) {
+        //     fetchTasks();
+        // }
     };
 
-    const updateEditingTask = (task: Task) => {
+    const handleTaskEdit = (task: Task) => {
         setEditingTask(task);
         openModal();
     };
 
-    const handleEditTask = async (task: Task) => {
+    const editExistingTask = async (task: Task) => {
         const { title, status, createdAt, updatedAt } = task;
         await apiClientPrivate.put(apiRoutes.createTaskEditUrl(task.id), {
             title,
@@ -63,18 +57,18 @@ export const useTaskPageManagement = () => {
         });
     };
 
-    const handleDeleteTask = async (taskId: string) => {
+    const handleTaskDelete = async (taskId: string) => {
         await apiClientPrivate.delete(apiRoutes.createTaskDeleteUrl(taskId));
-        await fetchTasks();
+        // await fetchTasks();
     };
 
     const handleTaskSubmit = async (task: Task) => {
         const isFreshTask = !task.id;
         setIsSubmitting(true);
         if (isFreshTask) {
-            await handleCreateTask(task);
+            await createNewTask(task);
         } else {
-            await handleEditTask(task);
+            await editExistingTask(task);
         }
         setIsSubmitting(false);
         closeModal();
@@ -84,18 +78,15 @@ export const useTaskPageManagement = () => {
         setEditingTask(undefined);
     };
 
-    const isTaskListEmpty = tasks.length === 0;
-
     return {
-        tasks,
         editingTask,
-        updateEditingTask,
+        handleTaskEdit,
         handleTaskSubmit,
-        handleDeleteTask,
+        handleTaskDelete,
         isModalOpen,
         closeModal,
         openModal,
         isSubmitting,
-        isTaskListEmpty,
+        tasksResource,
     };
 };

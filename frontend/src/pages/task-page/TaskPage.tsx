@@ -1,22 +1,22 @@
 import React from 'react';
+import { AsyncUIWrapper } from 'src/components/async-ui-wrapper/async-ui-wrapper';
 import { PrimaryButton } from 'src/components/button/Button';
 import { Modal } from 'src/components/modal/Modal';
 import { TaskForm } from 'src/components/task-form/TaskForm';
-import { TaskList } from 'src/components/task-list/TaskList';
+import { TaskListUI } from 'src/pages/task-page/common/components/task-list-ui/TaskListUI';
 import { useTaskPageManagement } from 'src/pages/task-page/common/hooks/task-page.management';
 
 export const TaskPage = () => {
     const {
-        tasks,
         editingTask,
-        updateEditingTask,
+        handleTaskEdit,
         handleTaskSubmit,
-        handleDeleteTask,
+        handleTaskDelete,
         openModal,
         isModalOpen,
         closeModal,
         isSubmitting,
-        isTaskListEmpty,
+        tasksResource,
     } = useTaskPageManagement();
 
     const AddTaskButton = (
@@ -29,36 +29,40 @@ export const TaskPage = () => {
         />
     );
 
-    const EmptyListUI = (
-        <div className='mx-auto w-1/3 rounded bg-white p-10 text-center'>
-            <h3 className='mb-5 text-lg'>
-                {`it seems your task list is empty, let's add some tasks!`}
-            </h3>
-            {AddTaskButton}
-        </div>
-    );
+    // const EmptyListUI = (
+    //     <div className='mx-auto w-1/3 rounded bg-white p-10 text-center'>
+    //         <h3 className='mb-5 text-lg'>
+    //             {`it seems your task list is empty, let's add some tasks!`}
+    //         </h3>
+    //         {AddTaskButton}
+    //     </div>
+    // );
 
-    const TaskListUI = (
-        <>
-            <div className='flex justify-end'>{AddTaskButton}</div>
-            <TaskList
-                tasks={tasks}
-                onEdit={updateEditingTask}
-                onDelete={handleDeleteTask}
+    // if (isTaskListEmpty) {
+    //     return EmptyListUI;
+    // }
+
+    const AddTaskModal = () => (
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+            <TaskForm
+                initialTask={editingTask}
+                onSubmit={handleTaskSubmit}
+                isSubmitting={isSubmitting}
             />
-        </>
+        </Modal>
     );
 
     return (
         <div className='mx-auto w-full max-w-7xl p-4'>
-            {isTaskListEmpty ? EmptyListUI : TaskListUI}
-            <Modal isOpen={isModalOpen} onClose={closeModal}>
-                <TaskForm
-                    initialTask={editingTask}
-                    onSubmit={handleTaskSubmit}
-                    isSubmitting={isSubmitting}
+            <div className='flex justify-end'>{AddTaskButton}</div>
+            <AsyncUIWrapper>
+                <TaskListUI
+                    onEdit={handleTaskEdit}
+                    onDelete={handleTaskDelete}
+                    tasksResource={tasksResource}
                 />
-            </Modal>
+            </AsyncUIWrapper>
+            <AddTaskModal />
         </div>
     );
 };
